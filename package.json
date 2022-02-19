@@ -1,0 +1,19 @@
+{
+  "name": "grooveblogserve",
+  "version": "1.0.0",
+  "description": "make for blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blog",
+    "serve"
+  ],
+  "author": "groove",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.4",
+    "markdown-it": "^12.3.2"
+  }
+}

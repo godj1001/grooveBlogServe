@@ -1,0 +1,41 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,legend,button
+form,fieldset,input,textarea,p,blockquote,th,td {   
+    padding: 0;   
+    margin: 0;   
+}
+
+a{
+    text-underline-offset: none;
+}
+.page{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.sider{
+    height: 100%;
+    min-width:200px;
+    background-color: aqua;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.content{
+    height: 100%;
+    flex-grow: 1;
+    background-color: bisque;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.level-1{
+    text-indent: 10px;
+}
+.level-2{
+    text-indent: 15px;
+}
+.level-3{
+    text-indent: 20px;
+}
