@@ -148,7 +148,7 @@ async function blogServe(option) {
             }
         } else {
             const templateCode = await fs.readFileSync(templateHtmlPath);
-            let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent).replace(/blogTitle/, markdownInfo.name);
+            let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent).replace(/blogTitle/, mdNameJson[markdownInfo.name]);
             saveTransformResultForHtml(transformMarkdownPath2HtmlPath(markdownInfo.path), htmlFileContent);
         }
     }
