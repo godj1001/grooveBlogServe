@@ -141,7 +141,7 @@ async function handleMarkdownInfo(markdownInfo, sidebarCode) {
         }
     } else {
         const templateCode = await fs.readFileSync(path.join(__dirname, '../template/template.html'));
-        let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent);
+        let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent).replace(/blogTitle/, markdownInfo.name);
         saveTransformResultForHtml(transformMarkdownPath2HtmlPath(markdownInfo.path), htmlFileContent);
     }
 }
