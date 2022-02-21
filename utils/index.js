@@ -4,8 +4,6 @@ const path = require('path');
 const {execSync} = require('child_process');
 const mdNameJson = require('../sidebar.json');
 
-const siderCodeReg = new RegExp(/siderCode/);
-
 const basePath = 'http://groove-zhang.cn/';
 // input 插值
 function transformMarkdown2Html(markdownContent) {

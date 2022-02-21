@@ -3,7 +3,7 @@ const app = new Koa();
 const tool = require('./utils/index.js');
 const path = require('path');
 const {readFileSync} = require('fs');
-
+const {blogServe} = require('./blogServe');
 app.use(async ctx => {
     if (ctx.path === '/') {
         const content = await readFileSync(path.join(__dirname, '/html/about.html'));
@@ -37,7 +37,11 @@ async function init() {
     }
 }
 
-init();
+
+// init();
+blogServe({
+    location: 'http://localhost:3000/'
+});
 
 //  启动服务
 app.listen(3000);
