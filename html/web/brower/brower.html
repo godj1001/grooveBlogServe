@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <title> 浏览器 </title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="content">
+            <section>
+                <h2>为什么chrome浏览器流啤</h2>
+<p>古早时代的浏览器都是单进程浏览器，线程崩溃会引发进程崩溃，故而早起浏览器稳定性差，同时，多个页面共用进程，会产生阻塞等情况，浏览器的流畅性差，共用进程带来了资源的共享，也带来了不安全性。</p>
+<p>chrome浏览器改善了浏览器的基本结构，引入了多个进程来进行渲染。起初的进程为 主进程，渲染进程和插件进程。进程间通过IPC通信。</p>
+<ul>
+<li>主进程用于管控界面展示，用户操作以及数据存储相关（个人理解为 管理进程，用于管控多页面和浏览器相关属性）</li>
+<li>渲染进程 用于将js，css，html渲染编译成页面</li>
+<li>插件进程 用于运行插件</li>
+</ul>
+<p>此结构大大避免了因为线程崩溃而产生的浏览器崩溃情况，独立的渲染进程提高了页面的流畅性，每个页面独立的进程同事还引入了沙箱机制，保护了用户安全性。
+<img src="https://static001.geekbang.org/resource/image/cd/60/cdc9215e6c6377fc965b7fac8c3ec960.png" alt="cdc9215e6c6377fc965b7fac8c3ec960.png"></p>
+<p>随着浏览器和技术的发展，浏览器的结构也会产生变化。演化出了网络进程和GPU进程。</p>
+<ul>
+<li>网络进程用于网络资源的加载。</li>
+<li>GPU进程用于页面渲染的绘制。</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/b6/fc/b61cab529fa31301bde290813b4587fc.png" alt="b61cab529fa31301bde290813b4587fc.png"></p>
+<p>多进程的chrome浏览器带来了稳定性，流畅性和安全性，也带来了更高的资源占用率和更复杂的体系结构。</p>
+<p>chrome浏览器逐渐向操作系统中的操作系统进化，如今已经支持了诸多的应用和功能在浏览器中，未来，chrome浏览器将作为一个便携式的操作系统 。
+<img src="https://static001.geekbang.org/resource/image/32/2a/329658fe821252db47b0964037a1de2a.png" alt="329658fe821252db47b0964037a1de2a.png"></p>
+<h2>浏览器发起请求</h2>
+<p><img src="https://static001.geekbang.org/resource/image/1b/6c/1b49976aca2c700883d48d927f48986c.png" alt="1b49976aca2c700883d48d927f48986c.png"></p>
+<h2>浏览器渲染阶段到底做了什么？</h2>
+<p>由于渲染机制过于复杂，渲染模块会被划分成为很多子阶段。输入html经过许多子阶段，最终输出像素。</p>
+<p>渲染流水线可以分为以下几个子阶段：</p>
+<ul>
+<li>构建dom树</li>
+<li>样式计算</li>
+<li>布局阶段</li>
+<li>分层</li>
+<li>绘制</li>
+<li>分块</li>
+<li>光栅化</li>
+<li>合成</li>
+</ul>
+<h3>构建dom树</h3>
+<p>浏览器是无法直接理解和使用html，所以讲html转化为浏览器能够理解的结构——dom树</p>
+<h3>样式计算</h3>
+<p>样式计算的目的是为了计算出dom节点中每个元素的具体样式，这个阶段答题可分为三步来完成。</p>
+<ol>
+<li>把css转换为浏览器能理解的结构</li>
+</ol>
+<p>和 HTML 文件一样，浏览器也是无法直接理解这些纯文本的 CSS 样式，当渲染引擎接收到 CSS 文本时，会执行一个转换操作，将 CSS 文本转换为浏览器可以理解的结构——styleSheets。并且该结构同时具备了查询和修改功能，这会为后面的样式操作提供基础。</p>
+<ol start="2">
+<li>转换样式表中的属性值，使其标准化
+比如red，2em等属性转换为渲染引擎容易理解的，标准化的计算值。</li>
+<li>计算出dom树中每个节点的具体样式</li>
+</ol>
+<h3>布局阶段</h3>
+<p>计算出dom树中可见元素的几何位置。
+chrome在布局阶段需要完成两个任务：创建布局树和布局计算</p>
+<ol>
+<li>
+<p>创建布局树
+在显示之前，我们还要额外的构建一颗质保函可见元素布局树。
+为了构建布局树，浏览器大体上完成了这些工作：
+遍历dom树中的所有可见节点，并且添加到布局树中；
+不可见的节点会被布局树忽略掉，如head标签下面的全部内容。</p>
+</li>
+<li>
+<p>布局计算</p>
+</li>
+</ol>
+<h3>分层阶段</h3>
+<p>有了布局树和元素的具体位置。
+渲染引擎还需要为特定的节点生成专属的图层，并生成一颗对应的图层树。
+浏览器的页面实际上被分成了很多图层，这些图层叠加后合成了最终的页面。
+并不是布局树的每个节点都包含一个图层，如果一个节点没有对应的层，那么这个节点就从属父节点的图层。</p>
+<h3>图层绘制</h3>
+<p>在完成图层树的构建之后，渲染引擎会对图层树中的每个图层进行绘制。
+绘制会分成很多指令，然后流水线执行。</p>
+<h3>栅格化操作</h3>
+<p>绘制列表知识用来记录绘制顺序和绘制指令的列表，而实际上的绘制操作是由渲染引擎的合成线程来完成的。
+合成线程会将图层划分为图块。
+和城县城会按照视口附近的图块来有限生成位图，实际生成位图的草最是由栅格化来执行的。栅格化是指将图块转化为位图。</p>
+<p><img src="https://static001.geekbang.org/resource/image/d8/20/d8d77356211e12b47bb9f508e2db8520.png" alt="a8d954cd8e4722ee03d14afaa14c3987.png"></p>
+<h3>合成和显示</h3>
+<p>所有的图片都被光栅化，和城县城就会生成一个绘制图块的命令，然后提交到浏览器中。浏览器将页面内容绘制在内存中，将内存显示在屏幕上。<img src="https://static001.geekbang.org/resource/image/97/37/975fcbf7f83cc20d216f3d68a85d0f37.png" alt="975fcbf7f83cc20d216f3d68a85d0f37.png"></p>
+<h2>更底层的理解重排重绘<img src="https://static001.geekbang.org/resource/image/3c/03/3c1b7310648cccbf6aa4a42ad0202b03.png" alt="3c1b7310648cccbf6aa4a42ad0202b03.png"></h2>
+<p><img src="https://static001.geekbang.org/resource/image/02/2c/024bf6c83b8146d267f476555d953a2c.png" alt="b3ed565230fe4f5c1886304a8ff754e5.png"></p>
+<h2>JavaScript代码的执行顺序</h2>
+<p><img src="https://static001.geekbang.org/resource/image/64/1e/649c6e3b5509ffd40e13ce9c91b3d91e.png" alt="649c6e3b5509ffd40e13ce9c91b3d91e.png"></p>
+<p>经过编译，会生成两个部分内容： 执行上下文 和 可执行代码、
+执行上下文是js执行一段代码的运行环境，比如调用一个函数，就会进入这个函数的执行上下文，确定该函数在执行期间用到的诸如this。变量，对象以及函数等。</p>
+<p>执行阶段：
+后面就会按一行一行执行。</p>
+<h2>调用栈</h2>
+<p>调用栈就是用来管理函数调用关系的一种数据结构。
+js引擎正式利用栈的这种结构来管理执行上下文的，在执行上下文创建好后，js引擎会将执行上下压入栈中，通常把这种管理执行上下文的栈成为执行上下文栈。</p>
+<p>调用栈是js殷勤追踪函数执行的一个机制。</p>
+<h2>垃圾回收</h2>
+<p>调用栈的数据 会因为上下文退出运行环境而被回收</p>
+<p>代际假说：有两个特点： 默认大部分对象在内存中存在的时间都很短。一部分对象是不死对象。</p>
+<p>V8会把堆分成新生代和老生带两个区域，新生代存放生存时间短的对象，老生带会存放生存时间长的对象。</p>
+<p>新生区通常只支持 1～8M 的容量，而老生区支持的容量就大很多了。</p>
+<p>对于这两块区域，V8 分别使用两个不同的垃圾回收器，以便更高效地实施垃圾回收。副垃圾回收器，主要负责新生代的垃圾回收。主垃圾回收器，主要负责老生代的垃圾回收。</p>
+<h3>垃圾回收器的工作流程</h3>
+<p>不论什么类型的垃圾回收器，他们都有一套共同的执行流程</p>
+<p>第一步 标记空间中活动对象和非活动对象。
+第二部 是回收非活动对象的内存，其实就是在所有标记完成之后，统一清理内存中所有被标记可回收的对象
+第三部 内存整理，整理不连续的内存空间。</p>
+<p>因为新生代中存放的都是短生命的对象，所以需要频繁的清理。故而 新生代的空间会被设置的比较小。
+既然小了，那么如何才能保证新生代区域正常运行。
+它是使用了scavenge算法。将新生代分为 空白区和 对象区。 当对象区快要被填满时，进行清理，并且覆盖到空白区，这样就保证了一半的领域会一直处于空白区。</p>
+<p>同事 还有对象晋升策略。经过两次垃圾回收依然存活的对象会被移动到老生区 。</p>
+<h4>主垃圾回收器</h4>
+<p>主垃圾回收器主要负责老生区中的垃圾回收。除了新生区晋升的，一些大的对象会被直接分到老生区。老生区的对象有两个特点。一个是对象占空间大，另一个是存活时间长。</p>
+<p>主垃圾回收器 是采标记-清除的算法进行垃圾回收的。
+首先是标记过程。标记阶段就是从一组根元素开始，递归遍历这组根元素，在这个遍历过程中，能到达的元素成为活动对象，没有到达的就是垃圾数据了。
+对一块内存多次执行标记-清除算法后，会产生大量不连续的内存碎片。内存碎片过多会导致大对象无法分配到足够的内存，所有 产生了另一种算法 标记-整理。</p>
+<h4>全停顿</h4>
+<p>现在你知道了 V8 是使用副垃圾回收器和主垃圾回收器处理垃圾回收的，不过由于 JavaScript 是运行在主线程之上的，一旦执行垃圾回收算法，都需要将正在执行的 JavaScript 脚本暂停下来，待垃圾回收完毕后再恢复脚本执行。我们把这种行为叫做全停顿（Stop-The-World）。
+为了降低老生代的垃圾回收而造成的卡顿，V8 将标记过程分为一个个的子标记过程，同时让垃圾回收标记和 JavaScript 应用逻辑交替进行，直到标记阶段完成，我们把这个算法称为增量标记（Incremental Marking）算法。如下图所示：<img src="evernotecid://90F23ACD-810D-4622-B4D4-D8A110081DA1/appyinxiangcom/21617950/ENResource/p76" alt="de117fc96ae425ed90366e9060aa14e7.png">
+使用增量标记算法，可以把一个完整的垃圾回收任务拆分为很多小的任务，这些小的任务执行时间比较短，可以穿插在其他的 JavaScript 任务中间执行，这样当执行上述动画效果时，就不会让用户因为垃圾回收任务而感受到页面的卡顿了</p>
+<h3>消息队列和事件循环</h3>
+<p>如果有一些确定好的任务，可以使用一个单线程来按照顺序处理这些任务，这是第一版线程模型。要在线程执行过程中接收并处理新的任务，就需要引入循环语句和事件系统，这是第二版线程模型。如果要接收其他线程发送过来的任务，就需要引入消息队列，这是第三版线程模型。如果其他进程想要发送任务给页面主线程，那么先通过 IPC 把任务发送给渲染进程的 IO 线程，IO 线程再把任务发送给页面主线程。消息队列机制并不是太灵活，为了适应效率和实时性，引入了微任务。</p>
+<h3>为什么css动画比js高效</h3>
+<h4>显示器是怎么显示图像的</h4>
+<p>每个显示器都有固定的刷新频率，通常是 60HZ，也就是每秒更新 60 张图片，更新的图片都来自于显卡中一个叫前缓冲区的地方，显示器所做的任务很简单，就是每秒固定读取 60 次前缓冲区中的图像，并将读取的图像显示到显示器上。</p>
+<h4>显卡做了什么</h4>
+<p>显卡的职责是合成新的图像，并将图像保存到后缓冲区中，一旦显卡把合成的图像写到后缓冲区，系统就会让后缓冲区和前缓冲区互换。</p>
+<p>如果在一次动画过程中，渲染引擎生成某些帧的时间过久，那么用户就会感受到卡顿，这会给用户造成非常不好的印象。要解决卡顿问题，就要解决每帧生成时间过久的问题，为此 Chrome 对浏览器渲染方式做了大量的工作，其中最卓有成效的策略就是引入了分层和合成机制。分层和合成机制代表了当今最先进的渲染技术，所以接下来我们就来分析下什么是合成和渲染技术</p>
+<h3>帧图像</h3>
+<h4>分层</h4>
+<p>关于其中任意一帧的生成方式，有重排、重绘和合成三种方式。这三种方式的渲染路径是不同的，通常渲染路径越长，生成图像花费的时间就越多。比如重排，它需要重新根据 CSSOM 和 DOM 来计算布局树，这样生成一幅图片时，会让整个渲染流水线的每个阶段都执行一遍，如果布局复杂的话，就很难保证渲染的效率了。而重绘因为没有了重新布局的阶段，操作效率稍微高点，但是依然需要重新计算绘制信息，并触发绘制操作之后的一系列操作。</p>
+<p>相较于重排和重绘，合成操作的路径就显得非常短了，并不需要触发布局和绘制两个阶段，如果采用了 GPU，那么合成的效率会非常高。
+为了提升每帧的渲染效率，Chrome 引入了分层和合成的机制。那该怎么来理解分层和合成机制呢？</p>
+<p>在这个过程中，将素材分解为多个图层的操作就称为分层，最后将这些图层合并到一起的操作就称为合成。所以，分层和合成通常是一起使用的。</p>
+<p>需要重点关注的是，合成操作是在合成线程上完成的，这也就意味着在执行合成操作时，是不会影响到主线程执行的。</p>
+<h4>分块</h4>
+<p>如果说分层是从宏观上提升了渲染效率，那么分块则是从微观层面提升了渲染效率。</p>
+<p>通常情况下，页面的内容都要比屏幕大得多，显示一个页面时，如果等待所有的图层都生成完毕，再进行合成的话，会产生一些不必要的开销，也会让合成图片的时间变得更久。</p>
+<p>即使只绘制那些优先级最高的图块，也要耗费不少的时间，因为涉及到一个很关键的因素——纹理上传，这是因为从计算机内存上传到 GPU 内存的操作会比较慢。</p>
+<p>为了解决这个问题，Chrome 又采取了一个策略：在首次合成图块的时候使用一个低分辨率的图片</p>
+<h4>will-change</h4>
+<p>这个属性是我最近才知道的。原来它就是使用了分层的这个块优化。使用will-change来告诉渲染引擎会对该元素做一些特效变化。</p>
+<pre><code class="language-css">.box {
+    will-change: transform, opacity;
+}
+</code></pre>
+<p>这段代码就是提前告诉渲染引擎 box 元素将要做几何变换和透明度变换操作，这时候渲染引擎会将该元素单独实现一帧，等这些变换发生时，渲染引擎会通过合成线程直接去处理变换，这些变换并没有涉及到主线程，这样就大大提升了渲染的效率。这也是 CSS 动画比 JavaScript 动画高效的原因.</p>
+<p>如果涉及到一些可以使用合成线程来处理 CSS 特效或者动画的情况，就尽量使用 will-change 来提前告诉渲染引擎，让它为该元素准备独立的层。但是凡事都有两面性，每当渲染引擎为一个元素准备一个独立层的时候，它占用的内存也会大大增加，因为从层树开始，后续每个阶段都会多一个层结构，这些都需要额外的内存，所以你需要恰当地使用 will-change。</p>
+<h3>虚拟dom</h3>
+<p>首先渲染引擎会将 node 节点添加到 body 节点之上，然后触发样式计算、布局、绘制、栅格化、合成等任务，我们把这一过程称为重排。除了重排之外，还有可能引起重绘或者合成操作，形象地理解就是“牵一发而动全身”。另外，对于 DOM 的不当操作还有可能引发强制同步布局和布局抖动的问题，这些操作都会大大降低渲染效率。因此，对于 DOM 的操作我们时刻都需要非常小心谨慎。</p>
+<h4>什么是虚拟dom</h4>
+<p>虚拟dom到底在解决什么问题？</p>
+<ul>
+<li>页面改变的内容应用到虚拟dom上，而不是直接应用到dom上</li>
+<li>变化被应用到虚拟dom上时，虚拟dom并不着急去渲染页面，而仅仅是调整虚拟dom的内部状态，这样操作虚拟dom 的代价就变得非常轻了。</li>
+<li>虚拟dom收集到足够的改变时，再把这些变化压缩 再更新到真实的dom上。</li>
+</ul>
+<p><img src="https://static001.geekbang.org/resource/image/cf/90/cf2089ad62af94881757c2f2de277890.png" alt="cf2089ad62af94881757c2f2de277890.png"></p>
+<p>创建阶段。首先依据 JSX 和基础数据创建出来虚拟 DOM，它反映了真实的 DOM 树的结构。然后由虚拟 DOM 树创建出真实 DOM 树，真实的 DOM 树生成完后，再触发渲染流水线往屏幕输出页面。</p>
+<p>更新阶段。如果数据发生了改变，那么就需要根据新的数据创建一个新的虚拟 DOM 树；然后 React 比较两个树，找出变化的地方，并把变化的地方一次性更新到真实的 DOM 树上；最后渲染引擎更新渲染流水线，并生成新的页面。</p>
+<p>当有数据更新时，React 会生成一个新的虚拟 DOM，然后拿新的虚拟 DOM 和之前的虚拟 DOM 进行比较，这个过程会找出变化的节点，然后再将变化的节点应用到 DOM 上。</p>
+<h3>网络</h3>
+<h4>如何提高网络速度</h4>
+<p>在http1.1中 为网络效率做了大量的优化，核心的有：</p>
+<ul>
+<li>增加持久连接</li>
+<li>为每个域名最多同时维护6个tcp持久链接</li>
+<li>使用cdn的实现域名分片机制</li>
+</ul>
+<h3>安全</h3>
+<h4>csp</h4>
+<p>csp 内容安全策略
+csp的主要目标是减少和报告xss攻击，xss攻击利用了浏览器对于从服务器所获取的内容的信任。恶意脚本在受害者的浏览器中得以运行，因为浏览器信任其内容来源。</p>
+<p>使用csp
+配置csp涉及到添加 Content-Security-Policy  HTTP头部到一个页面，并配置相应的值，以控制用户代理（浏览器等）可以为该页面获取哪些资源</p>
+<h4>xss跨站脚本攻击</h4>
+<p>csp通过指定有效域--即浏览器认可的可执行脚本的有效来源  是服务器管理者有能力减少和消除xss攻击所依赖的载体。</p>
+<h4>数据包嗅探攻击</h4>
+<p>除了限制可加载内容的域，服务器还可以指明哪种协议允许使用；比如 服务端可以指定所有内容必须通过https加载。</p>
+
+            </section>
+        </div>
+    </div>
+</body>
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    code {
+        margin: 30px 2px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)'
+            }
+        }
+    })
+</script>
+
+</html>

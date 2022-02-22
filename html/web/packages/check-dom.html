@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <title> 检查元素是否在页面上 </title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="content">
+            <section>
+                <h2>背景</h2>
+<p>最近，产品提了一个需求，一个元素暴露在用户的页面上就上报数据。听上去还是蛮容易的，说起来就直接撸。</p>
+<h2>思路</h2>
+<p>判断元素的滚动和视图的展示区域的关系就能判断是否展示在屏幕中了。</p>
+<h2>实现</h2>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4e6cb7ccdbb45b6be96cf4e791f665b~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>首先，补一下基础概念。</p>
+<p>如何判断元素展示在页面上呢？</p>
+<pre><code class="language-javascript"> /**
+  * @description 判断元素是否在父元素中展示
+  * @param childBoxScrollTop {Number} 子元素滚动顶部
+  * @param childBoxScrollBottom {Number} 子元素滚动底部
+  * @param rootClientHeight {Number} 父元素展示高度
+  * @param rootScrollTop {Number} 父元素滚动距离
+  * @return {Boolean}
+  */
+export const checkExpose = (childBoxScrollTop,childBoxScrollBottom,rootClientHeight,rootScrollTop) =&gt; {
+  if (childBoxScrollBottom &lt; rootScrollTop){
+    return false
+  }
+  if (childBoxScrollTop&lt;rootScrollTop+rootClientHeight){
+    return true
+  }
+  return false
+}
+</code></pre>
+<p>检测 子元素盒子的滚动顶部和底部 和 父元素展示的视口距离 相关的关系就可以判断了。</p>
+<p>现在已经能拿到元素是否展示在视图中了。
+接下来 监听父元素滚动，进行元素判断就能拿到了元素的展示情况。</p>
+<pre><code class="language-javascript">root.addEventListener('scroll',(e) =&gt; { 
+      for (let child of newChildren){
+        let expose = checkExpose(child.scrollTop,child.scrollBottom,root.clientHeight,root.scrollTop,root.offsetTop)
+        if (child.expose !== expose){
+          child.expose = expose
+        }
+      }
+  })
+</code></pre>
+<p>大家都知道滚动事件触发的非常多，进行非常多的判断会出现性能问题。所以加一个节流就可以缓解一下这个问题,装一下，自己抛出个自定义事件。</p>
+<pre><code>  let fn = throttle()
+  root.addEventListener('scroll',(e) =&gt; {
+    fn(() =&gt; {
+      for (let child of newChildren){
+        let expose = checkExpose(child.scrollTop,child.scrollBottom,root.clientHeight,root.scrollTop,root.offsetTop)
+        if (child.expose !== expose){
+          window.dispatchEvent(new CustomEvent('domExpose',{
+            'detail': {
+              element: child,
+              domExpose: expose
+            },
+            bubbles: false,
+            cancelable: false
+          }))
+          child.expose = expose
+        }
+      }
+    })
+  })
+</code></pre>
+<p>在调用的地方进行一个监听</p>
+<pre><code>window.addEventListener('domExpose',(e) =&gt; {
+   console.log(e.detail)
+})
+</code></pre>
+<h2>结论</h2>
+<p>到这里，这个功能基本就ok了，当然非常的粗糙，横向判断啊，父元素被隐藏了怎么判断这些问题都是没有考虑的。最后打包，npm，github走一波。</p>
+<pre><code>yarn add check-dom-expose
+</code></pre>
+<p><a href="https://github.com/godj1001/check-dom-expose">github</a></p>
+<h2>最终</h2>
+<p>产品啊，这个需求不好做，需要两天时间啊</p>
+
+            </section>
+        </div>
+    </div>
+</body>
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    code {
+        margin: 30px 2px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)'
+            }
+        }
+    })
+</script>
+
+</html>

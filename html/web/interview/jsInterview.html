@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <title> undefined </title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="content">
+            <section>
+                <h1>经典前端面试题目</h1>
+<h2>js 基本类型</h2>
+<ol>
+<li>简单类型
+<ul>
+<li>null</li>
+<li>undefined</li>
+<li>string</li>
+<li>number</li>
+<li>boolean</li>
+<li>object</li>
+<li>symbol[es6]</li>
+<li>bigInt[es10]</li>
+</ul>
+</li>
+<li>复杂类型
+<ul>
+<li>function</li>
+<li>array</li>
+</ul>
+</li>
+</ol>
+<h2>什么是原型链</h2>
+<p>js的对象继承是依靠原型链来实现的。</p>
+<p>那么什么是原型链。</p>
+<blockquote>
+<p>每个构造函数(constructor)都有一个原型对象(prototype),原型对象都包含一个指向构造函数的指针,而实例(instance)都包含一个指向原型对象的内部指针.</p>
+</blockquote>
+<h2>Object.create(null) 和 {} 创建对象的区别</h2>
+<p>创建对象的方法：</p>
+<pre><code>const obj = {};
+const obj2 = Object.create(null);
+const obj3 = new Object();
+</code></pre>
+<h3>{} 和 new Object()</h3>
+<p>{} 和 new Object() 使用效果一样。</p>
+<p>都会继承object，具有原型方法。</p>
+<h3>Object.create(null)</h3>
+<p>要想创建一个干净的空对象，应该使用Object.create(null)。</p>
+<p>通过做Object.create(null). 可以显示指定null作为原型，没有多余属性，甚至没有构造函数，头ST日你锅，hasOwnProperty属性。</p>
+<h2>闭包</h2>
+<p>闭包是指有权访问另一个函数作用域中的变量的函数。</p>
+<p>当函数可以记住病房问所在的词法作用域时，就会产生闭包。</p>
+<p>闭包的作用：</p>
+<ul>
+<li>能够访问函数定义所在的词法作用。</li>
+<li>私有化变量</li>
+<li>模拟块级作用域</li>
+<li>创建模块</li>
+</ul>
+<p>缺点： 闭包产生的变量会一直保存在内存中，影响性能。不正确的使用闭包可能还会导致内存泄露。</p>
+
+            </section>
+        </div>
+    </div>
+</body>
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    code {
+        margin: 30px 2px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)'
+            }
+        }
+    })
+</script>
+
+</html>

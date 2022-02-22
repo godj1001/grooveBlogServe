@@ -40,8 +40,9 @@ async function init() {
 
 // init();
 blogServe({
-    location: 'http://localhost:3000/'
+    // location: 'http://localhost:3000/'
 });
 
 //  启动服务
 app.listen(3000);
+console.log('serve is open in 3000');

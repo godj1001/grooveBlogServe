@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <title> 网络协议 - DNS </title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="content">
+            <section>
+                <h1>dns</h1>
+<h2>dns是什么？</h2>
+<p>dns【Domain Name System】域名系统，是互联网的一项服务,是应用层协议。负责将域名和IP地址相互映射的一个分布式数据库。若是没有找到则会向上继续寻找，直到找到最顶级的服务器。</p>
+<h2>用途</h2>
+<p>例如 <code>www.baidu.com</code>,我们能清晰的记住他的网址，若是换成了 IP 地址则会大大增加了记忆成本。</p>
+<h2>dns解析</h2>
+<p>已经知道了dns是什么了。那么dns到底是如何工作的呢？</p>
+<h3>域名解析</h3>
+<p>dns的核心是一个树状的分布式服务。</p>
+<ul>
+<li>根域名服务器（Root DNS Server）：管理顶级域名服务器，返回“com”“net”“cn”等顶级域名服务器的 IP 地址</li>
+<li>顶级域名服务器（Top-level DNS Server）：管理各自域名下的权威域名服务器，比如 com 顶级域名服务器可以返回 apple.com 域名服务器的 IP 地址</li>
+<li>权威域名服务器（Authoritative DNS Server）：管理自己域名下主机的 IP 地址</li>
+</ul>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7171cbec7a2049fbab0a9556e5824938~tplv-k3u1fbpfcp-watermark.awebp" alt="dns"></p>
+<p>若是我们使用dns查询某域名时，分以下几个步骤：</p>
+<ol>
+<li>本地host文件</li>
+<li>本地dns解析</li>
+<li>dns服务器缓存</li>
+<li>dns服务器递归查找</li>
+</ol>
+<h3>本地host文件</h3>
+<p>如果大家改过host文件就能知道，host文件内可以配置域名和ip的对应。这个是第一优先级的，因为可能会被修改。</p>
+<h3>本地DNS缓存</h3>
+<p>为了防止每次都要去向最顶级的服务器查找，所以存在一种设备，叫做缓存域名服务器。当然这是外部设备，在本地也会留有缓存，可以方便查询。</p>
+<h3>DNS服务器缓存</h3>
+<p>每个在网络连接的设备都会有一个dns服务器相对应，若是访问某个从未访问过的网站，那么本地肯定是没有任何缓存记录的。这时候就需要向dns服务器缓存询问。</p>
+<h3>DNS服务器递归查找</h3>
+<p>那么若是dns服务器也没有这么偏僻的域名呢？例如 <code>http://groove-zhang.cn</code> 这样不知名的小网站呢？那就可以通过dns服务器递归查找的方式来找到。</p>
+<ol>
+<li>询问根域名，获取顶级域名 .cn 是中国国内域名。</li>
+<li>询问顶级域名，获取二级域名 groove-zhang.cn 需要在域名网站上进行注册，肯定是有所地址记录的。</li>
+<li>最后，将<code>http://groove-zhang.cn</code>的ip地址返回给用户，并且缓存</li>
+<li>用户获取到真正的ip地址，并且缓存</li>
+</ol>
+<h2>为什么选择使用UDP来发送DNS请求</h2>
+<p>UDP和TCP的特性和区别这边就不多说，主要说为什么选择UDP。</p>
+<p>在网络通信过程中，衡量快慢的指标是时间。那么从速度上来说UDP就比TCP要快一些，不仅传输不需要建立连接，传输的内容上也要小。</p>
+<p>当然，udp的缺点就是不保证完整和稳定，在dns的标准协议中，还要求若是udp失败了则需要使用tcp来进行dns协议请求。</p>
+<h2>总结</h2>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/471eba305be24253a89adfb053addd10~tplv-k3u1fbpfcp-watermark.awebp" alt="dns"></p>
+
+            </section>
+        </div>
+    </div>
+</body>
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    code {
+        margin: 30px 2px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)'
+            }
+        }
+    })
+</script>
+
+</html>
