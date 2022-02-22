@@ -11,7 +11,7 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider"> <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
         <div class="content">
             <section>
                 <h1>跨域问题相关</h1>
@@ -82,40 +82,40 @@ b. 有此头：值为一下
 jsonp请求一定需要对方服务器支持才行。</p>
 </li>
 </ul>
-<pre><code class="language-javascript">function jsonp({ url, params, callback }) {
-  return new Promise((resolve, reject) =&gt; {
-    let script = document.createElement('script')
-    window[callback] = function(data) {
-      resolve(data)
-      document.body.removeChild(script)
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">jsonp</span>(<span class="hljs-params">{ url, params, callback }</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-keyword">let</span> script = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>)
+    <span class="hljs-variable language_">window</span>[callback] = <span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) {
+      <span class="hljs-title function_">resolve</span>(data)
+      <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">removeChild</span>(script)
     }
-    params = { ...params, callback } // wd=b&amp;callback=show
-    let arrs = []
-    for (let key in params) {
-      arrs.push(`${key}=${params[key]}`)
+    params = { ...params, callback } <span class="hljs-comment">// wd=b&amp;callback=show</span>
+    <span class="hljs-keyword">let</span> arrs = []
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> params) {
+      arrs.<span class="hljs-title function_">push</span>(<span class="hljs-string">`<span class="hljs-subst">${key}</span>=<span class="hljs-subst">${params[key]}</span>`</span>)
     }
-    script.src = `${url}?${arrs.join('&amp;')}`
-    document.body.appendChild(script)
+    script.<span class="hljs-property">src</span> = <span class="hljs-string">`<span class="hljs-subst">${url}</span>?<span class="hljs-subst">${arrs.join(<span class="hljs-string">&#x27;&amp;&#x27;</span>)}</span>`</span>
+    <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(script)
   })
 }
-jsonp({
-  url: 'http://localhost:3000/say',
-  params: { wd: 'Iloveyou' },
-  callback: 'show'
-}).then(data =&gt; {
-  console.log(data)
+<span class="hljs-title function_">jsonp</span>({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;http://localhost:3000/say&#x27;</span>,
+  <span class="hljs-attr">params</span>: { <span class="hljs-attr">wd</span>: <span class="hljs-string">&#x27;Iloveyou&#x27;</span> },
+  <span class="hljs-attr">callback</span>: <span class="hljs-string">&#x27;show&#x27;</span>
+}).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)
 })
 
-// server.js
-let express = require('express')
-let app = express()
-app.get('/say', function(req, res) {
-  let { wd, callback } = req.query
-  console.log(wd) // Iloveyou
-  console.log(callback) // show
-  res.end(`${callback}('我不爱你')`)
+<span class="hljs-comment">// server.js</span>
+<span class="hljs-keyword">let</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>)
+<span class="hljs-keyword">let</span> app = <span class="hljs-title function_">express</span>()
+app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/say&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) {
+  <span class="hljs-keyword">let</span> { wd, callback } = req.<span class="hljs-property">query</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(wd) <span class="hljs-comment">// Iloveyou</span>
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(callback) <span class="hljs-comment">// show</span>
+  res.<span class="hljs-title function_">end</span>(<span class="hljs-string">`<span class="hljs-subst">${callback}</span>(&#x27;我不爱你&#x27;)`</span>)
 })
-app.listen(3000)
+app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>)
 
 </code></pre>
 <ul>
@@ -184,6 +184,14 @@ app.listen(3000)
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
     }
 
     .page {

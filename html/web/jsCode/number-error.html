@@ -11,7 +11,7 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider"> <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
         <div class="content">
             <section>
                 <h2>为什么js中 0.1 + 0.2 != 0.3</h2>
@@ -19,7 +19,7 @@
 <p>一个老生常谈的问题</p>
 </blockquote>
 <h3>背景</h3>
-<pre><code class="language-javascript">0.1 + 0.2 != 0.3
+<pre><code class="language-javascript"><span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span> != <span class="hljs-number">0.3</span>
 </code></pre>
 <p>第一次知道时，我简直震惊，why？</p>
 <p>原来js这门编程语言是采用的IEEE 754 双精度版本（64位）.</p>
@@ -29,11 +29,11 @@
 <p>所有采用IEEE 754的语言都会产生该问题、</p>
 <p>那么究竟是为什么呢？</p>
 <p>那就要从小数转成二进制来说了</p>
-<pre><code class="language-javascript">// 0.125  十进制 -&gt; 二进制
-0.125 * 2 = 0.25  //取0
-0.25 * 2 = 0.5    //取0
-0.5 * 2 = 1       //取1
-// 0.001 (0.125 的二进制)
+<pre><code class="language-javascript"><span class="hljs-comment">// 0.125  十进制 -&gt; 二进制</span>
+<span class="hljs-number">0.125</span> * <span class="hljs-number">2</span> = <span class="hljs-number">0.25</span>  <span class="hljs-comment">//取0</span>
+<span class="hljs-number">0.25</span> * <span class="hljs-number">2</span> = <span class="hljs-number">0.5</span>    <span class="hljs-comment">//取0</span>
+<span class="hljs-number">0.5</span> * <span class="hljs-number">2</span> = <span class="hljs-number">1</span>       <span class="hljs-comment">//取1</span>
+<span class="hljs-comment">// 0.001 (0.125 的二进制)</span>
 </code></pre>
 <p>小数转换成二进制就是通过不断乘2来判断二进制位是0还是1。
 通过这样的方法，就可以获取小数的二进制。</p>
@@ -93,6 +93,14 @@
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
     }
 
     .page {

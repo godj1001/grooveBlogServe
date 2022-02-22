@@ -11,7 +11,7 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider"> <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
         <div class="content">
             <section>
                 <h2>背景</h2>
@@ -22,32 +22,32 @@
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4e6cb7ccdbb45b6be96cf4e791f665b~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
 <p>首先，补一下基础概念。</p>
 <p>如何判断元素展示在页面上呢？</p>
-<pre><code class="language-javascript"> /**
-  * @description 判断元素是否在父元素中展示
-  * @param childBoxScrollTop {Number} 子元素滚动顶部
-  * @param childBoxScrollBottom {Number} 子元素滚动底部
-  * @param rootClientHeight {Number} 父元素展示高度
-  * @param rootScrollTop {Number} 父元素滚动距离
-  * @return {Boolean}
-  */
-export const checkExpose = (childBoxScrollTop,childBoxScrollBottom,rootClientHeight,rootScrollTop) =&gt; {
-  if (childBoxScrollBottom &lt; rootScrollTop){
-    return false
+<pre><code class="language-javascript"> <span class="hljs-comment">/**
+  * <span class="hljs-doctag">@description</span> 判断元素是否在父元素中展示
+  * <span class="hljs-doctag">@param</span> childBoxScrollTop {Number} 子元素滚动顶部
+  * <span class="hljs-doctag">@param</span> childBoxScrollBottom {Number} 子元素滚动底部
+  * <span class="hljs-doctag">@param</span> rootClientHeight {Number} 父元素展示高度
+  * <span class="hljs-doctag">@param</span> rootScrollTop {Number} 父元素滚动距离
+  * <span class="hljs-doctag">@return</span> {<span class="hljs-type">Boolean</span>}
+  */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">checkExpose</span> = (<span class="hljs-params">childBoxScrollTop,childBoxScrollBottom,rootClientHeight,rootScrollTop</span>) =&gt; {
+  <span class="hljs-keyword">if</span> (childBoxScrollBottom &lt; rootScrollTop){
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
   }
-  if (childBoxScrollTop&lt;rootScrollTop+rootClientHeight){
-    return true
+  <span class="hljs-keyword">if</span> (childBoxScrollTop&lt;rootScrollTop+rootClientHeight){
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
   }
-  return false
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
 }
 </code></pre>
 <p>检测 子元素盒子的滚动顶部和底部 和 父元素展示的视口距离 相关的关系就可以判断了。</p>
 <p>现在已经能拿到元素是否展示在视图中了。
 接下来 监听父元素滚动，进行元素判断就能拿到了元素的展示情况。</p>
-<pre><code class="language-javascript">root.addEventListener('scroll',(e) =&gt; { 
-      for (let child of newChildren){
-        let expose = checkExpose(child.scrollTop,child.scrollBottom,root.clientHeight,root.scrollTop,root.offsetTop)
-        if (child.expose !== expose){
-          child.expose = expose
+<pre><code class="language-javascript">root.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;scroll&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> { 
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> child <span class="hljs-keyword">of</span> newChildren){
+        <span class="hljs-keyword">let</span> expose = <span class="hljs-title function_">checkExpose</span>(child.<span class="hljs-property">scrollTop</span>,child.<span class="hljs-property">scrollBottom</span>,root.<span class="hljs-property">clientHeight</span>,root.<span class="hljs-property">scrollTop</span>,root.<span class="hljs-property">offsetTop</span>)
+        <span class="hljs-keyword">if</span> (child.<span class="hljs-property">expose</span> !== expose){
+          child.<span class="hljs-property">expose</span> = expose
         }
       }
   })
@@ -132,6 +132,14 @@ export const checkExpose = (childBoxScrollTop,childBoxScrollBottom,rootClientHei
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
     }
 
     .page {

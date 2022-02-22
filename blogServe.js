@@ -2,11 +2,13 @@ const MarkdownIt = require('markdown-it');
 const fs = require('fs');
 const path = require('path');
 const {execSync} = require('child_process');
+const hljs = require('highlight.js');
 const defautOptions = {
     markdownFilePath: path.join(__dirname, './markdown'),
     htmlOutputPath: path.join(__dirname, './html'),
     templateHtmlPath: path.join(__dirname, './template/template.html'),
     ossPath: '',
+    homePagePath: '',
     transformPath: path.join(__dirname, './sidebar.json'),
     location: 'http://groove-zhang.cn/'
 };
@@ -24,7 +26,16 @@ async function blogServe(option) {
 
     function transformMarkdown2Html(markdownContent) {
         let renderCore = new MarkdownIt({
-            html: true
+            html: true,
+            highlight: function (str, lang = 'javascript') {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {
+                        return hljs.highlight(str, {language: lang}).value;
+                    } catch (__) { }
+                }
+
+                return '';
+            }
         });
         return renderCore.render(markdownContent);
     }

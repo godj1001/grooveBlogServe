@@ -11,7 +11,7 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider"> <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
         <div class="content">
             <section>
                 <h2>什么是设计模式？</h2>
@@ -30,54 +30,54 @@
 </blockquote>
 <p>举个例子，我们的页面会有很多的播放小组件，我们期望的是一个音频播放，其他音频都停止。那么我们可以使用单例，让所有的播放组件的播放功能都是同一个class的实例，然后在这个class的实例中进行控制，那么就很容易了。</p>
 <pre><code class="language-javascript">
-/**
+<span class="hljs-comment">/**
  * audio
- */
-class Audio {
-  static instance
-  constructor() {
-    if (Audio.instance){
-      return Audio.instance
-    }else {
-      this.src = ''
-      this.isPlaying = false
-      Audio.instance = this
+ */</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Audio</span> {
+  <span class="hljs-keyword">static</span> instance
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Audio</span>.<span class="hljs-property">instance</span>){
+      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Audio</span>.<span class="hljs-property">instance</span>
+    }<span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">src</span> = <span class="hljs-string">&#x27;&#x27;</span>
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">isPlaying</span> = <span class="hljs-literal">false</span>
+      <span class="hljs-title class_">Audio</span>.<span class="hljs-property">instance</span> = <span class="hljs-variable language_">this</span>
     }
   }
 
-  start(src){
-    this.src = src
-    this.isPlaying = true
-    // ....
+  <span class="hljs-title function_">start</span>(<span class="hljs-params">src</span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">src</span> = src
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isPlaying</span> = <span class="hljs-literal">true</span>
+    <span class="hljs-comment">// ....</span>
   }
 
-  pause(){
-    this.isPlaying = false
+  <span class="hljs-title function_">pause</span>(<span class="hljs-params"></span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isPlaying</span> = <span class="hljs-literal">false</span>
   }
-  stop(){
-    this.src = ''
-    this.isPlaying = false
+  <span class="hljs-title function_">stop</span>(<span class="hljs-params"></span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">src</span> = <span class="hljs-string">&#x27;&#x27;</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">isPlaying</span> = <span class="hljs-literal">false</span>
   }
 }
-let audioOne = new Audio()
-let audioTwe = new Audio()
-console.log(audioOne === audioTwe) // true
+<span class="hljs-keyword">let</span> audioOne = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Audio</span>()
+<span class="hljs-keyword">let</span> audioTwe = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Audio</span>()
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(audioOne === audioTwe) <span class="hljs-comment">// true</span>
 </code></pre>
 <p>上面是使用class中的静态属性来实现的，还可以使用高阶函数和闭包来缓存静态变量来实现单例模式。</p>
-<pre><code class="language-javascript">/**
+<pre><code class="language-javascript"><span class="hljs-comment">/**
  * 高阶函数 使用闭包来实现静态变量
- */
-function getSingle(fn){
-  let instance;
-  return function(...args){
-    if(!instance){
-      instance = new fn(...args);
+ */</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">getSingle</span>(<span class="hljs-params">fn</span>){
+  <span class="hljs-keyword">let</span> instance;
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params">...args</span>){
+    <span class="hljs-keyword">if</span>(!instance){
+      instance = <span class="hljs-keyword">new</span> <span class="hljs-title function_">fn</span>(...args);
     }
-    return instance;
+    <span class="hljs-keyword">return</span> instance;
   }
 }
-let audioThree = getSingle(Audio)()
-console.log(audioThree === audioTwe) // true
+<span class="hljs-keyword">let</span> audioThree = <span class="hljs-title function_">getSingle</span>(<span class="hljs-title class_">Audio</span>)()
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(audioThree === audioTwe) <span class="hljs-comment">// true</span>
 </code></pre>
 <p>单例模式的优点：</p>
 <ul>
@@ -97,29 +97,29 @@ console.log(audioThree === audioTwe) // true
 <li>系统中大量使用该类对象，且各个调用者都需要给它的属性重新赋值。</li>
 </ul>
 <p>接下来用js来实现以下原型模式：</p>
-<pre><code class="language-javascript">// 定义原型 car
-const car = {
-  init: function (name) {
-    this.name = name
+<pre><code class="language-javascript"><span class="hljs-comment">// 定义原型 car</span>
+<span class="hljs-keyword">const</span> car = {
+  <span class="hljs-attr">init</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name
   },
-  getCar: function () {
-    return 'getCar'+ this.name
+  <span class="hljs-attr">getCar</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;getCar&#x27;</span>+ <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>
   }
 }
-// electricCar 是一个新的car，同时增加了engine属性。
-// electricCar 继承了原型上的方法，同时还新增属性。
-const electricCar =function (name){
-  function F() {}
-  F.prototype = car
-  const  f =new F()
-  f.init(name)
-  f.engine = 'Oil electric hybrid'
-  return f
+<span class="hljs-comment">// electricCar 是一个新的car，同时增加了engine属性。</span>
+<span class="hljs-comment">// electricCar 继承了原型上的方法，同时还新增属性。</span>
+<span class="hljs-keyword">const</span> electricCar =<span class="hljs-keyword">function</span> (<span class="hljs-params">name</span>){
+  <span class="hljs-keyword">function</span> <span class="hljs-title function_">F</span>(<span class="hljs-params"></span>) {}
+  F.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = car
+  <span class="hljs-keyword">const</span>  f =<span class="hljs-keyword">new</span> <span class="hljs-title function_">F</span>()
+  f.<span class="hljs-title function_">init</span>(name)
+  f.<span class="hljs-property">engine</span> = <span class="hljs-string">&#x27;Oil electric hybrid&#x27;</span>
+  <span class="hljs-keyword">return</span> f
 }
-let myCar = new electricCar('BYD')
+<span class="hljs-keyword">let</span> myCar = <span class="hljs-keyword">new</span> <span class="hljs-title function_">electricCar</span>(<span class="hljs-string">&#x27;BYD&#x27;</span>)
 
-console.log(myCar.getCar())
-console.log(myCar.engine)
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myCar.<span class="hljs-title function_">getCar</span>())
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myCar.<span class="hljs-property">engine</span>)
 </code></pre>
 <h3>工厂方法模式</h3>
 <blockquote>
@@ -127,44 +127,44 @@ console.log(myCar.engine)
 </blockquote>
 <p>如果要创建的产品不多，只要一个工厂类就可以完成，这种模式叫“简单工厂模式”。
 简单工厂接受一个参数，直接进行对象的构建，返回。</p>
-<pre><code class="language-javascript">/**
+<pre><code class="language-javascript"><span class="hljs-comment">/**
  * 简单工厂模式
- */
+ */</span>
 
-class Keyboard{
-  constructor(props) {
-     this.getProduct()
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Keyboard</span>{
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+     <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getProduct</span>()
   }
-  getProduct() {
-    console.log('生产键盘')
+  <span class="hljs-title function_">getProduct</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;生产键盘&#x27;</span>)
   }
 }
 
-class Mouse {
-  constructor(props) {
-    this.getProduct()
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Mouse</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getProduct</span>()
   }
   getProduct ( ){
-    console.log('生产鼠标')
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;生产鼠标&#x27;</span>)
   }
 }
 
-console.log('------------')
-function PeripheralFactory(product) {
-  let peripheralProduct = null
-  if (product === 'keyboard'){
-    peripheralProduct = new Keyboard()
-  }else if (product === 'mouse'){
-    peripheralProduct = new Mouse()
-  }else {
-    console.log('臣妾无能为力啊')
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;------------&#x27;</span>)
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">PeripheralFactory</span>(<span class="hljs-params">product</span>) {
+  <span class="hljs-keyword">let</span> peripheralProduct = <span class="hljs-literal">null</span>
+  <span class="hljs-keyword">if</span> (product === <span class="hljs-string">&#x27;keyboard&#x27;</span>){
+    peripheralProduct = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Keyboard</span>()
+  }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (product === <span class="hljs-string">&#x27;mouse&#x27;</span>){
+    peripheralProduct = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Mouse</span>()
+  }<span class="hljs-keyword">else</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;臣妾无能为力啊&#x27;</span>)
   }
-  return peripheralProduct
+  <span class="hljs-keyword">return</span> peripheralProduct
 }
 
-PeripheralFactory('keyboard')
-PeripheralFactory('mouse')
-PeripheralFactory('screen')
+<span class="hljs-title class_">PeripheralFactory</span>(<span class="hljs-string">&#x27;keyboard&#x27;</span>)
+<span class="hljs-title class_">PeripheralFactory</span>(<span class="hljs-string">&#x27;mouse&#x27;</span>)
+<span class="hljs-title class_">PeripheralFactory</span>(<span class="hljs-string">&#x27;screen&#x27;</span>)
 </code></pre>
 <p>通过一个简单的控制，来进行对象的生成，具有非常好的扩展性。但是 简单工厂方法却违背了开闭原则，而 工厂方法模式 则是对简单工厂进行进一步的抽象。</p>
 <p>工厂方法模式的主要角色如下:</p>
@@ -174,49 +174,49 @@ PeripheralFactory('screen')
 <li>抽象产品（Product）：定义了产品的规范，描述了产品的主要特性和功能。</li>
 <li>具体产品（ConcreteProduct）：实现了抽象产品角色所定义的接口，由具体工厂来创建，它同具体工厂之间一一对应。</li>
 </ol>
-<pre><code class="language-javascript">/**
+<pre><code class="language-javascript"><span class="hljs-comment">/**
  * 工厂方法模式
- */
-class Computer {
-  createComputer(){}
+ */</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Computer</span> {
+  <span class="hljs-title function_">createComputer</span>(<span class="hljs-params"></span>){}
 }
-class Cpu extends Computer{
-  createComputer() {
-    super.createComputer()
-    console.log('生产cpu')
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Cpu</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Computer</span>{
+  <span class="hljs-title function_">createComputer</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">createComputer</span>()
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;生产cpu&#x27;</span>)
   }
 }
-class Disk extends Computer{
-  createComputer() {
-    super.createComputer()
-    console.log('生产disk')
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Disk</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Computer</span>{
+  <span class="hljs-title function_">createComputer</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">createComputer</span>()
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;生产disk&#x27;</span>)
   }
 }
-class ComputeFactory {
-  getProduct(){}
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ComputeFactory</span> {
+  <span class="hljs-title function_">getProduct</span>(<span class="hljs-params"></span>){}
 }
-class CpuFactory extends ComputeFactory{
-  getProduct() {
-    super.getProduct();
-    return new Cpu()
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">CpuFactory</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">ComputeFactory</span>{
+  <span class="hljs-title function_">getProduct</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">getProduct</span>();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Cpu</span>()
   }
 }
-class DiskFactory extends ComputeFactory{
-  getProduct() {
-    super.getProduct();
-    return new Disk()
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">DiskFactory</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">ComputeFactory</span>{
+  <span class="hljs-title function_">getProduct</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">getProduct</span>();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Disk</span>()
   }
 }
 
-function product() {
-  let cpuFactory = new CpuFactory()
-  cpuFactory.getProduct().createComputer()
-  console.log('===&gt;')
-  let diskFactory = new DiskFactory()
-  diskFactory.getProduct().createComputer()
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">product</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">let</span> cpuFactory = <span class="hljs-keyword">new</span> <span class="hljs-title class_">CpuFactory</span>()
+  cpuFactory.<span class="hljs-title function_">getProduct</span>().<span class="hljs-title function_">createComputer</span>()
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;===&gt;&#x27;</span>)
+  <span class="hljs-keyword">let</span> diskFactory = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DiskFactory</span>()
+  diskFactory.<span class="hljs-title function_">getProduct</span>().<span class="hljs-title function_">createComputer</span>()
 }
 
-product()
+<span class="hljs-title function_">product</span>()
 
 </code></pre>
 <p>工厂方法模式是典型的解耦框架，用户只需要知道具体工厂的名称就可得到所要的产品，无须知道产品的具体创建过程。灵活性增强，对于新产品的创建，只需多写一个相应的工厂类。</p>
@@ -232,100 +232,100 @@ product()
 <li>指挥者（Director）：它调用建造者对象中的部件构造与装配方法完成复杂对象的创建，在指挥者中不涉及具体产品的信息。</li>
 </ol>
 <p>看起来挺复杂的，当我看到这个定义的时候，我第一时间想到的就是组装电脑，电脑是个复杂的对象，我们可以将它拆解为几个简单对象，比如 显卡，cpu，内存等。然后在通过不同的控制，进行组合，每一部分都是可以灵活选择的。那么我们套用到上面的概念，产品就是计算机，指挥者就是电脑组装，我这里定义为销售电脑的人。</p>
-<pre><code class="language-javascript">class Product{
-  setCpu(cpu){
-    this.cpu = cpu
+<pre><code class="language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Product</span>{
+  <span class="hljs-title function_">setCpu</span>(<span class="hljs-params">cpu</span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">cpu</span> = cpu
   }
-  setDisk(disk){
-    this.disk = disk
+  <span class="hljs-title function_">setDisk</span>(<span class="hljs-params">disk</span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">disk</span> = disk
   }
-  setVideoCard(videoCard){
-    this.videoCard = videoCard
+  <span class="hljs-title function_">setVideoCard</span>(<span class="hljs-params">videoCard</span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">videoCard</span> = videoCard
   }
-  show(){
-    console.log(`您可以购买的产品属性为：cpu:${this.cpu}  硬盘：${this.disk}  显卡：${this.videoCard}`)
-  }
-}
-// 抽象建造者
-class Builder {
-  constructor() {
-    this.product = new Product()
-  }
-  buildCpu(){}
-  buildDisk(){}
-  buildVideoCard(){}
-  getResult(){
-    return this.product
+  <span class="hljs-title function_">show</span>(<span class="hljs-params"></span>){
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`您可以购买的产品属性为：cpu:<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.cpu}</span>  硬盘：<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.disk}</span>  显卡：<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.videoCard}</span>`</span>)
   }
 }
-// 具体建造者
-class LowComputerBuild extends Builder{
-  buildCpu() {
-    super.buildCpu();
-    console.log('cpu: i3')
-    this.product.setCpu('i3')
+<span class="hljs-comment">// 抽象建造者</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Builder</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Product</span>()
   }
-  buildDisk() {
-    super.buildDisk();
-    console.log('disk: 512G')
-    this.product.setDisk('512G')
-  }
-  buildVideoCard() {
-    super.buildVideoCard();
-    console.log('video card: GTX980')
-    this.product.setVideoCard('GTX980')
+  <span class="hljs-title function_">buildCpu</span>(<span class="hljs-params"></span>){}
+  <span class="hljs-title function_">buildDisk</span>(<span class="hljs-params"></span>){}
+  <span class="hljs-title function_">buildVideoCard</span>(<span class="hljs-params"></span>){}
+  <span class="hljs-title function_">getResult</span>(<span class="hljs-params"></span>){
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>
   }
 }
-class GoodComputerBuild extends Builder{
-  buildCpu() {
-    super.buildCpu();
-    console.log('cpu: i9')
-    this.product.setCpu('i9')
+<span class="hljs-comment">// 具体建造者</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">LowComputerBuild</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Builder</span>{
+  <span class="hljs-title function_">buildCpu</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">buildCpu</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;cpu: i3&#x27;</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>.<span class="hljs-title function_">setCpu</span>(<span class="hljs-string">&#x27;i3&#x27;</span>)
   }
-  buildDisk() {
-    super.buildDisk();
-    console.log('disk: 2T')
-    this.product.setDisk('2T')
+  <span class="hljs-title function_">buildDisk</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">buildDisk</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;disk: 512G&#x27;</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>.<span class="hljs-title function_">setDisk</span>(<span class="hljs-string">&#x27;512G&#x27;</span>)
   }
-  buildVideoCard() {
-    super.buildVideoCard();
-    console.log('video card: GTX3070')
-    this.product.setVideoCard('GTX3070')
+  <span class="hljs-title function_">buildVideoCard</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">buildVideoCard</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;video card: GTX980&#x27;</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>.<span class="hljs-title function_">setVideoCard</span>(<span class="hljs-string">&#x27;GTX980&#x27;</span>)
   }
 }
-// 指挥者
-class Director{
-  constructor(money) {
-    console.log('电脑销售人员：你好，你的口袋里装了多少钱啊',`我：我口袋里面有${money}`)
-    if (money&lt;10000){
-      console.log('电脑销售人员心里话:穷鬼')
-      this.builder = new LowComputerBuild()
-    }else {
-      console.log('电脑销售人员心里话:小肥羊啊，宰了')
-      this.builder = new GoodComputerBuild()
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">GoodComputerBuild</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Builder</span>{
+  <span class="hljs-title function_">buildCpu</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">buildCpu</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;cpu: i9&#x27;</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>.<span class="hljs-title function_">setCpu</span>(<span class="hljs-string">&#x27;i9&#x27;</span>)
+  }
+  <span class="hljs-title function_">buildDisk</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">buildDisk</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;disk: 2T&#x27;</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>.<span class="hljs-title function_">setDisk</span>(<span class="hljs-string">&#x27;2T&#x27;</span>)
+  }
+  <span class="hljs-title function_">buildVideoCard</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">buildVideoCard</span>();
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;video card: GTX3070&#x27;</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">product</span>.<span class="hljs-title function_">setVideoCard</span>(<span class="hljs-string">&#x27;GTX3070&#x27;</span>)
+  }
+}
+<span class="hljs-comment">// 指挥者</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Director</span>{
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">money</span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;电脑销售人员：你好，你的口袋里装了多少钱啊&#x27;</span>,<span class="hljs-string">`我：我口袋里面有<span class="hljs-subst">${money}</span>`</span>)
+    <span class="hljs-keyword">if</span> (money&lt;<span class="hljs-number">10000</span>){
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;电脑销售人员心里话:穷鬼&#x27;</span>)
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">builder</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LowComputerBuild</span>()
+    }<span class="hljs-keyword">else</span> {
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;电脑销售人员心里话:小肥羊啊，宰了&#x27;</span>)
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">builder</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">GoodComputerBuild</span>()
     }
   }
-  construct(){
-    this.builder.buildCpu()
-    this.builder.buildDisk()
-    this.builder.buildVideoCard()
-    return this.builder.getResult()
+  <span class="hljs-title function_">construct</span>(<span class="hljs-params"></span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">builder</span>.<span class="hljs-title function_">buildCpu</span>()
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">builder</span>.<span class="hljs-title function_">buildDisk</span>()
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">builder</span>.<span class="hljs-title function_">buildVideoCard</span>()
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">builder</span>.<span class="hljs-title function_">getResult</span>()
   }
 }
 
-function buyComputer() {
-  console.log('I have $1000')
-  let salesman = new Director(1000)
-  let product =  salesman.construct()
-  product.show()
-  setTimeout(() =&gt; {
-    console.log('after 2 years working ---&gt; I have $10001 ')
-    salesman = new Director(10001)
-    product = salesman.construct()
-    product.show()
-  },2000)
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">buyComputer</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;I have $1000&#x27;</span>)
+  <span class="hljs-keyword">let</span> salesman = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Director</span>(<span class="hljs-number">1000</span>)
+  <span class="hljs-keyword">let</span> product =  salesman.<span class="hljs-title function_">construct</span>()
+  product.<span class="hljs-title function_">show</span>()
+  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;after 2 years working ---&gt; I have $10001 &#x27;</span>)
+    salesman = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Director</span>(<span class="hljs-number">10001</span>)
+    product = salesman.<span class="hljs-title function_">construct</span>()
+    product.<span class="hljs-title function_">show</span>()
+  },<span class="hljs-number">2000</span>)
 }
-buyComputer()
+<span class="hljs-title function_">buyComputer</span>()
 </code></pre>
 <p>上面的例子中，指挥者（销售人员）会根据我传入的参数，而进行具体产品的构建。
 看完了例子，会不会觉得建造者和工厂模式十分相似。建造者模式和工厂模式的区别主要在于对象的复杂程度，一个简单的对象使用工厂模式就可以了，对于复杂对象的构建时，可以考虑使用建造模式，建造者模式分离创建和表现，使得产品构建的灵活性大大增强。</p>
@@ -386,6 +386,14 @@ buyComputer()
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
     }
 
     .page {

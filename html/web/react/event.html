@@ -11,7 +11,7 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider"> <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
         <div class="content">
             <section>
                 <h1>react 事件</h1>
@@ -36,12 +36,12 @@
 <p>namesToPlugins装事件名 -&gt; 事件模块插件的映射。namesToPlugins最终的样子如：</p>
 </li>
 </ul>
-<pre><code class="language-javascript">  const namesToPlugins = {
-    SimpleEventPlugin,
-    EnterLeaveEventPlugin,
-    ChangeEventPlugin,
-    SelectEventPlugin,
-    BeforeInputEventPlugin,
+<pre><code class="language-javascript">  <span class="hljs-keyword">const</span> namesToPlugins = {
+    <span class="hljs-title class_">SimpleEventPlugin</span>,
+    <span class="hljs-title class_">EnterLeaveEventPlugin</span>,
+    <span class="hljs-title class_">ChangeEventPlugin</span>,
+    <span class="hljs-title class_">SelectEventPlugin</span>,
+    <span class="hljs-title class_">BeforeInputEventPlugin</span>,
 }
 </code></pre>
 <p>simpleEventPlugin 等是处理各个事件函数的插件，比如以此点击事件，就会找到SimpleEventPlugin对应的处理函数。</p>
@@ -54,33 +54,33 @@
 </ul>
 <p>registrationNameModules 记录了react合成的事件 - 对应的事件插件的关系，在react中处理props中事件的时候，会根据不同的事件名，找到对应的事件插件，然后统一绑定在document上，对于没有出现过的事件，就不会绑定。</p>
 <pre><code class="language-javascript">{
-    onBlur: SimpleEventPlugin,
-    onClick: SimpleEventPlugin,
-    onClickCapture: SimpleEventPlugin,
-    onChange: ChangeEventPlugin,
-    onChangeCapture: ChangeEventPlugin,
-    onMouseEnter: EnterLeaveEventPlugin,
-    onMouseLeave: EnterLeaveEventPlugin,
+    <span class="hljs-attr">onBlur</span>: <span class="hljs-title class_">SimpleEventPlugin</span>,
+    <span class="hljs-attr">onClick</span>: <span class="hljs-title class_">SimpleEventPlugin</span>,
+    <span class="hljs-attr">onClickCapture</span>: <span class="hljs-title class_">SimpleEventPlugin</span>,
+    <span class="hljs-attr">onChange</span>: <span class="hljs-title class_">ChangeEventPlugin</span>,
+    <span class="hljs-attr">onChangeCapture</span>: <span class="hljs-title class_">ChangeEventPlugin</span>,
+    <span class="hljs-attr">onMouseEnter</span>: <span class="hljs-title class_">EnterLeaveEventPlugin</span>,
+    <span class="hljs-attr">onMouseLeave</span>: <span class="hljs-title class_">EnterLeaveEventPlugin</span>,
     ...
 }
 </code></pre>
 <ul>
 <li>事件插件</li>
 </ul>
-<pre><code class="language-javascript">const SimpleEventPlugin = {
-    eventTypes:{ 
-        'click':{ /* 处理点击事件  */
-            phasedRegistrationNames:{
-                bubbled: 'onClick',       // 对应的事件冒泡 - onClick 
-                captured:'onClickCapture' //对应事件捕获阶段 - onClickCapture
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">SimpleEventPlugin</span> = {
+    <span class="hljs-attr">eventTypes</span>:{ 
+        <span class="hljs-string">&#x27;click&#x27;</span>:{ <span class="hljs-comment">/* 处理点击事件  */</span>
+            <span class="hljs-attr">phasedRegistrationNames</span>:{
+                <span class="hljs-attr">bubbled</span>: <span class="hljs-string">&#x27;onClick&#x27;</span>,       <span class="hljs-comment">// 对应的事件冒泡 - onClick </span>
+                <span class="hljs-attr">captured</span>:<span class="hljs-string">&#x27;onClickCapture&#x27;</span> <span class="hljs-comment">//对应事件捕获阶段 - onClickCapture</span>
             },
-            dependencies: ['click'], //事件依赖
+            <span class="hljs-attr">dependencies</span>: [<span class="hljs-string">&#x27;click&#x27;</span>], <span class="hljs-comment">//事件依赖</span>
             ...
         },
-        'blur':{ /* 处理失去焦点事件 */ },
+        <span class="hljs-string">&#x27;blur&#x27;</span>:{ <span class="hljs-comment">/* 处理失去焦点事件 */</span> },
         ...
     }
-    extractEvents:function(topLevelType,targetInst,){ /* eventTypes 里面的事件对应的统一事件处理函数，接下来会重点讲到 */ }
+    <span class="hljs-attr">extractEvents</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">topLevelType,targetInst,</span>){ <span class="hljs-comment">/* eventTypes 里面的事件对应的统一事件处理函数，接下来会重点讲到 */</span> }
 }
 </code></pre>
 <p>事件插件是一个对象，有两个属性，第一个extractEvents作为事件统一处理函数，第二个eventTypes是一个对象，对象保存了原生事件名和对应的配置项dispatchConfig的映射关系，由于react的事件统一绑定在document上，react用独特的事件名称比如onClick和onClickCapture，来说明我们给绑定的函数到底是在冒泡截断还是捕获事件阶段执行。</p>
@@ -89,66 +89,66 @@
 </ul>
 <p>registrationNameDependencies 用来记录，合成事件比如onClick和原生事件click对应关系。</p>
 <pre><code class="language-javascript">{
-    onBlur: ['blur'],
-    onClick: ['click'],
-    onClickCapture: ['click'],
-    onChange: ['blur', 'change', 'click', 'focus', 'input', 'keydown', 'keyup', 'selectionchange'],
-    onMouseEnter: ['mouseout', 'mouseover'],
-    onMouseLeave: ['mouseout', 'mouseover'],
+    <span class="hljs-attr">onBlur</span>: [<span class="hljs-string">&#x27;blur&#x27;</span>],
+    <span class="hljs-attr">onClick</span>: [<span class="hljs-string">&#x27;click&#x27;</span>],
+    <span class="hljs-attr">onClickCapture</span>: [<span class="hljs-string">&#x27;click&#x27;</span>],
+    <span class="hljs-attr">onChange</span>: [<span class="hljs-string">&#x27;blur&#x27;</span>, <span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-string">&#x27;focus&#x27;</span>, <span class="hljs-string">&#x27;input&#x27;</span>, <span class="hljs-string">&#x27;keydown&#x27;</span>, <span class="hljs-string">&#x27;keyup&#x27;</span>, <span class="hljs-string">&#x27;selectionchange&#x27;</span>],
+    <span class="hljs-attr">onMouseEnter</span>: [<span class="hljs-string">&#x27;mouseout&#x27;</span>, <span class="hljs-string">&#x27;mouseover&#x27;</span>],
+    <span class="hljs-attr">onMouseLeave</span>: [<span class="hljs-string">&#x27;mouseout&#x27;</span>, <span class="hljs-string">&#x27;mouseover&#x27;</span>],
     ...
 }
 </code></pre>
 <h3>事件初始化</h3>
 <p>采用初始化注册方式</p>
-<pre><code class="language-javascript">/* 第一步：注册事件：  */
-injectEventPluginsByName({
-    SimpleEventPlugin: SimpleEventPlugin,
-    EnterLeaveEventPlugin: EnterLeaveEventPlugin,
-    ChangeEventPlugin: ChangeEventPlugin,
-    SelectEventPlugin: SelectEventPlugin,
-    BeforeInputEventPlugin: BeforeInputEventPlugin,
+<pre><code class="language-javascript"><span class="hljs-comment">/* 第一步：注册事件：  */</span>
+<span class="hljs-title function_">injectEventPluginsByName</span>({
+    <span class="hljs-title class_">SimpleEventPlugin</span>: <span class="hljs-title class_">SimpleEventPlugin</span>,
+    <span class="hljs-title class_">EnterLeaveEventPlugin</span>: <span class="hljs-title class_">EnterLeaveEventPlugin</span>,
+    <span class="hljs-title class_">ChangeEventPlugin</span>: <span class="hljs-title class_">ChangeEventPlugin</span>,
+    <span class="hljs-title class_">SelectEventPlugin</span>: <span class="hljs-title class_">SelectEventPlugin</span>,
+    <span class="hljs-title class_">BeforeInputEventPlugin</span>: <span class="hljs-title class_">BeforeInputEventPlugin</span>,
 });
 </code></pre>
 <p>injectEventPluginsByName 做的事情很简单，形成了namesToPlugins，然后执行recomputePluginOrdering，那么recomeputePluginOrdering做了什么？</p>
-<pre><code class="language-javascript">const eventPluginOrder = [ 'SimpleEventPlugin' , 'EnterLeaveEventPlugin','ChangeEventPlugin','SelectEventPlugin' , 'BeforeInputEventPlugin' ]
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> eventPluginOrder = [ <span class="hljs-string">&#x27;SimpleEventPlugin&#x27;</span> , <span class="hljs-string">&#x27;EnterLeaveEventPlugin&#x27;</span>,<span class="hljs-string">&#x27;ChangeEventPlugin&#x27;</span>,<span class="hljs-string">&#x27;SelectEventPlugin&#x27;</span> , <span class="hljs-string">&#x27;BeforeInputEventPlugin&#x27;</span> ]
 
-function recomputePluginOrdering(){
-    for (const pluginName in namesToPlugins) {
-        /* 找到对应的事件处理插件，比如 SimpleEventPlugin  */
-        const pluginModule = namesToPlugins[pluginName];
-        const pluginIndex = eventPluginOrder.indexOf(pluginName);
-        /* 填充 plugins 数组  */
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">recomputePluginOrdering</span>(<span class="hljs-params"></span>){
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> pluginName <span class="hljs-keyword">in</span> namesToPlugins) {
+        <span class="hljs-comment">/* 找到对应的事件处理插件，比如 SimpleEventPlugin  */</span>
+        <span class="hljs-keyword">const</span> pluginModule = namesToPlugins[pluginName];
+        <span class="hljs-keyword">const</span> pluginIndex = eventPluginOrder.<span class="hljs-title function_">indexOf</span>(pluginName);
+        <span class="hljs-comment">/* 填充 plugins 数组  */</span>
         plugins[pluginIndex] = pluginModule;
-        const publishedEvents = pluginModule.eventTypes;
-        for (const eventName in publishedEvents) {
-        // publishedEvents[eventName] -&gt; eventConfig , pluginModule -&gt; 事件插件 ， eventName -&gt; 事件名称
-            publishEventForPlugin(publishedEvents[eventName],pluginModule,eventName,)
+        <span class="hljs-keyword">const</span> publishedEvents = pluginModule.<span class="hljs-property">eventTypes</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> eventName <span class="hljs-keyword">in</span> publishedEvents) {
+        <span class="hljs-comment">// publishedEvents[eventName] -&gt; eventConfig , pluginModule -&gt; 事件插件 ， eventName -&gt; 事件名称</span>
+            <span class="hljs-title function_">publishEventForPlugin</span>(publishedEvents[eventName],pluginModule,eventName,)
         } 
     }
 }
 </code></pre>
 <p>recomputePluginOrdering 的作用是形成plugins，然后执行publishEventForPlugin</p>
-<pre><code class="language-javascript">/*
+<pre><code class="language-javascript"><span class="hljs-comment">/*
   dispatchConfig -&gt; 原生事件对应配置项 { phasedRegistrationNames :{  冒泡 捕获  } ，   }
   pluginModule -&gt; 事件插件 比如SimpleEventPlugin  
   eventName -&gt; 原生事件名称。
-*/
-function publishEventForPlugin (dispatchConfig,pluginModule,eventName){
+*/</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">publishEventForPlugin</span> (dispatchConfig,pluginModule,eventName){
     eventNameDispatchConfigs[eventName] = dispatchConfig;
-    /* 事件 */
-    const phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
-    if (phasedRegistrationNames) {
-    for (const phaseName in phasedRegistrationNames) {
-        if (phasedRegistrationNames.hasOwnProperty(phaseName)) {
-            // phasedRegistrationName React事件名 比如 onClick / onClickCapture
-            const phasedRegistrationName = phasedRegistrationNames[phaseName];
-            // 填充形成 registrationNameModules React 合成事件 -&gt; React 处理事件插件映射关系
+    <span class="hljs-comment">/* 事件 */</span>
+    <span class="hljs-keyword">const</span> phasedRegistrationNames = dispatchConfig.<span class="hljs-property">phasedRegistrationNames</span>;
+    <span class="hljs-keyword">if</span> (phasedRegistrationNames) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> phaseName <span class="hljs-keyword">in</span> phasedRegistrationNames) {
+        <span class="hljs-keyword">if</span> (phasedRegistrationNames.<span class="hljs-title function_">hasOwnProperty</span>(phaseName)) {
+            <span class="hljs-comment">// phasedRegistrationName React事件名 比如 onClick / onClickCapture</span>
+            <span class="hljs-keyword">const</span> phasedRegistrationName = phasedRegistrationNames[phaseName];
+            <span class="hljs-comment">// 填充形成 registrationNameModules React 合成事件 -&gt; React 处理事件插件映射关系</span>
             registrationNameModules[phasedRegistrationName] = pluginModule;
-            // 填充形成 registrationNameDependencies React 合成事件 -&gt; 原生事件 映射关系
-            registrationNameDependencies[phasedRegistrationName] = pluginModule.eventTypes[eventName].dependencies;
+            <span class="hljs-comment">// 填充形成 registrationNameDependencies React 合成事件 -&gt; 原生事件 映射关系</span>
+            registrationNameDependencies[phasedRegistrationName] = pluginModule.<span class="hljs-property">eventTypes</span>[eventName].<span class="hljs-property">dependencies</span>;
         }
     }
-    return true;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }
 }
 
@@ -162,22 +162,22 @@ function publishEventForPlugin (dispatchConfig,pluginModule,eventName){
 <li>diffProperties处理React合成事件</li>
 </ol>
 <pre><code class="language-javascript">&lt;div&gt;
-  &lt;button onClick={ this.handerClick }  className=&quot;button&quot; &gt;点击&lt;/button&gt;
+  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> <span class="hljs-attr">this.handerClick</span> }  <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;button&quot;</span> &gt;</span>点击<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
 &lt;/div&gt;
 </code></pre>
 <p>我们绑定给hostComponent种类的fiber，button对应的fiber上，以memoizedProps和pendingProps形式保存；</p>
-<pre><code class="language-javascript">// button 对应 fiber
+<pre><code class="language-javascript"><span class="hljs-comment">// button 对应 fiber</span>
 memoizedProps = {
-   onClick:function handerClick(){},
-   className:'button'
+   <span class="hljs-attr">onClick</span>:<span class="hljs-keyword">function</span> <span class="hljs-title function_">handerClick</span>(<span class="hljs-params"></span>){},
+   <span class="hljs-attr">className</span>:<span class="hljs-string">&#x27;button&#x27;</span>
 }
 </code></pre>
 <p>第二步 react在调和子节点后，进入diff阶段，判断hostComponent类型的fiber，会用diff props函数diffProperties单独处理。</p>
-<pre><code class="language-javascript">function diffProperties(){
-    /* 判断当前的 propKey 是不是 React合成事件 */
-    if(registrationNameModules.hasOwnProperty(propKey)){
-         /* 这里多个函数简化了，如果是合成事件， 传入成事件名称 onClick ，向document注册事件  */
-         legacyListenToEvent(registrationName, document）;
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">diffProperties</span>(<span class="hljs-params"></span>){
+    <span class="hljs-comment">/* 判断当前的 propKey 是不是 React合成事件 */</span>
+    <span class="hljs-keyword">if</span>(registrationNameModules.<span class="hljs-title function_">hasOwnProperty</span>(propKey)){
+         <span class="hljs-comment">/* 这里多个函数简化了，如果是合成事件， 传入成事件名称 onClick ，向document注册事件  */</span>
+         <span class="hljs-title function_">legacyListenToEvent</span>(registrationName, <span class="hljs-variable language_">document</span>）;
     }
 }
 </code></pre>
@@ -185,20 +185,20 @@ memoizedProps = {
 <ol start="2">
 <li>legacyListenToEvent 注册事件监听器</li>
 </ol>
-<pre><code class="language-javascript">//  registrationName -&gt; onClick 事件
-//  mountAt -&gt; document or container
-function legacyListenToEvent(registrationName，mountAt){
-   const dependencies = registrationNameDependencies[registrationName]; // 根据 onClick 获取  onClick 依赖的事件数组 [ 'click' ]。
-    for (let i = 0; i &lt; dependencies.length; i++) {
-        const dependency = dependencies[i];
-        //这个经过多个函数简化，如果是 click 基础事件，会走 legacyTrapBubbledEvent ,而且都是按照冒泡处理
-        legacyTrapBubbledEvent(dependency, mountAt);
+<pre><code class="language-javascript"><span class="hljs-comment">//  registrationName -&gt; onClick 事件</span>
+<span class="hljs-comment">//  mountAt -&gt; document or container</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">legacyListenToEvent</span>(<span class="hljs-params">registrationName，mountAt</span>){
+   <span class="hljs-keyword">const</span> dependencies = registrationNameDependencies[registrationName]; <span class="hljs-comment">// 根据 onClick 获取  onClick 依赖的事件数组 [ &#x27;click&#x27; ]。</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; dependencies.<span class="hljs-property">length</span>; i++) {
+        <span class="hljs-keyword">const</span> dependency = dependencies[i];
+        <span class="hljs-comment">//这个经过多个函数简化，如果是 click 基础事件，会走 legacyTrapBubbledEvent ,而且都是按照冒泡处理</span>
+        <span class="hljs-title function_">legacyTrapBubbledEvent</span>(dependency, mountAt);
   }
 }
 </code></pre>
 <p>legacyTrapBubbledEvent 就是执行将绑定真正的dom事件的函数（冒泡处理）</p>
-<pre><code class="language-javascript">function legacyTrapBubbledEvent(topLevelType,element){
-   addTrappedEventListener(element,topLevelType,PLUGIN_EVENT_SYSTEM,false)
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">legacyTrapBubbledEvent</span>(<span class="hljs-params">topLevelType,element</span>){
+   <span class="hljs-title function_">addTrappedEventListener</span>(element,topLevelType,<span class="hljs-variable constant_">PLUGIN_EVENT_SYSTEM</span>,<span class="hljs-literal">false</span>)
 }
 </code></pre>
 <p>第三步在legacyListenToEvent函数中，先找到react合成事件对应的原生事件集合，比如 onClick -&gt; ['click'] , onChange -&gt; [blur , change , input , keydown , keyup]，然后遍历依赖项的数组，绑定事件。</p>
@@ -207,18 +207,18 @@ function legacyListenToEvent(registrationName，mountAt){
 <li>绑定dispatchEvent进行事件监听。</li>
 </ol>
 <p>react是如何绑定事件到document。</p>
-<pre><code class="language-javascript">/*
+<pre><code class="language-javascript"><span class="hljs-comment">/*
   targetContainer -&gt; document
   topLevelType -&gt;  click
   capture = false
-*/
-function addTrappedEventListener(targetContainer,topLevelType,eventSystemFlags,capture){
-   const listener = dispatchEvent.bind(null,topLevelType,eventSystemFlags,targetContainer) 
-   if(capture){
-       // 事件捕获阶段处理函数。
-   }else{
-       /* TODO: 重要, 这里进行真正的事件绑定。*/
-      targetContainer.addEventListener(topLevelType,listener,false) // document.addEventListener('click',listener,false)
+*/</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">addTrappedEventListener</span>(<span class="hljs-params">targetContainer,topLevelType,eventSystemFlags,capture</span>){
+   <span class="hljs-keyword">const</span> listener = dispatchEvent.<span class="hljs-title function_">bind</span>(<span class="hljs-literal">null</span>,topLevelType,eventSystemFlags,targetContainer) 
+   <span class="hljs-keyword">if</span>(capture){
+       <span class="hljs-comment">// 事件捕获阶段处理函数。</span>
+   }<span class="hljs-keyword">else</span>{
+       <span class="hljs-comment">/* <span class="hljs-doctag">TODO:</span> 重要, 这里进行真正的事件绑定。*/</span>
+      targetContainer.<span class="hljs-title function_">addEventListener</span>(topLevelType,listener,<span class="hljs-literal">false</span>) <span class="hljs-comment">// document.addEventListener(&#x27;click&#x27;,listener,false)</span>
    }
 }
 
@@ -233,25 +233,25 @@ function addTrappedEventListener(targetContainer,topLevelType,eventSystemFlags,c
 <h2>事件触发</h2>
 <h3>事件触发处理函数 dispatchEvent</h3>
 <p>react事件注册时候，统一的监听器dispathchEvent，也就是当按钮被点击之后，首先执行的是dispatchEvent函数，dispatchEvent前三个参数已经被bind了，所以真正的事件源对象event，被默认绑定成第四个参数。</p>
-<pre><code class="language-javascript">function dispatchEvent(topLevelType,eventSystemFlags,targetContainer,nativeEvent){
-    /* 尝试调度事件 */
-    const blockedOn = attemptToDispatchEvent( topLevelType,eventSystemFlags, targetContainer, nativeEvent);
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">dispatchEvent</span>(<span class="hljs-params">topLevelType,eventSystemFlags,targetContainer,nativeEvent</span>){
+    <span class="hljs-comment">/* 尝试调度事件 */</span>
+    <span class="hljs-keyword">const</span> blockedOn = <span class="hljs-title function_">attemptToDispatchEvent</span>( topLevelType,eventSystemFlags, targetContainer, nativeEvent);
 }
 </code></pre>
-<pre><code class="language-javascript">/*
+<pre><code class="language-javascript"><span class="hljs-comment">/*
 topLevelType -&gt; click
 eventSystemFlags -&gt; 1
 targetContainer -&gt; document
 nativeEvent -&gt; 原生事件的 event 对象
-*/
-function attemptToDispatchEvent(topLevelType,eventSystemFlags,targetContainer,nativeEvent){
-    /* 获取原生事件 e.target */
-    const nativeEventTarget = getEventTarget(nativeEvent)
-    /* 获取当前事件，最近的dom类型fiber ，我们 demo中 button 按钮对应的 fiber */
-    let targetInst = getClosestInstanceFromNode(nativeEventTarget); 
-    /* 重要：进入legacy模式的事件处理系统 */
-    dispatchEventForLegacyPluginEventSystem(topLevelType,eventSystemFlags,nativeEvent,targetInst,);
-    return null;
+*/</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">attemptToDispatchEvent</span>(<span class="hljs-params">topLevelType,eventSystemFlags,targetContainer,nativeEvent</span>){
+    <span class="hljs-comment">/* 获取原生事件 e.target */</span>
+    <span class="hljs-keyword">const</span> nativeEventTarget = <span class="hljs-title function_">getEventTarget</span>(nativeEvent)
+    <span class="hljs-comment">/* 获取当前事件，最近的dom类型fiber ，我们 demo中 button 按钮对应的 fiber */</span>
+    <span class="hljs-keyword">let</span> targetInst = <span class="hljs-title function_">getClosestInstanceFromNode</span>(nativeEventTarget); 
+    <span class="hljs-comment">/* 重要：进入legacy模式的事件处理系统 */</span>
+    <span class="hljs-title function_">dispatchEventForLegacyPluginEventSystem</span>(topLevelType,eventSystemFlags,nativeEvent,targetInst,);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
 }
 </code></pre>
 <ul>
@@ -310,6 +310,14 @@ var internalInstanceKey = '__reactInternalInstance
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
     }
 
     .page {
@@ -494,25 +502,25 @@ function getClosestInstanceFromNode(targetNode){
 }
 </code></pre>
 <h3>legacy 事件处理系统与批量更新</h3>
-<pre><code class="language-javascript">/* topLevelType - click事件 ｜ eventSystemFlags = 1 ｜ nativeEvent = 事件源对象  ｜ targetInst = 元素对应的fiber对象  */
-function dispatchEventForLegacyPluginEventSystem(topLevelType,eventSystemFlags,nativeEvent,targetInst){
-    /* 从React 事件池中取出一个，将 topLevelType ，targetInst 等属性赋予给事件  */
-    const bookKeeping = getTopLevelCallbackBookKeeping(topLevelType,nativeEvent,targetInst,eventSystemFlags);
-    try { /* 执行批量更新 handleTopLevel 为事件处理的主要函数 */
-    batchedEventUpdates(handleTopLevel, bookKeeping);
-  } finally {
-    /* 释放事件池 */  
-    releaseTopLevelCallbackBookKeeping(bookKeeping);
+<pre><code class="language-javascript"><span class="hljs-comment">/* topLevelType - click事件 ｜ eventSystemFlags = 1 ｜ nativeEvent = 事件源对象  ｜ targetInst = 元素对应的fiber对象  */</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">dispatchEventForLegacyPluginEventSystem</span>(<span class="hljs-params">topLevelType,eventSystemFlags,nativeEvent,targetInst</span>){
+    <span class="hljs-comment">/* 从React 事件池中取出一个，将 topLevelType ，targetInst 等属性赋予给事件  */</span>
+    <span class="hljs-keyword">const</span> bookKeeping = <span class="hljs-title function_">getTopLevelCallbackBookKeeping</span>(topLevelType,nativeEvent,targetInst,eventSystemFlags);
+    <span class="hljs-keyword">try</span> { <span class="hljs-comment">/* 执行批量更新 handleTopLevel 为事件处理的主要函数 */</span>
+    <span class="hljs-title function_">batchedEventUpdates</span>(handleTopLevel, bookKeeping);
+  } <span class="hljs-keyword">finally</span> {
+    <span class="hljs-comment">/* 释放事件池 */</span>  
+    <span class="hljs-title function_">releaseTopLevelCallbackBookKeeping</span>(bookKeeping);
   }
 }
 </code></pre>
 <p>batchedEventUpdates 是批量更新的主要函数。</p>
-<pre><code class="language-javascript">export function batchedEventUpdates(fn,a){
-    isBatchingEventUpdates = true;
-    try{
-       fn(a) // handleTopLevel(bookKeeping)
-    }finally{
-        isBatchingEventUpdates = false
+<pre><code class="language-javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">batchedEventUpdates</span>(<span class="hljs-params">fn,a</span>){
+    isBatchingEventUpdates = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">try</span>{
+       <span class="hljs-title function_">fn</span>(a) <span class="hljs-comment">// handleTopLevel(bookKeeping)</span>
+    }<span class="hljs-keyword">finally</span>{
+        isBatchingEventUpdates = <span class="hljs-literal">false</span>
     }
 }
 </code></pre>
@@ -555,57 +563,57 @@ function handleTopLevel(bookKeeping){
 <p>handleTopLevel最后的处理逻辑是执行事件处理插件中的处理函数 extractEvents, react是采用事件合成，事件统一绑定，并且在组件中的时间处理函数，也不是真正的执行函数dispatchAction,那么我们在点击事件对象event，也是react单独合成处理的，里面封装了stopPropagetion和preventDefault。这样的好处是不需要跨浏览器处理兼容问题，统一交给react底层处理。</p>
 <h3>extractEvents 形成事件对象和是按处理函数队列</h3>
 <p>extraEvent 是整个事件系统核心代码。</p>
-<pre><code class="language-javascript">const  SimpleEventPlugin = {
-    extractEvents:function(topLevelType,targetInst,nativeEvent,nativeEventTarget){
-        const dispatchConfig = topLevelEventsToDispatchConfig.get(topLevelType);
-        if (!dispatchConfig) {
-            return null;
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span>  <span class="hljs-title class_">SimpleEventPlugin</span> = {
+    <span class="hljs-attr">extractEvents</span>:<span class="hljs-keyword">function</span>(<span class="hljs-params">topLevelType,targetInst,nativeEvent,nativeEventTarget</span>){
+        <span class="hljs-keyword">const</span> dispatchConfig = topLevelEventsToDispatchConfig.<span class="hljs-title function_">get</span>(topLevelType);
+        <span class="hljs-keyword">if</span> (!dispatchConfig) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
         }
-        switch(topLevelType){
-            default:
-            EventConstructor = SyntheticEvent;
-            break;
+        <span class="hljs-keyword">switch</span>(topLevelType){
+            <span class="hljs-attr">default</span>:
+            <span class="hljs-title class_">EventConstructor</span> = <span class="hljs-title class_">SyntheticEvent</span>;
+            <span class="hljs-keyword">break</span>;
         }
-        /* 产生事件源对象 */
-        const event = EventConstructor.getPooled(dispatchConfig,targetInst,nativeEvent,nativeEventTarget)
-        const phasedRegistrationNames = event.dispatchConfig.phasedRegistrationNames;
-        const dispatchListeners = [];
-        const {bubbled, captured} = phasedRegistrationNames; /* onClick / onClickCapture */
-        const dispatchInstances = [];
-        /* 从事件源开始逐渐向上，查找dom元素类型HostComponent对应的fiber ，收集上面的React合成事件，onClick / onClickCapture  */
-         while (instance !== null) {
-              const {stateNode, tag} = instance;
-              if (tag === HostComponent &amp;&amp; stateNode !== null) { /* DOM 元素 */
-                   const currentTarget = stateNode;
-                   if (captured !== null) { /* 事件捕获 */
-                        /* 在事件捕获阶段,真正的事件处理函数 */
-                        const captureListener = getListener(instance, captured);
-                        if (captureListener != null) {
-                        /* 对应发生在事件捕获阶段的处理函数，逻辑是将执行函数unshift添加到队列的最前面 */
-                            dispatchListeners.unshift(captureListener);
-                            dispatchInstances.unshift(instance);
-                            dispatchCurrentTargets.unshift(currentTarget);
+        <span class="hljs-comment">/* 产生事件源对象 */</span>
+        <span class="hljs-keyword">const</span> event = <span class="hljs-title class_">EventConstructor</span>.<span class="hljs-title function_">getPooled</span>(dispatchConfig,targetInst,nativeEvent,nativeEventTarget)
+        <span class="hljs-keyword">const</span> phasedRegistrationNames = event.<span class="hljs-property">dispatchConfig</span>.<span class="hljs-property">phasedRegistrationNames</span>;
+        <span class="hljs-keyword">const</span> dispatchListeners = [];
+        <span class="hljs-keyword">const</span> {bubbled, captured} = phasedRegistrationNames; <span class="hljs-comment">/* onClick / onClickCapture */</span>
+        <span class="hljs-keyword">const</span> dispatchInstances = [];
+        <span class="hljs-comment">/* 从事件源开始逐渐向上，查找dom元素类型HostComponent对应的fiber ，收集上面的React合成事件，onClick / onClickCapture  */</span>
+         <span class="hljs-keyword">while</span> (instance !== <span class="hljs-literal">null</span>) {
+              <span class="hljs-keyword">const</span> {stateNode, tag} = instance;
+              <span class="hljs-keyword">if</span> (tag === <span class="hljs-title class_">HostComponent</span> &amp;&amp; stateNode !== <span class="hljs-literal">null</span>) { <span class="hljs-comment">/* DOM 元素 */</span>
+                   <span class="hljs-keyword">const</span> currentTarget = stateNode;
+                   <span class="hljs-keyword">if</span> (captured !== <span class="hljs-literal">null</span>) { <span class="hljs-comment">/* 事件捕获 */</span>
+                        <span class="hljs-comment">/* 在事件捕获阶段,真正的事件处理函数 */</span>
+                        <span class="hljs-keyword">const</span> captureListener = <span class="hljs-title function_">getListener</span>(instance, captured);
+                        <span class="hljs-keyword">if</span> (captureListener != <span class="hljs-literal">null</span>) {
+                        <span class="hljs-comment">/* 对应发生在事件捕获阶段的处理函数，逻辑是将执行函数unshift添加到队列的最前面 */</span>
+                            dispatchListeners.<span class="hljs-title function_">unshift</span>(captureListener);
+                            dispatchInstances.<span class="hljs-title function_">unshift</span>(instance);
+                            dispatchCurrentTargets.<span class="hljs-title function_">unshift</span>(currentTarget);
                         }
                     }
-                    if (bubbled !== null) { /* 事件冒泡 */
-                        /* 事件冒泡阶段，真正的事件处理函数，逻辑是将执行函数push到执行队列的最后面 */
-                        const bubbleListener = getListener(instance, bubbled);
-                        if (bubbleListener != null) {
-                            dispatchListeners.push(bubbleListener);
-                            dispatchInstances.push(instance);
-                            dispatchCurrentTargets.push(currentTarget);
+                    <span class="hljs-keyword">if</span> (bubbled !== <span class="hljs-literal">null</span>) { <span class="hljs-comment">/* 事件冒泡 */</span>
+                        <span class="hljs-comment">/* 事件冒泡阶段，真正的事件处理函数，逻辑是将执行函数push到执行队列的最后面 */</span>
+                        <span class="hljs-keyword">const</span> bubbleListener = <span class="hljs-title function_">getListener</span>(instance, bubbled);
+                        <span class="hljs-keyword">if</span> (bubbleListener != <span class="hljs-literal">null</span>) {
+                            dispatchListeners.<span class="hljs-title function_">push</span>(bubbleListener);
+                            dispatchInstances.<span class="hljs-title function_">push</span>(instance);
+                            dispatchCurrentTargets.<span class="hljs-title function_">push</span>(currentTarget);
                         }
                     }
               }
-              instance = instance.return;
+              instance = instance.<span class="hljs-property">return</span>;
          }
-          if (dispatchListeners.length &gt; 0) {
-              /* 将函数执行队列，挂到事件对象event上 */
-            event._dispatchListeners = dispatchListeners;
-            event._dispatchInstances = dispatchInstances;
-            event._dispatchCurrentTargets = dispatchCurrentTargets;
+          <span class="hljs-keyword">if</span> (dispatchListeners.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+              <span class="hljs-comment">/* 将函数执行队列，挂到事件对象event上 */</span>
+            event.<span class="hljs-property">_dispatchListeners</span> = dispatchListeners;
+            event.<span class="hljs-property">_dispatchInstances</span> = dispatchInstances;
+            event.<span class="hljs-property">_dispatchCurrentTargets</span> = dispatchCurrentTargets;
          }
-        return event
+        <span class="hljs-keyword">return</span> event
     }
 }
 
@@ -677,6 +685,14 @@ function handleTopLevel(bookKeeping){
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
     }
 
     .page {
