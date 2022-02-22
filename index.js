@@ -1,6 +1,5 @@
 const Koa = require('koa');
 const app = new Koa();
-const tool = require('./utils/index.js');
 const path = require('path');
 const {readFileSync} = require('fs');
 const {blogServe} = require('./blogServe');
@@ -24,21 +23,6 @@ app.use(async ctx => {
     ctx.body = content.toString();
 });
 
-async function init() {
-    // rm html file
-    await tool.removeDir(path.join(__dirname, './html'));
-    // build markdown handler 
-    const markdownDirContentInfoList = await tool.getMarkdownDirContent(path.join(__dirname, './markdown'));
-    let sidebar = tool.buildSidebar(markdownDirContentInfoList);
-    const sidebarCode = tool.buildSidebarCode(sidebar);
-    for (let markdownInfo of markdownDirContentInfoList) {
-        markdownInfo.sidebarCode = sidebarCode;
-        tool.handleMarkdownInfo(markdownInfo, sidebarCode);
-    }
-}
-
-
-// init();
 blogServe({
     // location: 'http://localhost:3000/'
 });
