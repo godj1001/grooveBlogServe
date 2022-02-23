@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <title> js手写系列 - 对象继承 </title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="content">
+            <section>
+                <h2>js原型链 对象相关</h2>
+<h3>new 关键字</h3>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">newKey</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-comment">// 创建空对象</span>
+    <span class="hljs-keyword">const</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();
+    <span class="hljs-comment">// 获取构造函数</span>
+    <span class="hljs-keyword">const</span> classConstuctor = <span class="hljs-title class_">Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">shift</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>);
+    <span class="hljs-comment">// 继承方法和属性</span>
+    obj.<span class="hljs-property">__proto__</span> = classConstuctor.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>;
+    <span class="hljs-comment">// 转移this指向</span>
+    <span class="hljs-keyword">let</span> res = classConstuctor.<span class="hljs-title function_">apply</span>(obj, <span class="hljs-variable language_">arguments</span>);
+    <span class="hljs-keyword">let</span> isObject = <span class="hljs-keyword">typeof</span> res === <span class="hljs-string">&#x27;object&#x27;</span> &amp;&amp; res !== <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">let</span> isFunction = <span class="hljs-keyword">typeof</span> res === <span class="hljs-string">&#x27;function&#x27;</span>;
+    <span class="hljs-comment">// 如果有返回值且返回值是对象类型，那么就将它作为返回值，否则就返回之前新建的对象</span>
+    <span class="hljs-keyword">return</span> isObject || isFunction ? res : obj;
+}
+</code></pre>
+<h3>原型链继承</h3>
+<p>直接在子类的原型上去初始化父类。</p>
+<pre><code class="language-javascript">child.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Father</span>()
+</code></pre>
+<p>原型链继承有很大的缺点：</p>
+<ol>
+<li>原型中包含的引用类型属性将会被所有实例共享</li>
+<li>子类在实例化的时候不能给父类的构造函数传参,意味着子类无法拥有一无二的父类，所有的子类共享一个父类。</li>
+</ol>
+<h3>构造函数继承</h3>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Father</span>(<span class="hljs-params">name</span>){
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">bname</span> = name;
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">getName</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>
+    }
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">Children</span>(<span class="hljs-params">name</span>){
+    <span class="hljs-title class_">Father</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>,name)
+}
+</code></pre>
+<p>缺点呢就是</p>
+<ul>
+<li>只能继承父类实例上的属性和方法，不能继承原型属性和方法。</li>
+<li>无法实现复用，每个子类都有父类实例函数的副本。</li>
+</ul>
+<h3>组合继承</h3>
+<p>用原型链实现对原型属性和方法的继承，用借用构造函数来实现实例属性的继承</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Father</span>(<span class="hljs-params">name</span>){
+    ...
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">Child</span>(<span class="hljs-params">name</span>){
+    <span class="hljs-title class_">Father</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>,name)
+}
+
+<span class="hljs-title class_">Child</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Father</span>()
+<span class="hljs-title class_">Child</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">constructor</span> = <span class="hljs-title class_">Child</span>;
+</code></pre>
+<p>组合继承的缺点就是在使用子类创建实例的时候，其中原型中会存在两份相同的属性和方法，不过这已经是相对于前两种方式，比较完善的方式了。</p>
+<h3>原型式继承</h3>
+<p>利用空对象作为中介，将某个对象直接复制给空对象构造函数的原型。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">createObj</span>(<span class="hljs-params">obj</span>){
+    <span class="hljs-keyword">function</span> <span class="hljs-title function_">F</span>(<span class="hljs-params"></span>){}
+    F.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = obj;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title function_">F</span>();
+}
+</code></pre>
+<p>缺点：</p>
+<ul>
+<li>原型链继承对个实例的引用类型指向相同，存在篡改的可能。</li>
+<li>无法传递参数</li>
+</ul>
+<h3>寄生继承</h3>
+<p>在原型式继承的基础上，增强对象，返回构造函数</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">createFn</span>(<span class="hljs-params">obj</span>){
+    <span class="hljs-keyword">const</span> clone = <span class="hljs-title function_">createObj</span>(obj);
+    clone.<span class="hljs-property">doSomething</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;do something&#x27;</span>)
+    }
+    <span class="hljs-keyword">return</span> clone
+}
+</code></pre>
+<p>缺点同原型式继承相同；</p>
+<h3>寄生组合式继承</h3>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">extendFn</span>(<span class="hljs-params">father,child</span>){
+    <span class="hljs-keyword">const</span> prototype = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(father.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>)
+    prototype.<span class="hljs-property">constructor</span> = child
+    child.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = prototype
+}
+</code></pre>
+<p>这是最成熟的方法，也是现在库实现的方法</p>
+<h3>ES6 继承 extends</h3>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">_inherits</span>(<span class="hljs-params">subType, superType</span>) {
+  
+    <span class="hljs-comment">// 创建对象，创建父类原型的一个副本</span>
+    <span class="hljs-comment">// 增强对象，弥补因重写原型而失去的默认的constructor 属性</span>
+    <span class="hljs-comment">// 指定对象，将新创建的对象赋值给子类的原型</span>
+    subType.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(superType &amp;&amp; superType.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>, {
+        <span class="hljs-attr">constructor</span>: {
+            <span class="hljs-attr">value</span>: subType,
+            <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">writable</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">configurable</span>: <span class="hljs-literal">true</span>
+        }
+    });
+    
+    <span class="hljs-keyword">if</span> (superType) {
+        <span class="hljs-title class_">Object</span>.<span class="hljs-property">setPrototypeOf</span> 
+            ? <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">setPrototypeOf</span>(subType, superType) 
+            : subType.<span class="hljs-property">__proto__</span> = superType;
+    }
+}
+</code></pre>
+
+            </section>
+        </div>
+    </div>
+</body>
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    code {
+        margin: 30px 2px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)'
+            }
+        }
+    })
+</script>
+
+</html>
