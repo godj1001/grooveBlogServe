@@ -3,13 +3,14 @@ const app = new Koa();
 const path = require('path');
 const {readFileSync} = require('fs');
 const {blogServe} = require('./blogServe');
+const logger = require('koa-logger');
+app.use(logger());
 app.use(async ctx => {
     if (ctx.path === '/') {
         const content = await readFileSync(path.join(__dirname, '/html/about.html'));
         ctx.body = content.toString();
         return;
     }
-    const content = await readFileSync(path.join(__dirname, ctx.path));
     let pathList = ctx.path.split('/');
     if (pathList.includes('oss')) {
         if (pathList[pathList.length - 1].indexOf('.svg') > -1) {
@@ -20,7 +21,13 @@ app.use(async ctx => {
         }
         return;
     }
-    ctx.body = content.toString();
+    try {
+        const content = await readFileSync(path.join(__dirname, ctx.path));
+        ctx.body = content.toString();
+    } catch (e) {
+        const fail = await readFileSync(path.join(__dirname, './html/404.html'));
+        ctx.body = fail.toString();
+    }
 });
 
 blogServe({
@@ -28,5 +35,6 @@ blogServe({
 });
 
 //  启动服务
-app.listen(3000);
-console.log('serve is open in 3000');
+app.listen(3000, () => {
+    console.log('serve is open in 3000');
+});

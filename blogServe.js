@@ -10,7 +10,8 @@ const defautOptions = {
     ossPath: '',
     homePagePath: '',
     transformPath: path.join(__dirname, './sidebar.json'),
-    location: 'http://groove-zhang.cn/'
+    location: 'http://groove-zhang.cn/',
+    failHtmlPath: path.join(__dirname, './template/404.html')
 };
 async function blogServe(option) {
     const options = Object.assign(defautOptions, option);
@@ -173,6 +174,10 @@ async function blogServe(option) {
             markdownInfo.sidebarCode = sidebarCode;
             handleMarkdownInfo(markdownInfo, sidebarCode);
         }
+        //  build index html
+        //  todo build 404
+        const failFile = await fs.readFileSync(options.failHtmlPath);
+        await saveTransformResultForHtml(path.join(options.htmlOutputPath, '404.html'), failFile.toString());
     }
 
     await init(options);
