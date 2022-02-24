@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <title> 构建一个博客服务器 </title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="content">
+            <section>
+                <h2>前言</h2>
+<p>之前使用<a href="https://docsify.js.org/#/">docsify</a>来写自己的博客。</p>
+<p>docsify 核心的使用方法就是使用 markdown 来编写博客，加载一个html，根据页面的路由，去请求对应的 markdown 文件，将 markdown 文件转换 html 结构 ，然后加载到对应位置。</p>
+<p>使用了一段时间后，发现加载时间非常的长，总的来说就是需要加载很多文件，影响了速度。</p>
+<p>于是，我决定放弃 docsify 。自己去写一个服务，去实现自己的博客。</p>
+<h2>设想</h2>
+<p>借用 docsify 的 markdown 文件转换成 html 这个思路，我来实现一套服务器预渲染，读取 markdown 文件，将 markdown 内容转换成 html 内容，最后输出到一个模板当中，生成 html 。</p>
+<p>思路可行，开工！</p>
+<h2>起步</h2>
+<p>首先，先实现一个服务，我这边使用的是 koa 。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">Koa</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;koa&#x27;</span>);
+<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Koa</span>();
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);
+<span class="hljs-keyword">const</span> {readFileSync} = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+
+app.<span class="hljs-title function_">use</span>(<span class="hljs-keyword">async</span> ctx =&gt; {
+    <span class="hljs-keyword">const</span> html = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFileSync</span>(path.<span class="hljs-title function_">join</span>(__dirname, ctx.<span class="hljs-property">path</span>));
+    ctx.<span class="hljs-property">body</span> = html.<span class="hljs-title function_">toString</span>();
+});
+</code></pre>
+<p>这是一个最基本的服务，实现了基本的请求 html 返回资源。</p>
+<p>创建三个文件夹，一个 markdown ，一个 html ，一个 template ，分别去存储 markdown 文件 ，html 文件 和 模板文件。</p>
+<h2>构建</h2>
+<h3>转换 markdown 内容</h3>
+<p>这边我使用 markdown-it 来进行 markdown 文件内容的转换 。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">MarkdownIt</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;markdown-it&#x27;</span>);
+<span class="hljs-keyword">const</span> hljs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;highlight.js&#x27;</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">transformMarkdown2Html</span>(<span class="hljs-params">markdownContent</span>) {
+        <span class="hljs-keyword">let</span> renderCore = <span class="hljs-keyword">new</span> <span class="hljs-title class_">MarkdownIt</span>({
+            <span class="hljs-comment">// 保留html标签</span>
+            <span class="hljs-attr">html</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-comment">// 代码块高亮</span>
+            <span class="hljs-attr">highlight</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">str, lang = <span class="hljs-string">&#x27;javascript&#x27;</span></span>) {
+                <span class="hljs-keyword">if</span> (lang &amp;&amp; hljs.<span class="hljs-title function_">getLanguage</span>(lang)) {
+                    <span class="hljs-keyword">try</span> {
+                        <span class="hljs-keyword">return</span> hljs.<span class="hljs-title function_">highlight</span>(str, {<span class="hljs-attr">language</span>: lang}).<span class="hljs-property">value</span>;
+                    } <span class="hljs-keyword">catch</span> (__) { }
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>;
+            }
+        });
+        <span class="hljs-keyword">return</span> renderCore.<span class="hljs-title function_">render</span>(markdownContent);
+}
+</code></pre>
+<h3>构建目录栏</h3>
+<p>每个博客网站都需要导航栏或者一个目录栏。</p>
+<p>那么，我将文件夹作为目录结构，文件名作为路径，去构建一个目录栏。</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// 读取文件</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">readMarkdownFile</span>(<span class="hljs-params">markdownFilePath</span>) {
+    <span class="hljs-keyword">const</span> markdownBuffer = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFileSync</span>(markdownFilePath);
+    <span class="hljs-keyword">return</span> markdownBuffer.<span class="hljs-title function_">toString</span>();
+}
+<span class="hljs-comment">// 构建markdown内目录结构和markdown信息</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getMarkdownDirContent</span>(<span class="hljs-params">markdownFolderPath</span>) {
+    <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">dep</span>(<span class="hljs-params">dirPath</span>) {
+        <span class="hljs-keyword">const</span> dir = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readdirSync</span>(dirPath);
+        <span class="hljs-keyword">let</span> dirList = [];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> item <span class="hljs-keyword">of</span> dir) {
+            <span class="hljs-keyword">const</span> itemPath = path.<span class="hljs-title function_">join</span>(dirPath, item);
+            <span class="hljs-keyword">const</span> itemStat = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">statSync</span>(itemPath);
+            <span class="hljs-keyword">let</span> itemObj = {
+                <span class="hljs-attr">name</span>: item,
+                <span class="hljs-attr">path</span>: itemPath,
+                isDirectory = itemStat.<span class="hljs-title function_">isDirectory</span>()
+            };
+            <span class="hljs-keyword">if</span> (itemObj.<span class="hljs-property">isDirectory</span>) {
+                itemObj.<span class="hljs-property">children</span> = <span class="hljs-keyword">await</span> <span class="hljs-title function_">dep</span>(itemPath);
+            } <span class="hljs-keyword">else</span> {
+                itemObj.<span class="hljs-property">markdownContent</span> = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readMarkdownFile</span>(itemPath);
+                itemObj.<span class="hljs-property">htmlContent</span> = <span class="hljs-keyword">await</span> <span class="hljs-title function_">transformMarkdown2Html</span>(itemObj.<span class="hljs-property">markdownContent</span>);
+            }
+            dirList.<span class="hljs-title function_">push</span>(itemObj);
+        }
+        <span class="hljs-keyword">return</span> dirList;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">dep</span>(markdownFolderPath);
+}
+</code></pre>
+<p>通过上面的递归方法，就可以获取到 markdown 文件夹下的结构，内容以及对应的html内容。</p>
+<p>接下来 将结构转换成 目录。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">buildSidebar</span>(<span class="hljs-params">markdownFolderInfo, deepCount = <span class="hljs-number">1</span></span>) {
+    <span class="hljs-keyword">const</span> sidebar = [];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> info <span class="hljs-keyword">of</span> markdownInfo) {
+        <span class="hljs-keyword">if</span> (info.<span class="hljs-property">isDirectory</span>) {
+            <span class="hljs-keyword">let</span> obj = {
+                <span class="hljs-attr">name</span>: info.<span class="hljs-property">name</span>,
+                <span class="hljs-attr">element</span>: <span class="hljs-string">`&lt;div class=&#x27;level-<span class="hljs-subst">${deepCount}</span> folder&#x27;&gt;<span class="hljs-subst">${info.name}</span>&lt;/div&gt;`</span>
+            };
+            obj.<span class="hljs-property">children</span> = <span class="hljs-title function_">buildSidebar</span>(info.<span class="hljs-property">children</span>, deepCount + <span class="hljs-number">1</span>);
+            sidebar.<span class="hljs-title function_">push</span>(obj);
+        } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">let</span> htmlPath = <span class="hljs-title function_">transformMarkdownPath2HtmlPath</span>(info.<span class="hljs-property">path</span>);
+                <span class="hljs-keyword">let</span> hrefPath = <span class="hljs-title function_">buildHrefPath</span>(htmlPath, deepCount);
+                <span class="hljs-comment">// 通过层级来去控制目录级别</span>
+                <span class="hljs-keyword">const</span> element = <span class="hljs-string">`&lt;div class=&#x27;level-<span class="hljs-subst">${deepCount}</span>&#x27;&gt;&lt;a href=&quot;<span class="hljs-subst">${basePath + hrefPath}</span>&quot;&gt;<span class="hljs-subst">${info.name}</span>&lt;/a&gt;&lt;/div&gt;`</span>;
+                <span class="hljs-keyword">const</span> obj = {
+                    <span class="hljs-attr">name</span>: info.<span class="hljs-property">name</span>,
+                    hrefPath,
+                    <span class="hljs-attr">element</span>: element
+                };
+                sidebar.<span class="hljs-title function_">push</span>(obj);
+        }
+    }
+    <span class="hljs-keyword">return</span> sidebar;
+}
+<span class="hljs-comment">// 转换成相对路径</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">buildHrefPath</span>(<span class="hljs-params">htmlPath, deep</span>) {
+    <span class="hljs-keyword">const</span> htmlPathList = htmlPath.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>);
+    <span class="hljs-keyword">return</span> htmlPathList.<span class="hljs-title function_">slice</span>(htmlPathList.<span class="hljs-property">length</span> - deep - <span class="hljs-number">1</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;/&#x27;</span>);
+}
+<span class="hljs-comment">// markdown 路径转换成 html 文件路径</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">transformMarkdownPath2HtmlPath</span>(<span class="hljs-params">markdownFilePath</span>) {
+    <span class="hljs-keyword">const</span> filePath = markdownFilePath.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;/&#x27;</span>);
+    <span class="hljs-keyword">const</span> htmlPath = filePath.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">dir</span> =&gt;</span> {
+        <span class="hljs-keyword">if</span> (dir === <span class="hljs-string">&#x27;markdown&#x27;</span>) {
+            dir = <span class="hljs-string">&#x27;html&#x27;</span>;
+        }
+        <span class="hljs-keyword">if</span> (dir &amp;&amp; dir.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;.&#x27;</span>) &gt; -<span class="hljs-number">1</span>) {
+            dir = dir.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/.md/</span>, <span class="hljs-string">&#x27;.html&#x27;</span>);
+        }
+        <span class="hljs-keyword">return</span> dir;
+    });
+    <span class="hljs-keyword">return</span> htmlPath.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;/&#x27;</span>);
+}
+</code></pre>
+<h3>组装数据</h3>
+<p>哦吼、现在我们已经拥有了 目录 和 博客内容 的 html 代码的。</p>
+<p>我使用 template.html 作为模板，承接上面的这些 html 代码。</p>
+<pre><code class="language-html">...
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sider&quot;</span>&gt;</span> siderCode <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;content&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span>
+                contentCode
+            <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+...
+</code></pre>
+<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleMarkdownInfo</span>(<span class="hljs-params">markdownInfo, sidebarCode</span>) {
+    <span class="hljs-comment">// 判断是否是文件夹 </span>
+    <span class="hljs-keyword">if</span> (markdownInfo.<span class="hljs-property">isDirectory</span>) {
+        <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">mkdirSync</span>(<span class="hljs-title function_">transformMarkdownPath2HtmlPath</span>(markdownInfo.<span class="hljs-property">path</span>));
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> markdownChild <span class="hljs-keyword">of</span> markdownInfo.<span class="hljs-property">children</span>) {
+            <span class="hljs-title function_">handleMarkdownInfo</span>(markdownChild, sidebarCode);
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 读取template文件 进行字符串替换 然后存储</span>
+        <span class="hljs-keyword">const</span> templateCode = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFileSync</span>(path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;../template/template.html&#x27;</span>));
+        <span class="hljs-keyword">let</span> htmlFileContent = templateCode.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/siderCode/</span>, sidebarCode).<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/contentCode/</span>, markdownInfo.<span class="hljs-property">htmlContent</span>).<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/blogTitle/</span>, markdownInfo.<span class="hljs-property">name</span>);
+        <span class="hljs-title function_">saveTransformResultForHtml</span>(<span class="hljs-title function_">transformMarkdownPath2HtmlPath</span>(markdownInfo.<span class="hljs-property">path</span>), htmlFileContent);
+    }
+}
+<span class="hljs-comment">// 存储文件</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">saveTransformResultForHtml</span>(<span class="hljs-params">htmlPath, htmlContent</span>) {
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">writeFileSync</span>(htmlPath, htmlContent);
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<p>到目前，我们已经能实现将 markdown 文件转换成 html 文件。</p>
+<h2>填坑</h2>
+<h3>样式</h3>
+<p>我直接将样式写在了 template 内，这样就省去了一个css文件的请求，因为css内容并不多。</p>
+<h3>oss</h3>
+<p>静态资源这块，我通过最初创建的服务进行返回。
+不过，在处理svg文件的时候，需要将svg的返回格式设置为 svg 。前端才能正常读取。</p>
+<h3>目录名称</h3>
+<p>因为我这边都是markdown文件，文件名都是英文，怎么转换中文，或者 有一些草稿内容，怎么做？</p>
+<p>我使用一个json文件，将要发布的放在其内，并且在读取内容的时候，判断是否在json中，这样不仅可以做转换，还可以实现本地草稿。例如：</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;home.md&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;首页&quot;</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3>激活效果</h3>
+<p>这个我直接在 template 中写了一点js</p>
+<pre><code class="language-javascript">&lt;script&gt;
+    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;DOMContentLoaded&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
+        <span class="hljs-keyword">let</span> url = location.<span class="hljs-property">href</span>;
+        <span class="hljs-keyword">let</span> aEl = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementsByTagName</span>(<span class="hljs-string">&#x27;a&#x27;</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> el <span class="hljs-keyword">of</span> aEl) {
+            <span class="hljs-keyword">if</span> (el.<span class="hljs-property">href</span> === url) {
+                el.<span class="hljs-property">style</span>.<span class="hljs-property">color</span> = <span class="hljs-string">&#x27;rgb(66, 185, 131)&#x27;</span>
+            }
+        }
+    })
+&lt;/script&gt;
+</code></pre>
+<h3>首页</h3>
+<p>这个东西是没有做首页相关的，所以需要自己指定，在koa的应用中直接返回写死。【未来看怎么优化】</p>
+<h2>最终效果</h2>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ee89481695ed494e9273453890bd8e88~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<h2>未来优化点</h2>
+<ul>
+<li>koa的中间件
+<ul>
+<li>统计功能接入</li>
+<li>首页 优化</li>
+</ul>
+</li>
+<li>增加额外的 nav</li>
+<li>直接编写 html 作为内容</li>
+<li>抽离成包 共享大家</li>
+</ul>
+<h2>总结</h2>
+<p>博客从第一版 前后端分离 到 第二版 doscifly 再到最新的这一版本，感觉是逐步在优化的。现在这个版本的服务器预渲染，生成，应该对seo也有点好处，看能不能通过啥推广一下。嘿嘿。</p>
+<p>自己搞搞事情还是很开心的。</p>
+
+            </section>
+        </div>
+    </div>
+</body>
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    code {
+        margin: 30px 2px;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)'
+            }
+        }
+    })
+</script>
+
+</html>
