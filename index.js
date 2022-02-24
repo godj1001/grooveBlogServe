@@ -11,8 +11,11 @@ app.use(async ctx => {
         ctx.body = content.toString();
         return;
     }
+
     let pathList = ctx.path.split('/');
     if (pathList.includes('oss')) {
+        const content = await readFileSync(path.join(__dirname, ctx.path));
+
         if (pathList[pathList.length - 1].indexOf('.svg') > -1) {
             ctx.type = 'svg';
             ctx.body = content.toString();
