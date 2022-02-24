@@ -3,5 +3,8 @@ node_modules
 /lib
 .DS_Store
 /dist
-./html
+
 ./node_modules
+
+./html
+./package-lock.json
