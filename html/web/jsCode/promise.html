@@ -175,6 +175,106 @@ promise1.<span class="hljs-title function_">then</span>(<span class="hljs-functi
 </code></pre>
 <p>到这里，promise的基本功能已经实现了。</p>
 <p>还差什么呢？ 就是Promise链式的这个能力。</p>
+<h2>promise 链式 【2022年2月25日】</h2>
+<p>什么是promise的链式呢？ 简单说就是promise.then方法调用结束后，会继续返回一个 promise 。</p>
+<pre><code class="language-javascript">...
+<span class="hljs-comment">// 重写一下 promise then</span>
+<span class="hljs-title function_">then</span>(<span class="hljs-params">onFulfilled, onRejected</span>) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseState</span> === <span class="hljs-string">&#x27;fulfilled&#x27;</span>) {
+            <span class="hljs-title function_">onFulfilled</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseResult</span>);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseState</span> === <span class="hljs-string">&#x27;rejected&#x27;</span>) {
+            <span class="hljs-title function_">onRejected</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseReason</span>);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseState</span> === <span class="hljs-string">&#x27;pending&#x27;</span>) {
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">fulfilledCallback</span>.<span class="hljs-title function_">push</span>(onFulfilled);
+            <span class="hljs-variable language_">this</span>.<span class="hljs-property">rejectedCallback</span>.<span class="hljs-title function_">push</span>(onRejected);
+        }
+
+        <span class="hljs-keyword">const</span> newPromise = <span class="hljs-keyword">new</span> <span class="hljs-title class_">NewPromise</span>(<span class="hljs-function">(<span class="hljs-params">resolve,reject</span>) =&gt;</span> {
+            <span class="hljs-keyword">if</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseState</span> === <span class="hljs-string">&#x27;fulfilled&#x27;</span>){
+                <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+                    <span class="hljs-keyword">try</span>{
+                       <span class="hljs-keyword">let</span> x = <span class="hljs-title function_">onFulfilled</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseResult</span>);
+                       <span class="hljs-title function_">resolvePromise</span>(newPromise,x,resolve,reject)
+                    }<span class="hljs-keyword">catch</span>(e){
+                        <span class="hljs-title function_">reject</span>(e)
+                    }
+                })
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseState</span> === <span class="hljs-string">&#x27;rejected&#x27;</span>){
+                <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+                    <span class="hljs-keyword">try</span>{
+                        <span class="hljs-keyword">let</span> x = <span class="hljs-title function_">onRejected</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseReason</span>)
+                         <span class="hljs-title function_">resolvePromise</span>(newPromise,x,resolve,reject)
+                    }<span class="hljs-keyword">catch</span>(e){
+                        <span class="hljs-title function_">reject</span>(e)
+                    }
+                })
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">promiseState</span> ===<span class="hljs-string">&#x27;pending&#x27;</span>){
+                <span class="hljs-variable language_">this</span>.<span class="hljs-property">fulfilledCallback</span>.<span class="hljs-title function_">push</span>(onFulfilled);
+                <span class="hljs-variable language_">this</span>.<span class="hljs-property">rejectedCallback</span>.<span class="hljs-title function_">push</span>(onRejected);
+            }
+        })
+
+        <span class="hljs-keyword">return</span> newPromise
+}
+...
+
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">resolvePromise</span>(<span class="hljs-params">promise2, x, resolve, reject</span>) {
+    <span class="hljs-keyword">if</span> (x === promise2) {
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">&#x27;chaining cycle&#x27;</span>));
+    }
+
+    <span class="hljs-keyword">if</span> (x <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">NewPromise</span>) {
+        <span class="hljs-comment">//  处理返回是promise</span>
+        <span class="hljs-keyword">if</span> (x.<span class="hljs-property">status</span> === <span class="hljs-string">&#x27;pending&#x27;</span>) {
+            x.<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">y</span> =&gt;</span> {
+                <span class="hljs-title function_">resolvePromise</span>(promise2, y, resolve, reject);
+            }, reject);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x.<span class="hljs-property">status</span> === <span class="hljs-string">&#x27;fulfilled&#x27;</span>) {
+            <span class="hljs-title function_">resolve</span>(x.<span class="hljs-property">result</span>);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x.<span class="hljs-property">status</span> === <span class="hljs-string">&#x27;rejected&#x27;</span>) {
+            <span class="hljs-title function_">reject</span>(x.<span class="hljs-property">reason</span>);
+        }
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x !== <span class="hljs-literal">null</span> &amp;&amp; ((<span class="hljs-keyword">typeof</span> x === <span class="hljs-string">&#x27;object&#x27;</span> || <span class="hljs-keyword">typeof</span> x === <span class="hljs-string">&#x27;function&#x27;</span>))) {
+        <span class="hljs-comment">//  </span>
+        <span class="hljs-keyword">let</span> then = <span class="hljs-literal">null</span>;
+        <span class="hljs-keyword">try</span> {
+            then = x.<span class="hljs-property">then</span>;
+        } <span class="hljs-keyword">catch</span> (e) {
+            <span class="hljs-keyword">return</span> <span class="hljs-title function_">reject</span>(e);
+        }
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> then === <span class="hljs-string">&#x27;function&#x27;</span>) {
+            <span class="hljs-keyword">let</span> called = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">try</span> {
+                then.<span class="hljs-title function_">call</span>(x,
+                    <span class="hljs-function"><span class="hljs-params">y</span> =&gt;</span> {
+                        <span class="hljs-keyword">if</span> (called) <span class="hljs-keyword">return</span>;
+                        called = <span class="hljs-literal">true</span>;
+                        <span class="hljs-title function_">resolvePromise</span>(promise2, y, resolve, reject);
+                    },
+                    <span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> {
+                        <span class="hljs-keyword">if</span> (called) <span class="hljs-keyword">return</span>;
+                        called = <span class="hljs-literal">true</span>;
+                        <span class="hljs-title function_">reject</span>(r);
+                    }
+                );
+            } <span class="hljs-keyword">catch</span> (e) {
+                <span class="hljs-keyword">if</span> (called) <span class="hljs-keyword">return</span>;
+                called = <span class="hljs-literal">true</span>;
+                <span class="hljs-title function_">reject</span>(e);
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-title function_">resolve</span>(x);
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_">resolve</span>(x);
+    }
+}
+</code></pre>
+<p>then方法会返回一个 promise ，然后会通过 resolvePromise 去处理上一个 promise 的结果，然后循环调用起来，就可以达成 promise 的链式调用。</p>
+<h2>总结</h2>
+<p>手写 promise 真的是一个很好的方式去开阔自己的思路，去学习 js ，坚持啃下来，会有一个很好的提升。</p>
 
             </section>
         </div>

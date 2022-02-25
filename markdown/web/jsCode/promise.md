@@ -183,3 +183,111 @@ console.log(4);
 
 还差什么呢？ 就是Promise链式的这个能力。
 
+
+
+## promise 链式 【2022年2月25日】
+
+什么是promise的链式呢？ 简单说就是promise.then方法调用结束后，会继续返回一个 promise 。 
+
+```javascript
+...
+// 重写一下 promise then
+then(onFulfilled, onRejected) {
+        if (this.promiseState === 'fulfilled') {
+            onFulfilled(this.promiseResult);
+        } else if (this.promiseState === 'rejected') {
+            onRejected(this.promiseReason);
+        } else if (this.promiseState === 'pending') {
+            this.fulfilledCallback.push(onFulfilled);
+            this.rejectedCallback.push(onRejected);
+        }
+
+        const newPromise = new NewPromise((resolve,reject) => {
+            if(this.promiseState === 'fulfilled'){
+                setTimeout(() => {
+                    try{
+                       let x = onFulfilled(this.promiseResult);
+                       resolvePromise(newPromise,x,resolve,reject)
+                    }catch(e){
+                        reject(e)
+                    }
+                })
+            }else if (this.promiseState === 'rejected'){
+                setTimeout(() => {
+                    try{
+                        let x = onRejected(this.promiseReason)
+                         resolvePromise(newPromise,x,resolve,reject)
+                    }catch(e){
+                        reject(e)
+                    }
+                })
+            }else if (this.promiseState ==='pending'){
+                this.fulfilledCallback.push(onFulfilled);
+                this.rejectedCallback.push(onRejected);
+            }
+        })
+
+        return newPromise
+}
+...
+
+
+function resolvePromise(promise2, x, resolve, reject) {
+    if (x === promise2) {
+        return reject(new TypeError('chaining cycle'));
+    }
+
+    if (x instanceof NewPromise) {
+        //  处理返回是promise
+        if (x.status === 'pending') {
+            x.then(y => {
+                resolvePromise(promise2, y, resolve, reject);
+            }, reject);
+        } else if (x.status === 'fulfilled') {
+            resolve(x.result);
+        } else if (x.status === 'rejected') {
+            reject(x.reason);
+        }
+    } else if (x !== null && ((typeof x === 'object' || typeof x === 'function'))) {
+        //  
+        let then = null;
+        try {
+            then = x.then;
+        } catch (e) {
+            return reject(e);
+        }
+
+        if (typeof then === 'function') {
+            let called = false;
+            try {
+                then.call(x,
+                    y => {
+                        if (called) return;
+                        called = true;
+                        resolvePromise(promise2, y, resolve, reject);
+                    },
+                    r => {
+                        if (called) return;
+                        called = true;
+                        reject(r);
+                    }
+                );
+            } catch (e) {
+                if (called) return;
+                called = true;
+                reject(e);
+            }
+        } else {
+            resolve(x);
+        }
+    } else {
+        return resolve(x);
+    }
+}
+```
+
+then方法会返回一个 promise ，然后会通过 resolvePromise 去处理上一个 promise 的结果，然后循环调用起来，就可以达成 promise 的链式调用。
+
+## 总结
+
+手写 promise 真的是一个很好的方式去开阔自己的思路，去学习 js ，坚持啃下来，会有一个很好的提升。
