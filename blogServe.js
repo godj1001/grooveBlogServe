@@ -1,5 +1,6 @@
 const MarkdownIt = require('markdown-it');
 const fs = require('fs');
+const readFileSync = require('fs').readFileSync;
 const path = require('path');
 const {execSync} = require('child_process');
 const hljs = require('highlight.js');
