@@ -16,6 +16,11 @@
             <section>
                 contentCode
             </section>
+
+            <div class="comment-box">
+                <input type="text" id="commentEmail" placeholder="value">
+                <textarea id="commentContent" class="comment-content" placeholder="comment content"></textarea>
+            </div>
         </div>
     </div>
 </body>
@@ -230,6 +235,46 @@
 
     section code {
         margin: 30px 2px;
+    }
+
+    .comment-box {
+        width: 100%;
+        max-width: 1200px;
+        min-width: 880px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #444c56;
+        box-sizing: border-box;
+        background-color: white;
+    }
+
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-fg-default);
+        vertical-align: middle;
+        background-color: var(--color-canvas-default);
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        border: 1px solid black;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    .comment-content {
+        margin-top: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        border-radius: 6px;
+        outline: none;
+        border: 1px solid black;
+
     }
 </style>
 <script>

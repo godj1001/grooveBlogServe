@@ -11,7 +11,7 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider"> <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
         <div class="content">
             <section>
                 <h1>promise</h1>
@@ -277,6 +277,11 @@ promise1.<span class="hljs-title function_">then</span>(<span class="hljs-functi
 <p>手写 promise 真的是一个很好的方式去开阔自己的思路，去学习 js ，坚持啃下来，会有一个很好的提升。</p>
 
             </section>
+
+            <div class="comment-box">
+                <input type="text" id="commentEmail" placeholder="value">
+                <textarea id="commentContent" class="comment-content" placeholder="comment content"></textarea>
+            </div>
         </div>
     </div>
 </body>
@@ -491,6 +496,46 @@ promise1.<span class="hljs-title function_">then</span>(<span class="hljs-functi
 
     section code {
         margin: 30px 2px;
+    }
+
+    .comment-box {
+        width: 100%;
+        max-width: 1200px;
+        min-width: 880px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #444c56;
+        box-sizing: border-box;
+        background-color: white;
+    }
+
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-fg-default);
+        vertical-align: middle;
+        background-color: var(--color-canvas-default);
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        border: 1px solid black;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    .comment-content {
+        margin-top: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        border-radius: 6px;
+        outline: none;
+        border: 1px solid black;
+
     }
 </style>
 <script>

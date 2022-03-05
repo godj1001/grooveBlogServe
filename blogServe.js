@@ -6,7 +6,8 @@ const {execSync} = require('child_process');
 const hljs = require('highlight.js');
 const KoaLogger = require('koa-logger');
 const Koa = require('koa');
-
+const Router = require('koa-router');
+const router = new Router();
 const defautOptions = {
     markdownFilePath: path.join(__dirname, './markdown'),
     htmlOutputPath: path.join(__dirname, './html'),
@@ -244,6 +245,9 @@ async function blogServe(option) {
             ctx.body = fail.toString();
         }
     };
+
+    router;
+
 
     const app = new Koa();
 
