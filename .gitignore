@@ -6,6 +6,6 @@ node_modules/*
 
 ./node_modules
 
-./html
+./html/*
 ./package-lock.json
-./visit.json
+visit.json
