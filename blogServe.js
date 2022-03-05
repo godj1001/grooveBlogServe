@@ -15,7 +15,7 @@ const defautOptions = {
     port: 3000,
     homePagePath: '',
     transformPath: path.join(__dirname, './sidebar.json'),
-    location: 'http://localhost:3000',
+    location: 'http://groove-zhang.cn/',
     failHtmlPath: path.join(__dirname, './template/404.html')
 };
 
