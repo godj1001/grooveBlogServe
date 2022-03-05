@@ -214,7 +214,11 @@ async function blogServe(option) {
         } else {
             visit[ctx.path] = 1;
         }
-        fs.writeFile(path.join(__dirname, './visit.json'), JSON.stringify(visit));
+        fs.writeFile(path.join(__dirname, './visit.json'), JSON.stringify(visit), (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
         if (ctx.path === '/') {
             const content = await readFileSync(path.join(__dirname, '/html/about.html'));
             ctx.body = content.toString();

@@ -8,3 +8,4 @@ node_modules
 
 ./html
 ./package-lock.json
+./visit.json
