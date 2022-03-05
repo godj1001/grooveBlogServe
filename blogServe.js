@@ -15,9 +15,11 @@ const defautOptions = {
     port: 3000,
     homePagePath: '',
     transformPath: path.join(__dirname, './sidebar.json'),
-    location: 'http://groove-zhang.cn/',
+    location: 'http://localhost:3000',
     failHtmlPath: path.join(__dirname, './template/404.html')
 };
+
+
 async function blogServe(option) {
     const options = Object.assign(defautOptions, option);
     let mdNameJson = {};
@@ -206,6 +208,13 @@ async function blogServe(option) {
     }
 
     const handleCtx = async (ctx) => {
+        const visit = require('./visit.json');
+        if (visit[ctx.path]) {
+            visit[ctx.path]++;
+        } else {
+            visit[ctx.path] = 1;
+        }
+        fs.writeFile(path.join(__dirname, './visit.json'), JSON.stringify(visit));
         if (ctx.path === '/') {
             const content = await readFileSync(path.join(__dirname, '/html/about.html'));
             ctx.body = content.toString();
