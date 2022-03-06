@@ -343,6 +343,9 @@
         }
     })
     let submitBtn = document.getElementById('submitBtn')
+
+    const host = hostPath;
+
     submitBtn.addEventListener('click', () => {
         let commentEmail = document.getElementById('commentEmail')
         let commentMessage = document.getElementById('commentContent')
@@ -356,7 +359,7 @@
             alert('请输入评论内容')
             return
         }
-        ajax('post', 'http://groove-zhang.cn/comment', {
+        ajax('post', host + '/comment', {
             blogPath: location.pathname,
             commentEmail: commentEmail.value,
             commentMessage: commentMessage.value

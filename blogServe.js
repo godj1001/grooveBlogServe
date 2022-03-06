@@ -177,10 +177,11 @@ async function blogServe(option) {
             }
         } else {
             const templateCode = await fs.readFileSync(templateHtmlPath);
-            let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent).replace(/blogTitle/, mdNameJson[markdownInfo.name]);
+            let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent).replace(/blogTitle/, mdNameJson[markdownInfo.name]).replace(/hostPath/, options.location);
             saveTransformResultForHtml(markdownInfo.htmlPath, htmlFileContent);
         }
     }
+
     async function folderExist(inputPath) {
         let pathList = inputPath.split('/');
         let currentPath = '/';
@@ -221,9 +222,10 @@ async function blogServe(option) {
         const failFile = await fs.readFileSync(options.failHtmlPath);
         await saveTransformResultForHtml(path.join(options.htmlOutputPath, '404.html'), failFile.toString());
 
-
         getMPath2HPath(markdownDirContentInfoList);
     }
+
+
     async function testVisitJson() {
         const exist = await fs.existsSync('./visit.json');
         return exist;
@@ -294,7 +296,7 @@ async function blogServe(option) {
             const content = await readFileSync(path.join(__dirname, ctx.path));
             ctx.body = content.toString();
         } catch (e) {
-            const fail = await readFileSync(path.join(__dirname, './html/404.html'));
+            const fail = await readFileSync(options.failHtmlPath);
             ctx.body = fail.toString();
         }
     });
@@ -305,9 +307,24 @@ async function blogServe(option) {
     app.use(KoaLogger());
 
     await init(options);
+    const dog = [
+        "░░░░░░░░░░░░░░░░░░░░░░░░▄░░",
+        "░░░░░░░░░▐█░░░░░░░░░░░▄▀▒▌░",
+        "░░░░░░░░▐▀▒█░░░░░░░░▄▀▒▒▒▐",
+        "░░░░░░░▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐",
+        "░░░░░▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐",
+        "░░░▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌",
+        "░░▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒",
+        "░░▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐",
+        "░▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄",
+        "░▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒",
+        "▀▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒"
+    ];
+
 
     app.listen(options.port, () => {
-        console.log('blog serve is open at port: ' + options.port);
+        console.log(dog.join('\n'));
+        console.log('blog serve is open at ' + options.port);
     });
 }
 
