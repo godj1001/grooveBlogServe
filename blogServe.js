@@ -7,6 +7,7 @@ const hljs = require('highlight.js');
 const KoaLogger = require('koa-logger');
 const Koa = require('koa');
 const Router = require('koa-router');
+const bodyparser = require('koa-bodyparser');
 const router = new Router();
 const defautOptions = {
     markdownFilePath: path.join(__dirname, './markdown'),
@@ -43,6 +44,8 @@ async function blogServe(option) {
             return '';
         }
     });
+
+    const markdownPath2htmlPathObj = {};
     // 转换 markdown 内容的方法 
     // TODO 增加事件广播
     function transformMarkdown2Html(markdownContent) {
@@ -150,6 +153,7 @@ async function blogServe(option) {
                 let itemObj = {
                     name: item,
                     path: itemPath,
+                    htmlPath: transformMarkdownPath2HtmlPath(itemPath)
                 };
                 if (itemStat.isDirectory()) {
                     itemObj.isDirectory = true;
@@ -168,14 +172,14 @@ async function blogServe(option) {
 
     async function handleMarkdownInfo(markdownInfo, sidebarCode) {
         if (markdownInfo.isDirectory) {
-            await fs.mkdirSync(transformMarkdownPath2HtmlPath(markdownInfo.path));
+            await fs.mkdirSync(markdownInfo.htmlPath);
             for (let markdownChild of markdownInfo.children) {
                 handleMarkdownInfo(markdownChild, sidebarCode);
             }
         } else {
             const templateCode = await fs.readFileSync(templateHtmlPath);
             let htmlFileContent = templateCode.toString().replace(/siderCode/, sidebarCode).replace(/contentCode/, markdownInfo.htmlContent).replace(/blogTitle/, mdNameJson[markdownInfo.name]);
-            saveTransformResultForHtml(transformMarkdownPath2HtmlPath(markdownInfo.path), htmlFileContent);
+            saveTransformResultForHtml(markdownInfo.htmlPath, htmlFileContent);
         }
     }
     async function folderExist(inputPath) {
@@ -190,6 +194,17 @@ async function blogServe(option) {
         }
         return true;
     }
+
+    function getMPath2HPath(markdownDirContentInfoList) {
+        for (let item of markdownDirContentInfoList) {
+            if (item.isDirectory) {
+                getMPath2HPath(item.children);
+            } else {
+                markdownPath2htmlPathObj[item.htmlPath] = item.path;
+            }
+        }
+    }
+
     async function init(options) {
         // 判断输出路径是否存在 不存在便创建
         await folderExist(options.htmlOutputPath);
@@ -206,9 +221,23 @@ async function blogServe(option) {
         //  build index html
         const failFile = await fs.readFileSync(options.failHtmlPath);
         await saveTransformResultForHtml(path.join(options.htmlOutputPath, '404.html'), failFile.toString());
+
+
+        getMPath2HPath(markdownDirContentInfoList);
+    }
+    async function testVisitJson() {
+        const exist = await fs.existsSync('./visit.json');
+        console.log(exist);
+        return exist;
     }
 
-    const handleCtx = async (ctx) => {
+    async function makeSureVisitJson() {
+        let exist = await testVisitJson();
+        if (!exist) {
+            await fs.writeFileSync(path.join(__dirname, './visit.json'), '{}');
+        }
+    }
+    function updateVisitJson(ctx) {
         const visit = require('./visit.json');
         if (visit[ctx.path]) {
             visit[ctx.path]++;
@@ -220,23 +249,48 @@ async function blogServe(option) {
                 console.log(err);
             }
         });
-        if (ctx.path === '/') {
-            const content = await readFileSync(path.join(__dirname, '/html/about.html'));
+    }
+
+    await makeSureVisitJson();
+
+    router.get('/', async (ctx) => {
+        updateVisitJson(ctx);
+        const content = await readFileSync(path.join(__dirname, '/html/about.html'));
+        ctx.body = content.toString();
+        return;
+    });
+
+    router.get('/oss/(.*)', async (ctx) => {
+        updateVisitJson(ctx);
+        let pathList = ctx.path.split('/');
+        const content = await readFileSync(path.join(__dirname, ctx.path));
+        if (pathList[pathList.length - 1].indexOf('.svg') > -1) {
+            ctx.type = 'svg';
             ctx.body = content.toString();
-            return;
+        } else {
+            ctx.body = content;
+        }
+    });
+
+    router.post('/comment', async (ctx) => {
+        const body = ctx.request.body;
+        const htmlFilePath = path.join(__dirname, body.blogPath);
+        const commentTemplate = await fs.readFileSync(path.join(__dirname, './template/commentTemplate.html')).toString();
+        const commentString = commentTemplate.replace('commentEmail', body.commentEmail).replace('commentMessage', body.commentMessage);
+
+        const markdownFilePath = markdownPath2htmlPathObj[htmlFilePath] || '';
+
+        if (markdownFilePath) {
+            await fs.appendFileSync(markdownFilePath, commentString);
+            init(options);
         }
 
-        let pathList = ctx.path.split('/');
-        if (pathList.includes('oss')) {
-            const content = await readFileSync(path.join(__dirname, ctx.path));
-            if (pathList[pathList.length - 1].indexOf('.svg') > -1) {
-                ctx.type = 'svg';
-                ctx.body = content.toString();
-            } else {
-                ctx.body = content;
-            }
-            return;
-        }
+        ctx.status = 200;
+        ctx.body = {code: 200};
+        ctx.response.type = 'application/json';
+    });
+    router.get('/(.*)', async (ctx) => {
+        updateVisitJson(ctx);
         try {
             const content = await readFileSync(path.join(__dirname, ctx.path));
             ctx.body = content.toString();
@@ -244,16 +298,11 @@ async function blogServe(option) {
             const fail = await readFileSync(path.join(__dirname, './html/404.html'));
             ctx.body = fail.toString();
         }
-    };
-
-    router;
-
-
+    });
     const app = new Koa();
-
+    app.use(bodyparser());
+    app.use(router.routes());
     app.use(KoaLogger());
-
-    app.use(handleCtx);
 
     await init(options);
 
