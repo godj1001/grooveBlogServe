@@ -40,7 +40,6 @@ async function blogServe(option) {
                     return hljs.highlight(str, {language: lang}).value;
                 } catch (__) { }
             }
-
             return '';
         }
     });
@@ -227,7 +226,6 @@ async function blogServe(option) {
     }
     async function testVisitJson() {
         const exist = await fs.existsSync('./visit.json');
-        console.log(exist);
         return exist;
     }
 
@@ -237,6 +235,7 @@ async function blogServe(option) {
             await fs.writeFileSync(path.join(__dirname, './visit.json'), '{}');
         }
     }
+
     function updateVisitJson(ctx) {
         const visit = require('./visit.json');
         if (visit[ctx.path]) {
@@ -299,6 +298,7 @@ async function blogServe(option) {
             ctx.body = fail.toString();
         }
     });
+
     const app = new Koa();
     app.use(bodyparser());
     app.use(router.routes());
