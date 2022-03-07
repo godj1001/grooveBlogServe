@@ -14,7 +14,9 @@
 
 <body>
     <div class="page">
-        <div class="sider"> <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div> </div>
+        <div class="sider">
+            <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div>
+        </div>
         <div class="content">
             <section>
                 <p>look</p>
@@ -318,21 +320,21 @@
 
     const ajax = (methon, path, data) => {
         return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
+            let xhr = new XMLHttpRequest();
             xhr.open(methon.toUpperCase(), path, true);
             //设置发送数据的请求格式
             xhr.setRequestHeader('content-type', 'application/json');
             xhr.onreadystatechange = function () {
                 if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.responseText))
+                    resolve(JSON.parse(xhr.responseText));
                 } else {
-                    reject(JSON.parse(xhr.responseText))
+                    reject(JSON.parse(xhr.responseText));
                 }
-            }
+            };
             //将用户输入值序列化成字符串
             xhr.send(JSON.stringify(data));
-        })
-    }
+        });
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
         let url = location.href;
@@ -342,23 +344,23 @@
                 el.style.color = 'rgb(66, 185, 131)';
             }
         }
-    })
-    let submitBtn = document.getElementById('submitBtn')
+    });
+    let submitBtn = document.getElementById('submitBtn');
 
-    const host = http://groove-zhang.cn/;
+    const host = `http://localhost:3000/`;
 
     submitBtn.addEventListener('click', () => {
-        let commentEmail = document.getElementById('commentEmail')
-        let commentMessage = document.getElementById('commentContent')
-        const emailRep = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+        let commentEmail = document.getElementById('commentEmail');
+        let commentMessage = document.getElementById('commentContent');
+        const emailRep = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
         if (!emailRep.test(commentEmail.value)) {
-            alert('请输入正确邮箱')
-            commentEmail.value = ''
-            return
+            alert('请输入正确邮箱');
+            commentEmail.value = '';
+            return;
         }
         if (commentMessage.value === '') {
-            alert('请输入评论内容')
-            return
+            alert('请输入评论内容');
+            return;
         }
         ajax('post', host + '/comment', {
             blogPath: location.pathname,
@@ -366,12 +368,12 @@
             commentMessage: commentMessage.value
         }).then(res => {
             console.log(res);
-            alert('评论已经提交，正在审核 ~ ')
-            commentEmail.value = ''
-            commentMessage.value = ''
+            alert('评论已经提交，正在审核 ~ ');
+            commentEmail.value = '';
+            commentMessage.value = '';
         }, err => {
-            alert('评论失败，请稍后再试 ~ ')
-        })
+            alert('评论失败，请稍后再试 ~ ');
+        });
     })
 </script>
 

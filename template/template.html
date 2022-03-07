@@ -14,7 +14,9 @@
 
 <body>
     <div class="page">
-        <div class="sider"> siderCode </div>
+        <div class="sider">
+            siderCode
+        </div>
         <div class="content">
             <section>
                 contentCode
@@ -317,21 +319,21 @@
 
     const ajax = (methon, path, data) => {
         return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest()
+            let xhr = new XMLHttpRequest();
             xhr.open(methon.toUpperCase(), path, true);
             //设置发送数据的请求格式
             xhr.setRequestHeader('content-type', 'application/json');
             xhr.onreadystatechange = function () {
                 if (xhr.status === 200) {
-                    resolve(JSON.parse(xhr.responseText))
+                    resolve(JSON.parse(xhr.responseText));
                 } else {
-                    reject(JSON.parse(xhr.responseText))
+                    reject(JSON.parse(xhr.responseText));
                 }
-            }
+            };
             //将用户输入值序列化成字符串
             xhr.send(JSON.stringify(data));
-        })
-    }
+        });
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
         let url = location.href;
@@ -341,23 +343,23 @@
                 el.style.color = 'rgb(66, 185, 131)';
             }
         }
-    })
-    let submitBtn = document.getElementById('submitBtn')
+    });
+    let submitBtn = document.getElementById('submitBtn');
 
-    const host = hostPath;
+    const host = `hostPath`;
 
     submitBtn.addEventListener('click', () => {
-        let commentEmail = document.getElementById('commentEmail')
-        let commentMessage = document.getElementById('commentContent')
-        const emailRep = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+        let commentEmail = document.getElementById('commentEmail');
+        let commentMessage = document.getElementById('commentContent');
+        const emailRep = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
         if (!emailRep.test(commentEmail.value)) {
-            alert('请输入正确邮箱')
-            commentEmail.value = ''
-            return
+            alert('请输入正确邮箱');
+            commentEmail.value = '';
+            return;
         }
         if (commentMessage.value === '') {
-            alert('请输入评论内容')
-            return
+            alert('请输入评论内容');
+            return;
         }
         ajax('post', host + '/comment', {
             blogPath: location.pathname,
@@ -365,12 +367,12 @@
             commentMessage: commentMessage.value
         }).then(res => {
             console.log(res);
-            alert('评论已经提交，正在审核 ~ ')
-            commentEmail.value = ''
-            commentMessage.value = ''
+            alert('评论已经提交，正在审核 ~ ');
+            commentEmail.value = '';
+            commentMessage.value = '';
         }, err => {
-            alert('评论失败，请稍后再试 ~ ')
-        })
+            alert('评论失败，请稍后再试 ~ ');
+        });
     })
 </script>
 
