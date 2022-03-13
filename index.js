@@ -2,5 +2,5 @@ const {blogServe} = require('./blogServe');
 
 
 blogServe({
-    location: 'http://groove-zhang.cn/'
+    // location: 'http://groove-zhang.cn/'
 });

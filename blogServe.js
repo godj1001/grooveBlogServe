@@ -293,6 +293,9 @@ async function blogServe(option) {
     router.get('/(.*)', async (ctx) => {
         updateVisitJson(ctx);
         try {
+            if (!ctx.path.split('/').includes('html')) {
+                throw new Error('without html');
+            }
             const content = await readFileSync(path.join(__dirname, ctx.path));
             ctx.body = content.toString();
         } catch (e) {
