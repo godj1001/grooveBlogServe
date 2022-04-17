@@ -17,6 +17,8 @@
 ## 全家桶
 既然上面提到了 Vue 全家桶，那么究竟谁是 Vue 官方提供呢？
 * Vue
+    * 2.x 
+    * 3.x   
 * Vue Cli
 * Vue Loader
 * Vue Router
@@ -27,20 +29,4 @@
 
 涵盖了Vue使用中的绝大多数场景，当然，还有很多社区贡献的内容。
 
-接下来，我们挨个看看 Vue 全家桶的内容。
-
-## Vue Cli
-待补充
-
-## Vue Loader
-待补充
-
-## Vue Router
-待补充
-
-## Vuex
-待补充
-
-## Vue Server Renderer
-待补充
 
