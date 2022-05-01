@@ -19,6 +19,6 @@
     "cli.md": "原来写一个脚手架如此容易",
     "groove-cli.md": "groove-cli中文文档",
     "blog.md": "构建一个博客服务器",
-    "postcss.md": "poctCss 食用",
-    "vue2-observe.md": "vue2 响应式原理"
+    "vue2-observe.md": "vue2 响应式原理",
+    "js-desigin-contruction.md": "设计模式 - 结构型"
 }
