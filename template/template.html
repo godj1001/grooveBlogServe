@@ -8,30 +8,7 @@
     <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
     <title> blogTitle </title>
 </head>
-<script>
 
-</script>
-
-<body>
-    <div class="page">
-        <div class="sider">
-            siderCode
-        </div>
-        <div class="content">
-            <section>
-                contentCode
-            </section>
-
-            <div class="comment-box">
-                <input type="text" id="commentEmail" placeholder="your email ">
-                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
-                <div class="button-bar">
-                    <button class="submit-btn" id='submitBtn'>submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 <style>
     body,
     div,
@@ -315,8 +292,29 @@
         margin-top: 30px;
     }
 </style>
-<script type="text/javascript">
 
+<body>
+    <div class="page">
+        <div class="sider">
+            siderCode
+        </div>
+        <div class="content">
+            <section>
+                contentCode
+            </section>
+
+            <div class="comment-box">
+                <input type="text" id="commentEmail" placeholder="your email ">
+                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
+                <div class="button-bar">
+                    <button class="submit-btn" id='submitBtn'>submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
     const ajax = (methon, path, data) => {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
