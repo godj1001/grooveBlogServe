@@ -20,5 +20,6 @@
     "groove-cli.md": "groove-cli中文文档",
     "blog.md": "构建一个博客服务器",
     "vue2-observe.md": "vue2 响应式原理",
-    "js-desigin-contruction.md": "设计模式 - 结构型"
+    "js-desigin-contruction.md": "设计模式 - 结构型",
+    "workflow.md":"写完了代码，我算完成了工作么？"
 }
