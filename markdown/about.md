@@ -54,7 +54,7 @@
 
 ---
 
-![我是谁](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2682618724,2098056066&fm=26&gp=0.jpg)
+<!-- ![我是谁](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2682618724,2098056066&fm=26&gp=0.jpg) -->
 
 </center>
 
