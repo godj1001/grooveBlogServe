@@ -6,64 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <meta name="lark:url:enable" content="true">
+    <meta name="lark:url:video_icon_url" content="http://groove-zhang.cn/oss/favicon.ico">
+    <meta name="lark:url:video_iframe_url" content="https://xxxx.com/player.html">
+    <meta name="lark:url:video_title" content="Groove的博客">
     <title> 0.1 + 0.2 != 0.3 </title>
 </head>
-<script>
 
-</script>
-
-<body>
-    <div class="page">
-        <div class="sider">
-            <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div>
-        </div>
-        <div class="content">
-            <section>
-                <h2>为什么js中 0.1 + 0.2 != 0.3</h2>
-<blockquote>
-<p>一个老生常谈的问题</p>
-</blockquote>
-<h3>背景</h3>
-<pre><code class="language-javascript"><span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span> != <span class="hljs-number">0.3</span>
-</code></pre>
-<p>第一次知道时，我简直震惊，why？</p>
-<p>原来js这门编程语言是采用的IEEE 754 双精度版本（64位）.</p>
-<blockquote>
-<p>IEEE二进制浮点数算术标准（IEEE 754）是20世纪80年代以来最广泛使用的浮点数运算标准，为许多CPU与浮点运算器所采用</p>
-</blockquote>
-<p>所有采用IEEE 754的语言都会产生该问题、</p>
-<p>那么究竟是为什么呢？</p>
-<p>那就要从小数转成二进制来说了</p>
-<pre><code class="language-javascript"><span class="hljs-comment">// 0.125  十进制 -&gt; 二进制</span>
-<span class="hljs-number">0.125</span> * <span class="hljs-number">2</span> = <span class="hljs-number">0.25</span>  <span class="hljs-comment">//取0</span>
-<span class="hljs-number">0.25</span> * <span class="hljs-number">2</span> = <span class="hljs-number">0.5</span>    <span class="hljs-comment">//取0</span>
-<span class="hljs-number">0.5</span> * <span class="hljs-number">2</span> = <span class="hljs-number">1</span>       <span class="hljs-comment">//取1</span>
-<span class="hljs-comment">// 0.001 (0.125 的二进制)</span>
-</code></pre>
-<p>小数转换成二进制就是通过不断乘2来判断二进制位是0还是1。
-通过这样的方法，就可以获取小数的二进制。</p>
-<p>那么可以得到</p>
-<pre><code>0.1 =&gt; 0.000110011...
-0.2 =&gt; 0.00111000111... 
-0.3 =&gt; 0.01001100...
-</code></pre>
-<p>在IEEE 754双精度下，六十四为中符号占一位，整数位占十一位，其余的五十二位都是小数。无限小数都会在末尾进行进位，
-最后 这两个二进制的数相加然后转换成十进制，就是0.30000000000000004</p>
-<h3>总结</h3>
-<p>js在操作高精度的小数操作时，需要额外注意这些情况。</p>
-
-            </section>
-
-            <div class="comment-box">
-                <input type="text" id="commentEmail" placeholder="your email ">
-                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
-                <div class="button-bar">
-                    <button class="submit-btn" id='submitBtn'>submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 <style>
     body,
     div,
@@ -347,8 +296,61 @@
         margin-top: 30px;
     }
 </style>
-<script type="text/javascript">
 
+<body>
+    <div class="page">
+        <div class="sider">
+            <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/css/overflow-left.html">分享一个冷知识，文字溢出左侧省略号</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/css/postcss.html">PostCss 简单食用</a></div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-desigin-contruction.html">设计模式 - 结构型</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/workflow.html">写完了代码，我算完成了工作么？</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue2-observe.html">vue2 响应式原理</a></div>
+        </div>
+        <div class="content">
+            <section>
+                <h2>为什么js中 0.1 + 0.2 != 0.3</h2>
+<blockquote>
+<p>一个老生常谈的问题</p>
+</blockquote>
+<h3>背景</h3>
+<pre><code class="language-javascript"><span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span> != <span class="hljs-number">0.3</span>
+</code></pre>
+<p>第一次知道时，我简直震惊，why？</p>
+<p>原来js这门编程语言是采用的IEEE 754 双精度版本（64位）.</p>
+<blockquote>
+<p>IEEE二进制浮点数算术标准（IEEE 754）是20世纪80年代以来最广泛使用的浮点数运算标准，为许多CPU与浮点运算器所采用</p>
+</blockquote>
+<p>所有采用IEEE 754的语言都会产生该问题、</p>
+<p>那么究竟是为什么呢？</p>
+<p>那就要从小数转成二进制来说了</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// 0.125  十进制 -&gt; 二进制</span>
+<span class="hljs-number">0.125</span> * <span class="hljs-number">2</span> = <span class="hljs-number">0.25</span>  <span class="hljs-comment">//取0</span>
+<span class="hljs-number">0.25</span> * <span class="hljs-number">2</span> = <span class="hljs-number">0.5</span>    <span class="hljs-comment">//取0</span>
+<span class="hljs-number">0.5</span> * <span class="hljs-number">2</span> = <span class="hljs-number">1</span>       <span class="hljs-comment">//取1</span>
+<span class="hljs-comment">// 0.001 (0.125 的二进制)</span>
+</code></pre>
+<p>小数转换成二进制就是通过不断乘2来判断二进制位是0还是1。
+通过这样的方法，就可以获取小数的二进制。</p>
+<p>那么可以得到</p>
+<pre><code>0.1 =&gt; 0.000110011...
+0.2 =&gt; 0.00111000111... 
+0.3 =&gt; 0.01001100...
+</code></pre>
+<p>在IEEE 754双精度下，六十四为中符号占一位，整数位占十一位，其余的五十二位都是小数。无限小数都会在末尾进行进位，
+最后 这两个二进制的数相加然后转换成十进制，就是0.30000000000000004</p>
+<h3>总结</h3>
+<p>js在操作高精度的小数操作时，需要额外注意这些情况。</p>
+
+            </section>
+
+            <div class="comment-box">
+                <input type="text" id="commentEmail" placeholder="your email ">
+                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
+                <div class="button-bar">
+                    <button class="submit-btn" id='submitBtn'>submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
     const ajax = (methon, path, data) => {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
@@ -378,7 +380,7 @@
     });
     let submitBtn = document.getElementById('submitBtn');
 
-    const host = `http://localhost:3000/`;
+    const host = `http://groove-zhang.cn/`;
 
     submitBtn.addEventListener('click', () => {
         let commentEmail = document.getElementById('commentEmail');

@@ -10,7 +10,7 @@
     <meta name="lark:url:video_icon_url" content="http://groove-zhang.cn/oss/favicon.ico">
     <meta name="lark:url:video_iframe_url" content="https://xxxx.com/player.html">
     <meta name="lark:url:video_title" content="Groove的博客">
-    <title> undefined </title>
+    <title> 分享一个冷知识，文字溢出左侧省略号 </title>
 </head>
 
 <style>
@@ -304,8 +304,82 @@
         </div>
         <div class="content">
             <section>
-                <h1>vite</h1>
-<h2></h2>
+                <h1>背景</h1>
+<p>因为没有仔细看设计稿，突然发现有这么一个 UI 细节，左侧省略号。这个就触及到了我的知识盲区了。</p>
+<h1>实现</h1>
+<p>在我的常规认知中，一般都是右侧省略号。</p>
+<p>我们先初始化一下这个结构。</p>
+<pre><code class="language-javascript">&lt;style&gt;
+    .<span class="hljs-property">box</span>{
+        max-<span class="hljs-attr">width</span>: 150px;
+        <span class="hljs-attr">background</span>: <span class="hljs-title function_">rgb</span>(<span class="hljs-number">157</span>, <span class="hljs-number">157</span>, <span class="hljs-number">156</span>);
+        <span class="hljs-attr">padding</span>: 8px;
+    }
+&lt;/style&gt;
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span>
+        这里是一个超长文本，用于测试省略功能。
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span>
+</code></pre>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c91519ea9278412db41a4653c9eb89db~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<p>对于左侧省略号，我第一反应是用js对字符串进行剪切，然后进行补充。</p>
+<pre><code class="language-javascript">&lt;script&gt;
+    <span class="hljs-keyword">const</span> box = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;box&#x27;</span>)
+    
+    <span class="hljs-keyword">const</span> innerTextLength = box.<span class="hljs-property">outerText</span>.<span class="hljs-property">length</span>;
+    <span class="hljs-keyword">const</span> newContent = box.<span class="hljs-property">outerText</span>.<span class="hljs-title function_">slice</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">0</span>,innerTextLength-<span class="hljs-number">8</span>),innerTextLength)
+    <span class="hljs-keyword">if</span>(innerTextLength &gt; <span class="hljs-number">8</span>){
+        box.<span class="hljs-property">innerHTML</span> = <span class="hljs-string">&#x27;...&#x27;</span>+ newContent;
+    }
+&lt;/script&gt;
+</code></pre>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86f1432b2a0043e5a882be7496b3d55d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<p>功能是实现了，但是这种方案会出现很多的问题，比如国际化切换语言后，文本长度变化以及各种适配等等。</p>
+<p>在上网搜索一番后，找到了css这边的解决方案。那就是 <strong>css direction</strong> 。</p>
+<blockquote>
+<p>CSS 属性 <strong><code>direction</code></strong> 用来设置文本、表列水平溢出的方向。 <code>rtl</code> 表示从右到左 (类似希伯来语或阿拉伯语)， <code>ltr</code> 表示从左到右 (类似英语等大部分语言).</p>
+</blockquote>
+<p>我们先实现右侧省略</p>
+<pre><code>    .box{
+        max-width: 150px;
+        background: rgb(157, 157, 156);
+        padding: 8px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</code></pre>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5b67a0cd338b4dbe89c99299ffd0e3e7~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<p>我们通过添加 css 属性 <code>dirction: rtl ; </code> 后，就可以实现了左侧省略号。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1f4567197ffd4ce6ac4ebd252dac273a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<p>但是如果文本不够长的时候，会出现文本右对齐，这个时候就添加 <code>text-align: left;</code>就可以解决这个问题。</p>
+<h1>最终</h1>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+    <span class="hljs-selector-class">.box</span>{
+        <span class="hljs-attribute">max-width</span>: <span class="hljs-number">150px</span>;
+        <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">157</span>, <span class="hljs-number">157</span>, <span class="hljs-number">156</span>);
+        <span class="hljs-attribute">padding</span>: <span class="hljs-number">8px</span>;
+        <span class="hljs-comment">/* 溢出文本省略 */</span>
+        <span class="hljs-attribute">white-space</span>: nowrap;
+        <span class="hljs-attribute">overflow</span>: hidden;
+        <span class="hljs-attribute">text-overflow</span>: ellipsis;
+        <span class="hljs-comment">/* 溢出文本左侧省略 */</span>
+        <span class="hljs-attribute">text-align</span>: left;
+        <span class="hljs-attribute">direction</span>: rtl;
+    }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span>
+        这里是一个超长文本，用于测试省略功能。
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<h1>总结</h1>
+<p>在前端效果实现中，css的优先级是非常高的。</p>
+<p>今天学到了新知识，分享一哈</p>
 
             </section>
 

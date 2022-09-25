@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <meta name="lark:url:enable" content="true">
+    <meta name="lark:url:video_icon_url" content="http://groove-zhang.cn/oss/favicon.ico">
+    <meta name="lark:url:video_iframe_url" content="https://xxxx.com/player.html">
+    <meta name="lark:url:video_title" content="Groove的博客">
+    <title> 设计模式 - 结构型 </title>
+</head>
+
+<style>
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    code,
+    legend,
+    button form,
+    fieldset,
+    input,
+    textarea,
+    p,
+    blockquote,
+    th,
+    td {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        color: #34495e;
+    }
+
+    a {
+        text-decoration: none;
+        color: #505d6b;
+
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .language-javascript .hljs-keyword {
+        color: coral
+    }
+
+    .language-javascript .hljs-title {
+        color: darkcyan;
+    }
+
+    .page {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .sider {
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 100%;
+        min-width: 200px;
+        width: 300px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .content {
+        box-sizing: border-box;
+        height: 100%;
+        flex-grow: 1;
+        padding: 0 30px;
+        background-color: white;
+        overflow: hidden;
+        overflow-y: auto;
+        padding-bottom: 30px;
+    }
+
+    .level-1,
+    .level-2,
+    .level-3 {
+        color: #505d6b;
+        font-size: 14px;
+        font-weight: 400;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 6px;
+        line-height: 30px;
+    }
+
+    .level-1 {
+        text-indent: 10px;
+    }
+
+    .level-2 {
+        text-indent: 20px;
+    }
+
+    .level-3 {
+        text-indent: 30px;
+    }
+
+    .folder {
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    section {
+        min-width: 880px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    section p {
+        margin: 1.2em 0;
+        line-height: 25px;
+    }
+
+    section h1,
+    section h2,
+    section h3,
+    section h4,
+    section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    hr {
+        border: none;
+        border-bottom: 1px solid #eee;
+        margin: 2em 0;
+    }
+
+    h1 {
+        margin-top: 40px;
+    }
+
+    h2 {
+        margin-top: 32px;
+    }
+
+    h3 {
+        margin-top: 24px;
+    }
+
+    h4 {
+        margin-top: 16px;
+    }
+
+    h5 {
+        margin-top: 8px;
+    }
+
+    section ul,
+    section ol {
+        padding-left: 24px;
+    }
+
+    section pre {
+        padding: 20px 44px;
+        line-height: 24px;
+        overflow: auto;
+        word-wrap: normal;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        margin: 30px 0;
+    }
+
+    section table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        margin-bottom: 1rem;
+        overflow: auto;
+        width: 100%;
+    }
+
+    section tr {
+        border-top: 1px solid #ccc;
+    }
+
+    section td {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    section th {
+        border: 1px solid #ddd;
+        padding: 6px 13px;
+    }
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+
+    section code {
+        margin: 30px 2px;
+    }
+
+    .comment-box {
+        width: 100%;
+        max-width: 1200px;
+        min-width: 880px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #444c56;
+        box-sizing: border-box;
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-fg-default);
+        vertical-align: middle;
+        background-color: var(--color-canvas-default);
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        border: 1px solid black;
+        border-radius: 6px;
+        outline: none;
+    }
+
+    .comment-content {
+        margin-top: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        border-radius: 6px;
+        outline: none;
+        border: 1px solid black;
+        resize: none;
+    }
+
+    .submit-btn {
+        box-sizing: border-box;
+        padding: 10px 15px;
+        background-color: rgb(66, 185, 131);
+        color: white;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .comment-email {
+        padding-right: 10px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .comment-message {
+        margin-top: 10px;
+
+    }
+
+    .comment {
+        background: rgb(255, 250, 241);
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 30px;
+    }
+</style>
+
+<body>
+    <div class="page">
+        <div class="sider">
+            <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/css/overflow-left.html">分享一个冷知识，文字溢出左侧省略号</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/css/postcss.html">PostCss 简单食用</a></div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-desigin-contruction.html">设计模式 - 结构型</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/workflow.html">写完了代码，我算完成了工作么？</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue2-observe.html">vue2 响应式原理</a></div>
+        </div>
+        <div class="content">
+            <section>
+                <h1>设计模式 - 结构型模式</h1>
+<p>我们在代码中创建了很多的类的实例，那么如何将他们组合起来，这就是 结构型模式 所负责的事情。</p>
+<h2>适配器模式</h2>
+<p>概念：适配器模式是得一个结构与其它接口兼容，从而给多个不同接口的同一抽象。</p>
+<h3>举例</h3>
+<p>我们大家都用过数据线，现在出来了那种可以通过添加头部的适配器，来实现给安卓口手机充电，typeC口 还有 苹果口的手机充电。</p>
+<p>我们尝试代码实现以下。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">IosPhone</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">interface</span> = <span class="hljs-string">&#x27;ios&#x27;</span>
+    }
+
+    <span class="hljs-title function_">charge</span>(<span class="hljs-params">chargeLine</span>){
+        <span class="hljs-keyword">if</span>(chargeLine.<span class="hljs-property">type</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">interface</span> ){
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">AndroidPhone</span> {
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">interface</span> = <span class="hljs-string">&#x27;android&#x27;</span>
+    }
+
+    <span class="hljs-title function_">charge</span>(<span class="hljs-params">chargeLine</span>){
+       <span class="hljs-keyword">if</span>(chargeLine.<span class="hljs-property">type</span> === <span class="hljs-variable language_">this</span>.<span class="hljs-property">interface</span> ){
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span> 
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">ChargeLine</span>{
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;android&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">connect</span>(<span class="hljs-params">phone,chargeLine</span>){
+    <span class="hljs-keyword">return</span> phone.<span class="hljs-title function_">charge</span>(chargeLine)
+}
+<span class="hljs-keyword">let</span> iphone = <span class="hljs-keyword">new</span> <span class="hljs-title class_">IosPhone</span>()
+
+<span class="hljs-keyword">let</span> mi1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AndroidPhone</span>()
+
+<span class="hljs-keyword">let</span> chargeLine = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChargeLine</span>()
+
+<span class="hljs-title function_">connect</span>(iphone,chargeLine)  <span class="hljs-comment">// false</span>
+
+<span class="hljs-title function_">connect</span>(mi1,chargeLine) <span class="hljs-comment">// true</span>
+
+</code></pre>
+<p>现在，我们无法给iPhone充电。我们使用适配器模式来去解决这个问题。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Adapter</span>{
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">line</span>= <span class="hljs-keyword">new</span> <span class="hljs-title class_">ChargeLine</span>()
+    }
+
+    <span class="hljs-title function_">use</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">line</span>.<span class="hljs-property">type</span> + <span class="hljs-string">&#x27;改变为&#x27;</span> + <span class="hljs-string">&#x27;ios&#x27;</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;ios&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">let</span> adapter= <span class="hljs-keyword">new</span> <span class="hljs-title class_">Adapter</span>(chargeLine)
+
+<span class="hljs-title function_">connect</span>(iphone, adapter.<span class="hljs-title function_">use</span>()) <span class="hljs-comment">// true</span>
+</code></pre>
+<p>哇哦，我们通过适配器，获得了一根新的充电线。哈哈哈 。</p>
+<h3>适用性</h3>
+<ul>
+<li>想要使用一个已经存在的类，但是接口不符合使用的需求。</li>
+<li>创建一个可以复用的类，该类可以与其他保护相关的类或不可预见的类协同工作。</li>
+</ul>
+<h2>桥接模式</h2>
+<p>桥接模式的意图是将抽象部分和他的视线部分分离，使他们可以独立的变化。【起初我是非常不理解这个模式，但是看了一个例子后，我就彻底明白这个例子了】。</p>
+<p>我就直接举例子了：</p>
+<p>我们大家都吃过披萨吧，披萨的底盘和上面的馅料组合的。</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// 首先定义好一个pizza的结构</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Pizza</span> {
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">filling</span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">filling</span> = filling
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">flavors</span> = <span class="hljs-string">&#x27;&#x27;</span>
+    }
+
+    <span class="hljs-title function_">finish</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.filling.getContent()}</span> is on the <span class="hljs-subst">${<span class="hljs-variable language_">this</span>.flavors}</span>`</span>)
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">CheesePizza</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Pizza</span>{
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">filling</span>){
+        <span class="hljs-variable language_">super</span>(filling)
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">flavors</span> = <span class="hljs-string">&#x27;cheese&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SausagePizza</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Pizza</span> {
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">filling</span>) {
+        <span class="hljs-variable language_">super</span>(filling)
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">flavors</span> = <span class="hljs-string">&#x27;sausage&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Filling</span>{
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>){
+        
+    }
+    <span class="hljs-title function_">getContent</span>(<span class="hljs-params"></span>){
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;base filling&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">FruitsFilling</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Filling</span>{
+    <span class="hljs-title function_">getContent</span>(<span class="hljs-params"></span>){
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;fruits&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">TomatoFilling</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Filling</span> {
+    <span class="hljs-title function_">getContent</span>(<span class="hljs-params"></span>){
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;tomato&#x27;</span>
+    }
+}
+
+<span class="hljs-keyword">let</span> tomato = <span class="hljs-keyword">new</span> <span class="hljs-title class_">TomatoFilling</span>()
+
+<span class="hljs-keyword">let</span> tomatoSausagePizza = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SausagePizza</span>(tomato);
+tomatoSausagePizza.<span class="hljs-title function_">finish</span>(); <span class="hljs-comment">//tomato is on the sausage pizza</span>
+<span class="hljs-keyword">let</span> tomatoCheesePizza = <span class="hljs-keyword">new</span> <span class="hljs-title class_">CheesePizza</span>(tomato);
+tomatoCheesePizza.<span class="hljs-title function_">finish</span>(); <span class="hljs-comment">//tomato is on the cheese pizza</span>
+</code></pre>
+<p>构建了一个Pizza的基类，然后创建两个继承这个基类的 CheesePizza 和 SausagePizza 。然后我们构建一个口味的基类，然后创建两个集成口味基类的。这样，我们将口味传入不同的基类就可以达到独立变化的效果。【很多时候我们都使用这个方法，但是并没有系统的认知到它是什么】</p>
+<h3>适用性</h3>
+<ul>
+<li>不希望在抽象和它的实现之间有一个固定的绑定关系。
+<ul>
+<li>比如我们在构建一些需要在运行时进行替换或者切换的部分。</li>
+</ul>
+</li>
+<li>类的抽象以及他的实现都应该可以通过生成子类的方式加以扩充。
+<ul>
+<li>Bridge模式使你可以对不同的抽象接口和实现部分进行组合，并分别对他们进行扩充。</li>
+</ul>
+</li>
+</ul>
+<h3>优点</h3>
+<p>Bridge 模式有以下优点：</p>
+<ul>
+<li>分离接口以及实现部分
+<ul>
+<li>接口与实现分离有助于分层，从而产生更好的结构化系统，系统的高层部分仅须知道 抽象 和 实现。</li>
+</ul>
+</li>
+<li>提高可扩展性。
+<ul>
+<li>可以分别对 抽象层 和 实现层进行拓展。</li>
+</ul>
+</li>
+</ul>
+<h2>组合模式</h2>
+<p>将对象组合成树形结构来表示 部分 - 整体 的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。</p>
+<h3>例子</h3>
+<p>举一个最简单的例子就是 - 文件夹结构，我们都知道 文件夹内可以放文件，可以放可以放文件夹。这样产生了一个组合的结构。</p>
+<p><img src="../../../oss/compose.png" alt="compose"></p>
+<p>接下来进入编码。首先分析我们需要什么,实现一个文件夹类，实现一个文件类。文件夹类型内可以包含文件类或者文件夹类型。</p>
+<pre><code class="language-typescript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">FileClass</span> {
+    <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>;
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params">content: <span class="hljs-built_in">string</span></span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">content</span> = content;
+    }
+    <span class="hljs-title function_">showContent</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">content</span>;
+    }
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">FloderClass</span> {
+    <span class="hljs-attr">content</span>: <span class="hljs-title class_">Array</span>&lt;<span class="hljs-title class_">FloderClass</span> | <span class="hljs-title class_">FileClass</span>&gt;;
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">content</span> = [];
+    }
+    <span class="hljs-title function_">add</span>(<span class="hljs-params">content: FileClass | FloderClass</span>) {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">content</span>.<span class="hljs-title function_">push</span>(content);
+    }
+    <span class="hljs-title function_">showContent</span>(): <span class="hljs-built_in">string</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">`[<span class="hljs-subst">${<span class="hljs-variable language_">this</span>.content.map(item =&gt; {
+            <span class="hljs-keyword">return</span> item.showContent();
+        }).join(<span class="hljs-string">&#x27;,&#x27;</span>)}</span>]`</span>;
+    }
+}
+
+
+<span class="hljs-keyword">const</span> floder = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FloderClass</span>();
+<span class="hljs-keyword">const</span> file1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileClass</span>(<span class="hljs-string">&#x27;file 1&#x27;</span>);
+<span class="hljs-keyword">const</span> file2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileClass</span>(<span class="hljs-string">&#x27;file 2&#x27;</span>);
+
+<span class="hljs-keyword">const</span> floder2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FloderClass</span>();
+
+<span class="hljs-keyword">const</span> file3 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileClass</span>(<span class="hljs-string">&#x27;file 3&#x27;</span>);
+floder2.<span class="hljs-title function_">add</span>(file3);
+floder.<span class="hljs-title function_">add</span>(file1);
+floder.<span class="hljs-title function_">add</span>(file2);
+floder.<span class="hljs-title function_">add</span>(floder2);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(floder.<span class="hljs-title function_">showContent</span>());<span class="hljs-comment">// [file 1,file 2,[file 3]]</span>
+</code></pre>
+<h3>适用性</h3>
+<p>通过上面的例子,应该对于组合模式有所了解。组合模式适用于 想要表示对象的部分 - 整体的层次结构，或者 希望用户葫芦哦组合对象与单个对象的不同，用户将统一的使用组合结构中的所有对象。</p>
+<h2>装饰模式</h2>
+<p>动态的给一个对象添加一些额外的职责。就增加功能来说装饰器模式相对于生成子类更为灵活。</p>
+<p>有时候我们希望给某个对象添加一些功能，但是又不想更改整个对象。这个时候就需要泳道装饰器模式了。</p>
+<h3>适用性</h3>
+<p>我们可以在一下情况使用装饰器模式：</p>
+<ul>
+<li>在不影响其他对象的情况下，用动态，透明的放肆给单个对象添加功能。</li>
+<li>处理一些可以撤销的功能。</li>
+<li>作为替换生成子类的方法进行拓展。不能生成子类的情况是 可能有大量独立的拓展，需要为每一种组合将产生大量的子类。</li>
+</ul>
+<h3>例子</h3>
+<p>不知道大家有没有看过高达么？它是一个很好的例子，核心的永远是人型的机器人，而各种火炮，战刀等，都是配件，也可以理解成装饰器。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Gundam</span> {
+    <span class="hljs-title function_">attack</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;attack enemy 10 hp by fist&#x27;</span>);
+    }
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">cannonEquipment</span>(<span class="hljs-params">target</span>) {
+    target.<span class="hljs-property">attack</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;attack enemy 50 hp by cannon&#x27;</span>);
+    };
+    <span class="hljs-keyword">return</span> target;
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">swordsEquipment</span>(<span class="hljs-params">target</span>) {
+    target.<span class="hljs-property">attack</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;attack enemy 30 hp by swords&#x27;</span>);
+    };
+    <span class="hljs-keyword">return</span> target;
+};
+
+<span class="hljs-keyword">let</span> swordsGundam = <span class="hljs-keyword">new</span> <span class="hljs-title function_">swordsEquipment</span>(<span class="hljs-title class_">Gundam</span>);
+swordsGundam.<span class="hljs-title function_">attack</span>();
+
+<span class="hljs-keyword">let</span> cannonGundam = <span class="hljs-keyword">new</span> <span class="hljs-title function_">cannonEquipment</span>(<span class="hljs-title class_">Gundam</span>);
+cannonGundam.<span class="hljs-title function_">attack</span>(); 
+</code></pre>
+<p>通过装饰器模式，我们给高达分别装备了 剑 和 火炮 。这样也避免不断的生成子类来。</p>
+<h3>特点</h3>
+<ul>
+<li>装饰器模式比静态继承更灵活。</li>
+<li>避免在层级结构高层的类有太多的特征，使得高层类更具有通用性。</li>
+</ul>
+<p>装饰器有优点也会有缺点，缺点就是会有诸多的小对象，虽然不是用类，但依旧是使用方法来去进行拓展。另一个就是 被装饰的组件和这个组件是有差异的，因此使用装饰的时候不应该依赖对象标识。</p>
+<h2>外观模式</h2>
+<p>在开发中，我们需要将大的一个系统拆分成很多子系统，这样有利于降低整个系统的复杂度。外观模式就是应对这样的场景。</p>
+<p>外观模式可以有效的降低子系统间的通信和相互依赖关系降低到最低。</p>
+<p>外观模式（Facede）模式定义了一个高层接口，这个接口使的子系统更容易使用。</p>
+<p><img src="../../../oss/facede.png" alt="facede"></p>
+<p>通过整合子系统内部，提供一个统一的外观接口。</p>
+<h3>适用性</h3>
+<ul>
+<li>需要为一个复杂子系统提供一个简单接口时。子系统往往因为不断演变变化，会逐步复杂。外观模式可以提供一个简单的缺省视图，提供最简单的使用方法，用来满足绝大多数的业务需求，对于特定需求可以绕过facede这一层。</li>
+<li>用来解耦客户程序和子系统。这也是外观模式的意义。</li>
+<li>需要构建一个层次结构的子系统是，使用外观模式定义每一层的入口点。</li>
+<li>各个子系统存在依赖关系，可以使用外观模式来架构，为每个子系统添加外观接口，可以简化他们的依赖关系。</li>
+</ul>
+<h3>例子</h3>
+<p>很简单的一个例子，比如 我们去警察局啊，派出所，各种机关部门办材料。他们提供的就是一种外观模式。都是通过一个统一的接口：柜台 来处理请求。这样 ，我们不需要了解这些材料要怎么流转，但是可以完成任务。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PoliceStation</span> {
+    <span class="hljs-title class_">Handle</span>(){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">takePhotos</span>()
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">uploadData</span>()
+    }
+
+    <span class="hljs-title function_">takePhotos</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;拍照&#x27;</span>);
+    }
+
+    <span class="hljs-title function_">uploadData</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;上传信息&#x27;</span>);
+    }
+}
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Bank</span> {
+    <span class="hljs-title function_">handle</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">withdraw</span>()
+    }
+
+    <span class="hljs-title function_">withdraw</span>(<span class="hljs-params"></span>){
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;取款&#x27;</span>);
+    }
+}
+</code></pre>
+<p>我们可以到 各种地方的柜台 去办理想办理的业务。</p>
+<h2>享元模式</h2>
+<p>我们都知道 一个复杂对象是存储在堆中，而且我们也知道 在使用这个对象时是这个对象的引用地址。这样我们就可以达成一个共享技术。</p>
+<p>共享一些内容，可以大大简化一些实现逻辑以及代价。</p>
+<p>html 的 class 就是享元模式的一种体现。页面上的一些元素共享一个样式。这样我们可以大大减少样式内容的编写。</p>
+<h3>适用性</h3>
+<ul>
+<li>一个应用程序中使用了大量的对象，</li>
+<li>完全由于使用大量的对象而造成了很大的存储开销</li>
+<li>对象的大多数状态都可以变成外部状态</li>
+<li>如果删除对象的外部状态，那么可以用相对较少的共享对象取代很多对象中的内容。</li>
+<li>应用程序不依赖于对象标识。</li>
+</ul>
+<h3>效果</h3>
+<p>在使用享元模式的时候，需要注意</p>
+<ol>
+<li>删除外部状态。享元模式很重要的一点就是提取出外部状态，提取外部状态到共享对象。</li>
+<li>管理共享对象，因为对象是共享的，所以如何管理共享对象就是 享元模式的一个注意点。</li>
+</ol>
+<p>使用享元模式能有效的节省空间，当共享对象被越多的对象引用，那么就节省越多的空间。但是这个世界是平衡的，享元模式在节省空间的同时，也会增加一些运行时的开销。</p>
+<h2>代理模式</h2>
+<p>代理模式啊，这就是大名鼎鼎的代理模式啊。</p>
+<p>如果你了解vue3的话，就应该知道vue3的响应式相关内容是由proxy来实现的，这个proxy就是代理模式的体现，</p>
+<p>为其他对象提供一种代理以控制对这个对象的访问。</p>
+<h3>分类</h3>
+<p>描述简单的一些模式都会有更加细节的一些分类。
+从如何使用 代理模式 来分为以下几种常见分类：</p>
+<ol>
+<li>远程代理： 为一个对象在不同的地址空间提供局部代理。</li>
+<li>虚代理： 根据需要创建开销很大的对象。</li>
+<li>保护代理，控制对原始对象的访问，可以提供对象的访问权限管理。</li>
+<li>智能指引： 取代了简单的指针。他在访问对象时，执行一些附加操作。</li>
+</ol>
+<p>【这一部分完全抄书，啥也不懂】</p>
+
+            </section>
+
+            <div class="comment-box">
+                <input type="text" id="commentEmail" placeholder="your email ">
+                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
+                <div class="button-bar">
+                    <button class="submit-btn" id='submitBtn'>submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    const ajax = (methon, path, data) => {
+        return new Promise((resolve, reject) => {
+            let xhr = new XMLHttpRequest();
+            xhr.open(methon.toUpperCase(), path, true);
+            //设置发送数据的请求格式
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject(JSON.parse(xhr.responseText));
+                }
+            };
+            //将用户输入值序列化成字符串
+            xhr.send(JSON.stringify(data));
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        let url = location.href;
+        let aEl = document.getElementsByTagName('a');
+        for (let el of aEl) {
+            if (el.href === url) {
+                el.style.color = 'rgb(66, 185, 131)';
+            }
+        }
+    });
+    let submitBtn = document.getElementById('submitBtn');
+
+    const host = `http://groove-zhang.cn/`;
+
+    submitBtn.addEventListener('click', () => {
+        let commentEmail = document.getElementById('commentEmail');
+        let commentMessage = document.getElementById('commentContent');
+        const emailRep = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (!emailRep.test(commentEmail.value)) {
+            alert('请输入正确邮箱');
+            commentEmail.value = '';
+            return;
+        }
+        if (commentMessage.value === '') {
+            alert('请输入评论内容');
+            return;
+        }
+        ajax('post', host + '/comment', {
+            blogPath: location.pathname,
+            commentEmail: commentEmail.value,
+            commentMessage: commentMessage.value
+        }).then(res => {
+            console.log(res);
+            alert('评论已经提交，正在审核 ~ ');
+            commentEmail.value = '';
+            commentMessage.value = '';
+        }, err => {
+            alert('评论失败，请稍后再试 ~ ');
+        });
+    })
+</script>
+
+</html>

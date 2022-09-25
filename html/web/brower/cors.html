@@ -6,127 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="http://groove-zhang.cn/oss/favicon.ico">
+    <meta name="lark:url:enable" content="true">
+    <meta name="lark:url:video_icon_url" content="http://groove-zhang.cn/oss/favicon.ico">
+    <meta name="lark:url:video_iframe_url" content="https://xxxx.com/player.html">
+    <meta name="lark:url:video_title" content="Groove的博客">
     <title> 跨域相关 </title>
 </head>
-<script>
 
-</script>
-
-<body>
-    <div class="page">
-        <div class="sider">
-            <div class='level-1'><a href="http://localhost:3000/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://localhost:3000/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://localhost:3000/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://localhost:3000/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://localhost:3000/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://localhost:3000/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://localhost:3000/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://localhost:3000/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://localhost:3000/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://localhost:3000/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://localhost:3000/html/web/vue/vue-diff.html">vue diff算法解析</a></div>
-        </div>
-        <div class="content">
-            <section>
-                <h1>跨域</h1>
-<p>曾经，作为一个菜鸡，听到跨域这两个字就会浑身颤抖，成为了我迈向更高境界的一个心魔。</p>
-<p>如今，我已修炼多年，今日便要斩这心魔于笔下。</p>
-<h2>为什么会有跨域？</h2>
-<p>跨域来源于浏览器的一个机制，叫做 同源策略 。</p>
-<h2>同源策略</h2>
-<blockquote>
-<p>在Web浏览器中，允许某个网页脚本访问另一个网页的数据，但前提是这两个网页必须有相同的URI、主机名和端口号，一旦两个网站满足上述条件，这两个网站就被认定为具有相同来源。此策略可防止某个网页上的恶意脚本通过该页面的文档对象模型访问另一网页上的敏感数据。</p>
-</blockquote>
-<p>注意这里的浏览器哦</p>
-<h4>为什么会有同源策略</h4>
-<p>同源策略主要是为了限制js的能力，限制js非法读取非同源的cookie，storage，indexDB的内容。</p>
-<h2>跨域方案</h2>
-<p>随着前后端分离，跨域问题也随之越来越多。</p>
-<h3>为什么前后端分离会引发跨域问题？</h3>
-<p>在我游历的时候，学过一本 javaWeb 的秘籍，在那本秘籍的描述下，前端页面是由后端服务返回给浏览器的，浏览器访问网址，服务器返回对应的内容。</p>
-<p>但是随着前后端分离，前端成为静态资源被储存在服务器的某个文件夹下，后端服务则在某个端口中。这个是请求前端资源，前端资源再向服务器发送请求，因为两个资源的端口号可能不一样，这个时候就会发生跨域问题。</p>
-<p>既然说了将它斩于笔下，那么我们就来说说如何解决跨域。</p>
-<h3>CORS</h3>
-<p>跨域资源共享，也是当今解决跨域问题的主流方案。</p>
-<p>浏览器将cors请求分成两类： 简单请求和非简单请求。</p>
-<h4>简单请求</h4>
-<p>请求头为</p>
-<ul>
-<li>HEAD</li>
-<li>GET</li>
-<li>POST</li>
-</ul>
-<p>请求的头信息不超出：</p>
-<ul>
-<li>Accept</li>
-<li>Accept-Language</li>
-<li>Content-Language</li>
-<li>Last-Event-ID</li>
-<li>Content-Type: application/x-www-form-urlencoded、multipart/form-data、text/plain.</li>
-</ul>
-<p>对于简单请求，cors的处理是在头部信息中加入一个origin，来表示本次请求是从哪个网址来,由服务器来判断是否要返回。</p>
-<p>如是origin不在允许的范围内，服务器就会返回一个http回应，这个时候，浏览器会判断这个http回应中有没有Access-Control-Allow-Origin 且 有没有包含请求的 origin。</p>
-<p>浏览器是关键，是执行同源策略的守卫。</p>
-<h4>非简单请求</h4>
-<p>既然明确了什么是简单请求，那么其他的请求就是非简单请求。</p>
-<p>对于非简单请求， 浏览器 会在正式访问之前，有一个预检请求，预检请求使用的就是 OPTIONS 这个方法。</p>
-<p>那么预检请求做什么呢？
-简单来说，就是核查服务器接受不接受这次非简单请求。若是能够接受，则会正式发送请求，若是不能，则会报错。</p>
-<h4>cors总结</h4>
-<p>浏览器是同源策略的执行者，也是cors的执行者。
-浏览器会核验服务器是否允许该地址向服务器发送请求，来去维护同源策略。</p>
-<h3>jsonP</h3>
-<p>在cors出现之前，人们是如何解决跨域的呢？就是这把上古传下来的宝剑 - jsonP。</p>
-<p>在说jsonP之前，再来聊聊同源策略。同源策略究竟限制的是什么呢？
-在定义里面，看到了这么一句话 '此策略可防止某个网页上的恶意脚本通过该页面的文档对象模型访问另一网页上的敏感数据。';</p>
-<p>同源策略仅适用于脚本，那么其他的内容是否可以跨域呢？比如html，比如css。
-原来 所有的带有src的html标签都可以绕过同源策略的检查。
-在这个前提下，就诞生了jsonP。</p>
-<p>通过动态的创建前端script标签，然后将请求地址和数据放入，同时设置一个回调函数。</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">jsonp</span>(<span class="hljs-params">{ url, params, callback }</span>) {
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
-    <span class="hljs-keyword">let</span> script = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>)
-    <span class="hljs-variable language_">window</span>[callback] = <span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) {
-      <span class="hljs-title function_">resolve</span>(data)
-      <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">removeChild</span>(script)
-    }
-    params = { ...params, callback } <span class="hljs-comment">// wd=b&amp;callback=show</span>
-    <span class="hljs-keyword">let</span> arrs = []
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> params) {
-      arrs.<span class="hljs-title function_">push</span>(<span class="hljs-string">`<span class="hljs-subst">${key}</span>=<span class="hljs-subst">${params[key]}</span>`</span>)
-    }
-    script.<span class="hljs-property">src</span> = <span class="hljs-string">`<span class="hljs-subst">${url}</span>?<span class="hljs-subst">${arrs.join(<span class="hljs-string">&#x27;&amp;&#x27;</span>)}</span>`</span>
-    <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(script)
-  })
-}
-</code></pre>
-<p>我被问过这么一个问题，为什么jsonP一定要一个回调函数。</p>
-<p>因为script脚本回去执行，然后怎么将数据回传给之前的处理方法呢，就需要将数据传入一个回调函数中，这样，我们就能感知到jsonP的返回。</p>
-<h3>Websocket</h3>
-<p>websocket的跨域方法就是 我使用另一套规则，来战胜跨域 。。</p>
-<p>websocket 使用ws://这样的方式进行连接，并不是使用http协议来进行数据传输，所以浏览器并不能限制它，再者，websocket本身就是设计成支持跨域的协议。</p>
-<h3>PostMessage</h3>
-<p>PostMessage 跨域的方向和前面的还是有些不同，是在不同网页的脚本之前做跨域。</p>
-<p>例如 在浏览器中，有两个网页 a 和 b 。在 a 网页点击一个按钮，在 b 网页弹出消息。这样的场景就可以使用postMessage来实现。
-现在一些iframe也可以通过这个方式实现通信。</p>
-<h3>IFrame 跨域三兄弟</h3>
-<p>既然有了Postmessage这样的方式，那么在iframe相关的其他方式也就没有那么多使用场景了。但是也列出来，让跨域这个心魔死的干干净净。</p>
-<ul>
-<li>document.domain + iframe</li>
-<li>window.location.hash + iframe</li>
-<li>window.name + iframe</li>
-</ul>
-<p>上面三种方式应对跨域的方式都是通过可以将某些信息传递出来做到跨域的。</p>
-<h2>总结</h2>
-<p>跨域问题，老生常谈，文章一写，心魔溃散。</p>
-<blockquote>
-<p>博客传送门： http://groove-zhang.cn/#/web/brower/cors</p>
-</blockquote>
-<p>如有错误，欢迎指正。</p>
-
-            </section>
-
-            <div class="comment-box">
-                <input type="text" id="commentEmail" placeholder="your email ">
-                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
-                <div class="button-bar">
-                    <button class="submit-btn" id='submitBtn'>submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 <style>
     body,
     div,
@@ -410,8 +296,124 @@
         margin-top: 30px;
     }
 </style>
-<script type="text/javascript">
 
+<body>
+    <div class="page">
+        <div class="sider">
+            <div class='level-1'><a href="http://groove-zhang.cn/html/about.html">关于我</a></div><div class='level-1 folder'>web</div><div class='level-2 folder'>brower</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/brower.html">浏览器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cache.html">缓存相关</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/brower/cors.html">跨域相关</a></div><div class='level-2 folder'>css</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/css/overflow-left.html">分享一个冷知识，文字溢出左侧省略号</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/css/postcss.html">PostCss 简单食用</a></div><div class='level-2 folder'>engineered</div><div class='level-2 folder'>ideological</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-desigin-contruction.html">设计模式 - 结构型</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/js-design-patterns.html">设计模式-创建型</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/ideological/workflow.html">写完了代码，我算完成了工作么？</a></div><div class='level-2 folder'>interview</div><div class='level-2 folder'>jsCode</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/extend.html">js手写系列 - 对象继承</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/jsTools.html">js手写系列 - 工具方法</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/number-error.html">0.1 + 0.2 != 0.3</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/jsCode/promise.html">js手写系列 - Promise</a></div><div class='level-2 folder'>network</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/dns.html">网络协议 - DNS</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/network/http.html">网络协议 - HTTP</a></div><div class='level-2 folder'>packages</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/blog.html">构建一个博客服务器</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/check-dom.html">检查元素是否在页面上</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/cli.html">原来写一个脚手架如此容易</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/packages/groove-cli.html">groove-cli中文文档</a></div><div class='level-2 folder'>react</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/react/event.html">react 事件系统</a></div><div class='level-2 folder'>vue</div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue-diff.html">vue diff算法解析</a></div><div class='level-3'><a href="http://groove-zhang.cn/html/web/vue/vue2-observe.html">vue2 响应式原理</a></div>
+        </div>
+        <div class="content">
+            <section>
+                <h1>跨域</h1>
+<p>曾经，作为一个菜鸡，听到跨域这两个字就会浑身颤抖，成为了我迈向更高境界的一个心魔。</p>
+<p>如今，我已修炼多年，今日便要斩这心魔于笔下。</p>
+<h2>为什么会有跨域？</h2>
+<p>跨域来源于浏览器的一个机制，叫做 同源策略 。</p>
+<h2>同源策略</h2>
+<blockquote>
+<p>在Web浏览器中，允许某个网页脚本访问另一个网页的数据，但前提是这两个网页必须有相同的URI、主机名和端口号，一旦两个网站满足上述条件，这两个网站就被认定为具有相同来源。此策略可防止某个网页上的恶意脚本通过该页面的文档对象模型访问另一网页上的敏感数据。</p>
+</blockquote>
+<p>注意这里的浏览器哦</p>
+<h4>为什么会有同源策略</h4>
+<p>同源策略主要是为了限制js的能力，限制js非法读取非同源的cookie，storage，indexDB的内容。</p>
+<h2>跨域方案</h2>
+<p>随着前后端分离，跨域问题也随之越来越多。</p>
+<h3>为什么前后端分离会引发跨域问题？</h3>
+<p>在我游历的时候，学过一本 javaWeb 的秘籍，在那本秘籍的描述下，前端页面是由后端服务返回给浏览器的，浏览器访问网址，服务器返回对应的内容。</p>
+<p>但是随着前后端分离，前端成为静态资源被储存在服务器的某个文件夹下，后端服务则在某个端口中。这个是请求前端资源，前端资源再向服务器发送请求，因为两个资源的端口号可能不一样，这个时候就会发生跨域问题。</p>
+<p>既然说了将它斩于笔下，那么我们就来说说如何解决跨域。</p>
+<h3>CORS</h3>
+<p>跨域资源共享，也是当今解决跨域问题的主流方案。</p>
+<p>浏览器将cors请求分成两类： 简单请求和非简单请求。</p>
+<h4>简单请求</h4>
+<p>请求头为</p>
+<ul>
+<li>HEAD</li>
+<li>GET</li>
+<li>POST</li>
+</ul>
+<p>请求的头信息不超出：</p>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Last-Event-ID</li>
+<li>Content-Type: application/x-www-form-urlencoded、multipart/form-data、text/plain.</li>
+</ul>
+<p>对于简单请求，cors的处理是在头部信息中加入一个origin，来表示本次请求是从哪个网址来,由服务器来判断是否要返回。</p>
+<p>如是origin不在允许的范围内，服务器就会返回一个http回应，这个时候，浏览器会判断这个http回应中有没有Access-Control-Allow-Origin 且 有没有包含请求的 origin。</p>
+<p>浏览器是关键，是执行同源策略的守卫。</p>
+<h4>非简单请求</h4>
+<p>既然明确了什么是简单请求，那么其他的请求就是非简单请求。</p>
+<p>对于非简单请求， 浏览器 会在正式访问之前，有一个预检请求，预检请求使用的就是 OPTIONS 这个方法。</p>
+<p>那么预检请求做什么呢？
+简单来说，就是核查服务器接受不接受这次非简单请求。若是能够接受，则会正式发送请求，若是不能，则会报错。</p>
+<h4>cors总结</h4>
+<p>浏览器是同源策略的执行者，也是cors的执行者。
+浏览器会核验服务器是否允许该地址向服务器发送请求，来去维护同源策略。</p>
+<h3>jsonP</h3>
+<p>在cors出现之前，人们是如何解决跨域的呢？就是这把上古传下来的宝剑 - jsonP。</p>
+<p>在说jsonP之前，再来聊聊同源策略。同源策略究竟限制的是什么呢？
+在定义里面，看到了这么一句话 '此策略可防止某个网页上的恶意脚本通过该页面的文档对象模型访问另一网页上的敏感数据。';</p>
+<p>同源策略仅适用于脚本，那么其他的内容是否可以跨域呢？比如html，比如css。
+原来 所有的带有src的html标签都可以绕过同源策略的检查。
+在这个前提下，就诞生了jsonP。</p>
+<p>通过动态的创建前端script标签，然后将请求地址和数据放入，同时设置一个回调函数。</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">jsonp</span>(<span class="hljs-params">{ url, params, callback }</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    <span class="hljs-keyword">let</span> script = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;script&#x27;</span>)
+    <span class="hljs-variable language_">window</span>[callback] = <span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) {
+      <span class="hljs-title function_">resolve</span>(data)
+      <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">removeChild</span>(script)
+    }
+    params = { ...params, callback } <span class="hljs-comment">// wd=b&amp;callback=show</span>
+    <span class="hljs-keyword">let</span> arrs = []
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> params) {
+      arrs.<span class="hljs-title function_">push</span>(<span class="hljs-string">`<span class="hljs-subst">${key}</span>=<span class="hljs-subst">${params[key]}</span>`</span>)
+    }
+    script.<span class="hljs-property">src</span> = <span class="hljs-string">`<span class="hljs-subst">${url}</span>?<span class="hljs-subst">${arrs.join(<span class="hljs-string">&#x27;&amp;&#x27;</span>)}</span>`</span>
+    <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(script)
+  })
+}
+</code></pre>
+<p>我被问过这么一个问题，为什么jsonP一定要一个回调函数。</p>
+<p>因为script脚本回去执行，然后怎么将数据回传给之前的处理方法呢，就需要将数据传入一个回调函数中，这样，我们就能感知到jsonP的返回。</p>
+<h3>Websocket</h3>
+<p>websocket的跨域方法就是 我使用另一套规则，来战胜跨域 。。</p>
+<p>websocket 使用ws://这样的方式进行连接，并不是使用http协议来进行数据传输，所以浏览器并不能限制它，再者，websocket本身就是设计成支持跨域的协议。</p>
+<h3>PostMessage</h3>
+<p>PostMessage 跨域的方向和前面的还是有些不同，是在不同网页的脚本之前做跨域。</p>
+<p>例如 在浏览器中，有两个网页 a 和 b 。在 a 网页点击一个按钮，在 b 网页弹出消息。这样的场景就可以使用postMessage来实现。
+现在一些iframe也可以通过这个方式实现通信。</p>
+<h3>IFrame 跨域三兄弟</h3>
+<p>既然有了Postmessage这样的方式，那么在iframe相关的其他方式也就没有那么多使用场景了。但是也列出来，让跨域这个心魔死的干干净净。</p>
+<ul>
+<li>document.domain + iframe</li>
+<li>window.location.hash + iframe</li>
+<li>window.name + iframe</li>
+</ul>
+<p>上面三种方式应对跨域的方式都是通过可以将某些信息传递出来做到跨域的。</p>
+<h2>总结</h2>
+<p>跨域问题，老生常谈，文章一写，心魔溃散。</p>
+<blockquote>
+<p>博客传送门： http://groove-zhang.cn/#/web/brower/cors</p>
+</blockquote>
+<p>如有错误，欢迎指正。</p>
+
+            </section>
+
+            <div class="comment-box">
+                <input type="text" id="commentEmail" placeholder="your email ">
+                <textarea id="commentContent" class="comment-content" placeholder="comment message"></textarea>
+                <div class="button-bar">
+                    <button class="submit-btn" id='submitBtn'>submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
     const ajax = (methon, path, data) => {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
@@ -441,7 +443,7 @@
     });
     let submitBtn = document.getElementById('submitBtn');
 
-    const host = `http://localhost:3000/`;
+    const host = `http://groove-zhang.cn/`;
 
     submitBtn.addEventListener('click', () => {
         let commentEmail = document.getElementById('commentEmail');
